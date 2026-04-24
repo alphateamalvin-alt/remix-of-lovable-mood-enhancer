@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import hero from "@/assets/hero.jpg";
-import { Reveal } from "./Reveal";
+import { Reveal } from "../Reveal";
 
 export function Hero() {
   return (
