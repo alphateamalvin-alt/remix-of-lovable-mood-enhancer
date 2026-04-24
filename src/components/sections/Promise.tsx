@@ -1,0 +1,44 @@
+import { Reveal } from "../Reveal";
+
+const promises = [
+  { icon: "🌿", title: "Chemical-Free, Without Pressure", desc: "No synthetic drugs. Just pure botanicals that work with your body." },
+  { icon: "💯", title: "Results You'll Feel — Or You Don't Pay", desc: "30-day full money-back guarantee. No questions asked." },
+  { icon: "🔬", title: "Completely Natural. Works Naturally", desc: "Formulated to work with your body, never against it." },
+  { icon: "❤️", title: "Stronger Relationships. Real Intimacy", desc: "Supporting your connection, not just a symptom." },
+  { icon: "🌟", title: "Supporting the WHOLE You", desc: "Mind, body, energy, and confidence. Not just one thing." },
+];
+
+export function Promise() {
+  return (
+    <section className="bg-[var(--color-noir)] py-24 md:py-36">
+      <div className="mx-auto max-w-4xl px-6 lg:px-10">
+        <Reveal>
+          <div className="text-center mb-16">
+            <p className="eyebrow mb-5">The LOVABLE Promise</p>
+            <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[44px] leading-[1.15]">
+              We Stand Behind Every Drop
+            </h2>
+          </div>
+        </Reveal>
+
+        <div>
+          {promises.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.06}>
+              <div className="gold-divider" />
+              <div className="flex items-start gap-6 py-8 sm:py-10">
+                <div className="flex-shrink-0 h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[var(--color-brand-red-soft)] border border-[var(--color-brand-red)]/30 flex items-center justify-center text-2xl">
+                  {p.icon}
+                </div>
+                <div>
+                  <h3 className="font-serif text-[var(--color-ivory)] text-xl sm:text-[22px] leading-snug">{p.title}</h3>
+                  <p className="mt-2 text-[var(--color-ivory-muted)] text-[15px] leading-relaxed">{p.desc}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+          <div className="gold-divider" />
+        </div>
+      </div>
+    </section>
+  );
+}
