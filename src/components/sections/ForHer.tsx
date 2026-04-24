@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import forher from "@/assets/forher.jpg";
 import bottle from "@/assets/product-her.png";
 import { Reveal } from "../Reveal";
@@ -43,7 +44,7 @@ export function ForHer() {
             </div>
 
             <div className="mt-8">
-              <a href="#shop" className="btn-primary">Shop For Her →</a>
+              <Link to="/shop" search={{ variant: "her" }} className="btn-primary">Shop For Her →</Link>
             </div>
           </Reveal>
         </div>

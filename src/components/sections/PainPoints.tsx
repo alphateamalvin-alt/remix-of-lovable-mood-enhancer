@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import painImg from "@/assets/painpoints.jpg";
 import { Reveal } from "../Reveal";
 
@@ -46,7 +47,7 @@ export function PainPoints() {
             You're not broken. You just need the right support.
           </p>
           <div className="mt-9">
-            <a href="#shop" className="btn-primary">I'm Ready to Feel Again →</a>
+            <Link to="/shop" className="btn-primary">I'm Ready to Feel Again →</Link>
           </div>
         </Reveal>
       </div>

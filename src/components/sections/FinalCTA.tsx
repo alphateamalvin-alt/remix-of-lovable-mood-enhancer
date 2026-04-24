@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import hero from "@/assets/hero.jpg";
 import { Reveal } from "../Reveal";
 
@@ -21,8 +22,8 @@ export function FinalCTA() {
         </Reveal>
         <Reveal delay={0.2}>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#forher" className="btn-primary">Shop For Her →</a>
-            <a href="#forhim" className="btn-outline">Shop For Him →</a>
+            <Link to="/shop" search={{ variant: "her" }} className="btn-primary">Shop For Her →</Link>
+            <Link to="/shop" search={{ variant: "him" }} className="btn-outline">Shop For Him →</Link>
           </div>
         </Reveal>
         <Reveal delay={0.3}>

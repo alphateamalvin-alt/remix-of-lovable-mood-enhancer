@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import logo from "@/assets/logo.png";
 
 export function Footer() {
@@ -14,17 +15,17 @@ export function Footer() {
         <div>
           <h5 className="text-[11px] tracking-[0.22em] uppercase text-[var(--color-brand-red)] font-semibold mb-5">Shop</h5>
           <ul className="space-y-3 text-sm text-[var(--color-ivory)]/80">
-            <li><a href="#forher" className="hover:text-[var(--color-brand-red)] transition-colors">For Her</a></li>
-            <li><a href="#forhim" className="hover:text-[var(--color-brand-red)] transition-colors">For Him</a></li>
-            <li><a href="#shop" className="hover:text-[var(--color-brand-red)] transition-colors">Couples Bundle</a></li>
+            <li><Link to="/shop" search={{ variant: "her" }} className="hover:text-[var(--color-brand-red)] transition-colors">For Her</Link></li>
+            <li><Link to="/shop" search={{ variant: "him" }} className="hover:text-[var(--color-brand-red)] transition-colors">For Him</Link></li>
+            <li><Link to="/shop" search={{ variant: "couples" }} className="hover:text-[var(--color-brand-red)] transition-colors">Couples Bundle</Link></li>
           </ul>
         </div>
 
         <div>
           <h5 className="text-[11px] tracking-[0.22em] uppercase text-[var(--color-brand-red)] font-semibold mb-5">Support</h5>
           <ul className="space-y-3 text-sm text-[var(--color-ivory)]/80">
-            <li><a href="#story" className="hover:text-[var(--color-brand-red)] transition-colors">Our Story</a></li>
-            <li><a href="#faq" className="hover:text-[var(--color-brand-red)] transition-colors">FAQ</a></li>
+            <li><Link to="/" hash="story" className="hover:text-[var(--color-brand-red)] transition-colors">Our Story</Link></li>
+            <li><Link to="/" hash="faq" className="hover:text-[var(--color-brand-red)] transition-colors">FAQ</Link></li>
             <li><a href="mailto:admin@lovablecouple.shop" className="hover:text-[var(--color-brand-red)] transition-colors">Contact</a></li>
           </ul>
         </div>

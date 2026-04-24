@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import hero from "@/assets/hero.jpg";
 import { Reveal } from "../Reveal";
 
@@ -40,7 +41,7 @@ export function VSL() {
           </ul>
 
           <div className="mt-9">
-            <a href="#shop" className="btn-primary">Get LOVABLE Now →</a>
+            <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
           </div>
         </Reveal>
       </div>

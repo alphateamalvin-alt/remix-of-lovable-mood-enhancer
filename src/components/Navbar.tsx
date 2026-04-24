@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
 import logo from "@/assets/logo.png";
 
 const links = [
-  { label: "Our Story", href: "#story" },
-  { label: "For Her", href: "#forher" },
-  { label: "For Him", href: "#forhim" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Our Story", hash: "#story" },
+  { label: "For Her", hash: "#forher" },
+  { label: "For Him", hash: "#forhim" },
+  { label: "FAQ", hash: "#faq" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -29,27 +32,37 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-4">
-        <a href="#top" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img src={logo} alt="LOVABLE" className="h-8 sm:h-9 w-auto" />
-        </a>
+        </Link>
 
         <ul className="hidden md:flex items-center gap-10">
           {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className="text-[12px] font-medium tracking-[0.18em] uppercase text-[var(--color-ivory)]/85 hover:text-[var(--color-brand-red)] transition-colors"
-              >
-                {l.label}
-              </a>
+            <li key={l.hash}>
+              {isHome ? (
+                <a
+                  href={l.hash}
+                  className="text-[12px] font-medium tracking-[0.18em] uppercase text-[var(--color-ivory)]/85 hover:text-[var(--color-brand-red)] transition-colors"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link
+                  to="/"
+                  hash={l.hash.slice(1)}
+                  className="text-[12px] font-medium tracking-[0.18em] uppercase text-[var(--color-ivory)]/85 hover:text-[var(--color-brand-red)] transition-colors"
+                >
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
 
         <div className="hidden md:block">
-          <a href="#shop" className="btn-primary !py-3 !px-6 text-[11px]">
+          <Link to="/shop" className="btn-primary !py-3 !px-6 text-[11px]">
             Shop Now →
-          </a>
+          </Link>
         </div>
 
         <button
@@ -71,20 +84,31 @@ export function Navbar() {
           </div>
           <ul className="flex flex-col items-center justify-center flex-1 gap-8">
             {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-serif text-3xl text-[var(--color-ivory)]"
-                >
-                  {l.label}
-                </a>
+              <li key={l.hash}>
+                {isHome ? (
+                  <a
+                    href={l.hash}
+                    onClick={() => setMobileOpen(false)}
+                    className="font-serif text-3xl text-[var(--color-ivory)]"
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    to="/"
+                    hash={l.hash.slice(1)}
+                    onClick={() => setMobileOpen(false)}
+                    className="font-serif text-3xl text-[var(--color-ivory)]"
+                  >
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
             <li>
-              <a href="#shop" onClick={() => setMobileOpen(false)} className="btn-primary mt-6">
+              <Link to="/shop" onClick={() => setMobileOpen(false)} className="btn-primary mt-6">
                 Shop Now →
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
