@@ -205,6 +205,11 @@
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
+
+  .mask-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
 }
 
 @keyframes marquee-left {
