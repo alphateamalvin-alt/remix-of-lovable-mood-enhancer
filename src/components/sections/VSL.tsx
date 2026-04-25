@@ -12,7 +12,7 @@ export function VSL() {
               controls
               preload="metadata"
               poster={hero}
-              src="https://i.imgur.com/BRbRsa9.mp4"
+              src="https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/0425.mov?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8wNDI1Lm1vdiIsImlhdCI6MTc3NzEzMjQzMiwiZXhwIjoxODA4NjY4NDMyfQ.zWaZ-jUbuawlObjN1VUhDqCRnkKwbGySjP_dy2wVtRg"
               className="w-full h-auto block aspect-video bg-black"
             />
           </div>
