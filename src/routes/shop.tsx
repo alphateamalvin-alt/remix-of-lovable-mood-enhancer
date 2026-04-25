@@ -19,13 +19,13 @@ import himThumb2 from "@/assets/him-thumb2.jpg";
 
 type Variant = "her" | "him" | "couples";
 
-type ShopSearch = { variant: Variant };
+type ShopSearch = { variant?: Variant };
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => {
     const v = search.variant;
-    const variant: Variant = v === "him" || v === "couples" ? v : "her";
-    return { variant };
+    if (v === "her" || v === "him" || v === "couples") return { variant: v };
+    return {};
   },
   head: () => ({
     meta: [
