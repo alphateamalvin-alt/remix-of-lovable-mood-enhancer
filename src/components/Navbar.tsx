@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-const LOGO_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Final%20Lovable%20Logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9GaW5hbCBMb3ZhYmxlIExvZ28ucG5nIiwiaWF0IjoxNzc3MDkzMjU1LCJleHAiOjE4MDg2MjkyNTV9.xOqIe60Yvp_a435B6fNgTkvMicsiSazYYU7KHxMF_dA";
+import logo from "@/assets/final-logo-new.png";
 
 const links = [
   { label: "Home", hash: "" },
