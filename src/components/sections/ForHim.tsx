@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import forhim from "@/assets/forhim.jpg";
 import { Reveal } from "../Reveal";
+
+const FOR_HIM_IMAGE = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/8.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy84LnBuZyIsImlhdCI6MTc3NzEzMjk5NSwiZXhwIjoxODA4NjY4OTk1fQ.1Ze3vH74IZ_9etm09fJzNhJiP9aT2RlVjrb5rirLhIw";
 
 const BOTTLE_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwOTM1NjgsImV4cCI6MTgwODYyOTU2OH0.nYMeiT6dIhYeCPfkXqtfaOT9zLNipVND5i9Y81IVG8Y";
@@ -47,7 +48,7 @@ export function ForHim() {
         {/* DRAMATIC BOTTLE STAGE */}
         <div className="order-1 lg:order-2 relative overflow-hidden bg-gradient-to-bl from-black via-[var(--color-warm-noir)] to-[var(--color-noir)] flex items-center justify-center min-h-[70vh] lg:min-h-0">
           <img
-            src={forhim}
+            src={FOR_HIM_IMAGE}
             alt=""
             aria-hidden
             loading="lazy"
