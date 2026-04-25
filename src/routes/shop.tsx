@@ -423,7 +423,7 @@ function CouplesBundle() {
 
       <Reveal delay={0.1}>
         <p className="text-center text-[var(--color-ivory-muted)] text-base sm:text-lg max-w-xl mx-auto">
-          One For Her. One For Him. One goal — feel each other again.
+          One For Her. One For Him. One goal. feel each other again.
         </p>
 
         <div className="glass-card rounded-2xl p-7 mt-9">
