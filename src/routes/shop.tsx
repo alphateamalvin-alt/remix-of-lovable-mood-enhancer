@@ -168,6 +168,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             mainImage={forher}
             thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
             bundles={herBundles}
+            bottleImage={BOTTLE_HER_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforher"
             faq={[
               { q: "How do I use it?", a: "2-3 drops under tongue or in any drink, 1-2x daily." },
@@ -188,6 +189,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
+            bottleImage={BOTTLE_HIM_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforhim"
             faq={[
               { q: "Is this like a blue pill?", a: "No. Works naturally with your body's own systems." },
