@@ -48,7 +48,7 @@ export function ForHim() {
         {/* DRAMATIC BOTTLE STAGE */}
         <div className="order-1 lg:order-2 relative overflow-hidden bg-gradient-to-bl from-black via-[var(--color-warm-noir)] to-[var(--color-noir)] flex items-center justify-center min-h-[70vh] lg:min-h-0">
           <img
-            src={forhim}
+            src={FOR_HIM_IMAGE}
             alt=""
             aria-hidden
             loading="lazy"
