@@ -24,13 +24,13 @@ export function VSL() {
             When Was the Last Time You Truly Felt… Connected?
           </h2>
           <p className="mt-6 text-[var(--color-ivory-muted)] text-base leading-[1.85] max-w-xl">
-            Before you scroll, watch this short video. It's the story of thousands of Filipino couples — and maybe yours too. What you'll see might be the most honest conversation about intimacy you've heard in years.
+            Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most honest conversation about intimacy you've heard in years.
           </p>
 
           <ul className="mt-7 space-y-3 max-w-xl">
             {[
               "What's actually stealing your connection (it's not what you think)",
-              "Why most solutions fail — and what works instead",
+              "Why most solutions fail and what works instead",
               "How LOVABLE helps your body remember how to feel again",
             ].map((b) => (
               <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 text-[15px] leading-relaxed">

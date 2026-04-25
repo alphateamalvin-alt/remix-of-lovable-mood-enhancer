@@ -3,7 +3,7 @@ import forher from "@/assets/forher.jpg";
 import { Reveal } from "../Reveal";
 
 const BOTTLE_URL =
-  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_sx4f03sx4f03sx4f.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9HZW1pbmlfR2VuZXJhdGVkX0ltYWdlX3N4NGYwM3N4NGYwM3N4NGYucG5nIiwiaWF0IjoxNzc3MDg4ODAzLCJleHAiOjE4MDg2MjQ4MDN9.YtCbhyXg36hEHtq6YgmhpH_RCRXbKToKCbZrnjx3mRs";
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwOTM0ODcsImV4cCI6MTgwODYyOTQ4N30.CFf7Np6Mbe2sVkMoi-19pQuRX9bY83BdtGeGzXp1mpU";
 
 const benefits = [
   "Supports natural arousal and healthy blood flow",
