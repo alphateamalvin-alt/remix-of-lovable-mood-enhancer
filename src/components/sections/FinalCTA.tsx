@@ -4,7 +4,7 @@ import { Reveal } from "../Reveal";
 
 export function FinalCTA() {
   return (
-    <section id="shop" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+    <section id="forcouples" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       <img src={hero} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" style={{ filter: "blur(2px)" }} />
       <div className="absolute inset-0 bg-[var(--color-noir)]/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-transparent to-[var(--color-noir)]/30" />
