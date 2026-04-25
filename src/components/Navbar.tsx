@@ -89,7 +89,7 @@ export function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-[var(--color-noir)]/98 backdrop-blur-xl flex flex-col">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
-            <img src={LOGO_URL} alt="LOVABLE" className="h-10 w-auto" />
+            <img src={logo} alt="LOVABLE" className="h-10 w-auto" />
             <button onClick={() => setMobileOpen(false)} aria-label="Close menu" className="p-2">
               <X size={22} />
             </button>
