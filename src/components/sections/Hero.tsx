@@ -1,7 +1,14 @@
 import { ChevronDown } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 import hero from "@/assets/hero.jpg";
 import { Reveal } from "../Reveal";
+
+function scrollTo(hash: string) {
+  return (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+}
 
 export function Hero() {
   return (
@@ -34,8 +41,9 @@ export function Hero() {
         </Reveal>
         <Reveal delay={0.3}>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/shop" search={{ variant: "her" }} className="btn-primary">For Her →</Link>
-            <Link to="/shop" search={{ variant: "him" }} className="btn-outline">For Him →</Link>
+            <a href="#forher" onClick={scrollTo("forher")} className="btn-primary">For Her →</a>
+            <a href="#forhim" onClick={scrollTo("forhim")} className="btn-outline">For Him →</a>
+            <a href="#forcouples" onClick={scrollTo("forcouples")} className="btn-gold">For Couples →</a>
           </div>
         </Reveal>
         <Reveal delay={0.45}>

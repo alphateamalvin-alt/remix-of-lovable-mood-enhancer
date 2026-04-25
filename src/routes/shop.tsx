@@ -17,15 +17,20 @@ import herThumb2 from "@/assets/her-thumb2.jpg";
 import himThumb1 from "@/assets/him-thumb1.jpg";
 import himThumb2 from "@/assets/him-thumb2.jpg";
 
+const BOTTLE_HER_URL =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
+const BOTTLE_HIM_URL =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwODkyNTksImV4cCI6MTgwODYyNTI1OX0.K5QMIKYRD65B8p2BagU6a3SVO0gCmuwFYS78qwdHmPU";
+
 type Variant = "her" | "him" | "couples";
 
-type ShopSearch = { variant: Variant };
+type ShopSearch = { variant?: Variant };
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => {
     const v = search.variant;
-    const variant: Variant = v === "him" || v === "couples" ? v : "her";
-    return { variant };
+    if (v === "her" || v === "him" || v === "couples") return { variant: v };
+    return {};
   },
   head: () => ({
     meta: [
@@ -72,7 +77,8 @@ const couplesBundles: Bundle[] = [
 ];
 
 function ShopPage() {
-  const { variant } = Route.useSearch();
+  const search = Route.useSearch();
+  const variant: Variant = search.variant ?? "her";
 
   return (
     <div className="min-h-screen bg-[var(--color-noir)] text-[var(--color-ivory)]">
@@ -162,6 +168,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             mainImage={forher}
             thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
             bundles={herBundles}
+            bottleImage={BOTTLE_HER_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforher"
             faq={[
               { q: "How do I use it?", a: "2-3 drops under tongue or in any drink, 1-2x daily." },
@@ -182,6 +189,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
+            bottleImage={BOTTLE_HIM_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforhim"
             faq={[
               { q: "Is this like a blue pill?", a: "No. Works naturally with your body's own systems." },
@@ -197,6 +205,29 @@ function ProductTabs({ initial }: { initial: Variant }) {
   );
 }
 
+function BottleStack({ src, count }: { src: string; count: number }) {
+  const items = Array.from({ length: Math.max(1, Math.min(count, 3)) });
+  return (
+    <div className="relative flex-shrink-0 h-[60px] w-[72px] flex items-center justify-center">
+      {items.map((_, i) => {
+        const offset = (i - (items.length - 1) / 2) * 14;
+        const z = items.length - i;
+        return (
+          <img
+            key={i}
+            src={src}
+            alt=""
+            loading="lazy"
+            aria-hidden={i > 0}
+            className="absolute h-[60px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
+            style={{ transform: `translateX(${offset}px)`, zIndex: z }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 function ProductDetail({
   eyebrow,
   title,
@@ -206,6 +237,7 @@ function ProductDetail({
   mainImage,
   thumbnails,
   bundles,
+  bottleImage,
   checkoutUrl,
   faq,
 }: {
@@ -217,6 +249,7 @@ function ProductDetail({
   mainImage: string;
   thumbnails: string[];
   bundles: Bundle[];
+  bottleImage: string;
   checkoutUrl: string;
   faq: { q: string; a: string }[];
 }) {
@@ -293,9 +326,10 @@ function ProductDetail({
                     isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
                   }`}
                 >
-                  {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
                 </span>
-                <div className="flex-1">
+                <BottleStack src={bottleImage} count={Number(b.id) || 1} />
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
                     {b.badge && (
@@ -436,9 +470,29 @@ function CouplesBundle() {
                     isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
                   }`}
                 >
-                  {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
                 </span>
-                <div className="flex-1">
+                <div className="relative flex-shrink-0 h-[60px] w-[88px] flex items-center justify-center">
+                  {Array.from({ length: Number(b.id) || 1 }).slice(0, 3).flatMap((_, setIdx, arr) => {
+                    const sets = arr.length;
+                    const setOffset = (setIdx - (sets - 1) / 2) * 22;
+                    return [BOTTLE_HER_URL, BOTTLE_HIM_URL].map((src, j) => (
+                      <img
+                        key={`${setIdx}-${j}`}
+                        src={src}
+                        alt=""
+                        loading="lazy"
+                        aria-hidden
+                        className="absolute h-[60px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
+                        style={{
+                          transform: `translateX(${setOffset + (j === 0 ? -7 : 7)}px)`,
+                          zIndex: 10 - setIdx * 2 + (j === 0 ? 1 : 0),
+                        }}
+                      />
+                    ));
+                  })}
+                </div>
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
                     {b.badge && (

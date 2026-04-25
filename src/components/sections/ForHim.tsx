@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import forhim from "@/assets/forhim.jpg";
-import bottle from "@/assets/product-him.png";
 import { Reveal } from "../Reveal";
+
+const BOTTLE_URL =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_5hgpsm5hgpsm5hgp.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9HZW1pbmlfR2VuZXJhdGVkX0ltYWdlXzVoZ3BzbTVoZ3BzbTVoZ3AucG5nIiwiaWF0IjoxNzc3MDg4OTc0LCJleHAiOjE4MDg2MjQ5NzR9.591JNx7cbD7TX--JJN3FumBLXn0MZDaQDvtquCQ9_k4";
 
 const benefits = [
   "Supports healthy testosterone levels naturally",
@@ -14,7 +16,8 @@ const benefits = [
 export function ForHim() {
   return (
     <section id="forhim" className="bg-[var(--color-warm-noir)]">
-      <div className="grid lg:grid-cols-2 min-h-[85vh]">
+      <div className="grid lg:grid-cols-2 min-h-[90vh]">
+        {/* CONTENT */}
         <div className="order-2 lg:order-1 flex items-center px-6 sm:px-10 lg:px-20 py-20">
           <Reveal>
             <p className="eyebrow mb-5">For Him</p>
@@ -35,18 +38,37 @@ export function ForHim() {
               ))}
             </ul>
 
-            <div className="mt-10 flex justify-center">
-              <img src={bottle} alt="LOVABLE for Him dropper bottle" loading="lazy" className="h-52 w-auto object-contain" />
-            </div>
-
-            <div className="mt-8">
+            <div className="mt-10">
               <Link to="/shop" search={{ variant: "him" }} className="btn-primary">Shop For Him →</Link>
             </div>
           </Reveal>
         </div>
 
-        <div className="order-1 lg:order-2 relative aspect-[4/5] lg:aspect-auto">
-          <img src={forhim} alt="Confident Filipino man portrait" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        {/* DRAMATIC BOTTLE STAGE */}
+        <div className="order-1 lg:order-2 relative overflow-hidden bg-gradient-to-bl from-black via-[var(--color-warm-noir)] to-[var(--color-noir)] flex items-center justify-center min-h-[70vh] lg:min-h-0">
+          <img
+            src={forhim}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover opacity-25"
+            style={{ filter: "blur(30px) saturate(1.2)" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-warm-noir)] via-transparent to-[var(--color-warm-noir)]/60" />
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[55%] w-[55%] rounded-full pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-red) 55%, transparent), transparent 70%)",
+              filter: "blur(40px)",
+            }}
+          />
+          <img
+            src={BOTTLE_URL}
+            alt="LOVABLE for Him dropper bottle"
+            loading="lazy"
+            className="relative z-10 h-[70vh] max-h-[640px] w-auto object-contain drop-shadow-[0_30px_60px_rgba(192,57,43,0.45)]"
+          />
         </div>
       </div>
     </section>
