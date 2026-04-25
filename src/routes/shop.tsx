@@ -164,7 +164,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             title="Mood Enhancer Drops For Women"
             rating="4.9"
             reviews="1,200+"
-            description="Formulated with clinically-studied amino acids and vitamins. Supports natural arousal, mood balance, and intimate wellness — safely and naturally."
+            description="Formulated with clinically-studied amino acids and vitamins. Supports natural arousal, mood balance, and intimate wellness, safely and naturally."
             mainImage={forher}
             thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
             bundles={herBundles}
