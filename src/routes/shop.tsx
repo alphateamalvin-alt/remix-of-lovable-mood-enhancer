@@ -470,9 +470,29 @@ function CouplesBundle() {
                     isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
                   }`}
                 >
-                  {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
                 </span>
-                <div className="flex-1">
+                <div className="relative flex-shrink-0 h-[60px] w-[88px] flex items-center justify-center">
+                  {Array.from({ length: Number(b.id) || 1 }).slice(0, 3).flatMap((_, setIdx, arr) => {
+                    const sets = arr.length;
+                    const setOffset = (setIdx - (sets - 1) / 2) * 22;
+                    return [BOTTLE_HER_URL, BOTTLE_HIM_URL].map((src, j) => (
+                      <img
+                        key={`${setIdx}-${j}`}
+                        src={src}
+                        alt=""
+                        loading="lazy"
+                        aria-hidden
+                        className="absolute h-[60px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
+                        style={{
+                          transform: `translateX(${setOffset + (j === 0 ? -7 : 7)}px)`,
+                          zIndex: 10 - setIdx * 2 + (j === 0 ? 1 : 0),
+                        }}
+                      />
+                    ));
+                  })}
+                </div>
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
                     {b.badge && (
