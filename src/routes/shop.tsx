@@ -326,9 +326,10 @@ function ProductDetail({
                     isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
                   }`}
                 >
-                  {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
                 </span>
-                <div className="flex-1">
+                <BottleStack src={bottleImage} count={Number(b.id) || 1} />
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
                     {b.badge && (
