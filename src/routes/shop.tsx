@@ -205,6 +205,29 @@ function ProductTabs({ initial }: { initial: Variant }) {
   );
 }
 
+function BottleStack({ src, count }: { src: string; count: number }) {
+  const items = Array.from({ length: Math.max(1, Math.min(count, 3)) });
+  return (
+    <div className="relative flex-shrink-0 h-[60px] w-[72px] flex items-center justify-center">
+      {items.map((_, i) => {
+        const offset = (i - (items.length - 1) / 2) * 14;
+        const z = items.length - i;
+        return (
+          <img
+            key={i}
+            src={src}
+            alt=""
+            loading="lazy"
+            aria-hidden={i > 0}
+            className="absolute h-[60px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
+            style={{ transform: `translateX(${offset}px)`, zIndex: z }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 function ProductDetail({
   eyebrow,
   title,
@@ -214,6 +237,7 @@ function ProductDetail({
   mainImage,
   thumbnails,
   bundles,
+  bottleImage,
   checkoutUrl,
   faq,
 }: {
@@ -225,6 +249,7 @@ function ProductDetail({
   mainImage: string;
   thumbnails: string[];
   bundles: Bundle[];
+  bottleImage: string;
   checkoutUrl: string;
   faq: { q: string; a: string }[];
 }) {
