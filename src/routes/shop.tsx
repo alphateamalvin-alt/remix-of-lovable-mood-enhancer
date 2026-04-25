@@ -185,7 +185,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             title="Mood Enhancer Drops For Men"
             rating="4.8"
             reviews="980+"
-            description="Powered by Maca Root, Panax Ginseng, and Tongkat Ali. Supports stamina, natural testosterone, circulation, and the confidence to show up fully — every time."
+            description="Powered by Maca Root, Panax Ginseng, and Tongkat Ali. Supports stamina, natural testosterone, circulation, and the confidence to show up fully every time."
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
