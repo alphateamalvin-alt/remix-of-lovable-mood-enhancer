@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
-const LOGO_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Final%20Lovable%20Logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9GaW5hbCBMb3ZhYmxlIExvZ28ucG5nIiwiaWF0IjoxNzc3MDkzMjU1LCJleHAiOjE4MDg2MjkyNTV9.xOqIe60Yvp_a435B6fNgTkvMicsiSazYYU7KHxMF_dA";
+import logo from "@/assets/final-logo-new.png";
 
 export function Footer() {
   return (
     <footer className="bg-[#080808] border-t border-white/[0.06] text-[var(--color-ivory)]">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <img src={LOGO_URL} alt="LOVABLE" className="h-9 w-auto mb-5" />
+          <img src={logo} alt="LOVABLE" className="h-9 w-auto mb-5" />
           <p className="text-sm leading-relaxed text-[var(--color-ivory-muted)] max-w-xs">
             Feel Normal Again. Live Fully Again. Love Deeply Again.
           </p>
