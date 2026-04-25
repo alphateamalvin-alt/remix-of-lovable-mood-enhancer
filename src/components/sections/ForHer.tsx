@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import forher from "@/assets/forher.jpg";
 import { Reveal } from "../Reveal";
+
+const FOR_HER_IMAGE = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMiAoMSkucG5nIiwiaWF0IjoxNzc3MTMyNzg2LCJleHAiOjE4MDg2Njg3ODZ9.B-AMqN_dXsCpMyXZQlOCFNt-OQtx30ikTNBNvzfd9Kk";
 
 const BOTTLE_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwOTM0ODcsImV4cCI6MTgwODYyOTQ4N30.CFf7Np6Mbe2sVkMoi-19pQuRX9bY83BdtGeGzXp1mpU";
