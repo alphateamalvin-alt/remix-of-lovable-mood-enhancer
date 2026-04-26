@@ -411,8 +411,14 @@ function CouplesBundle() {
     <div className="mx-auto max-w-2xl">
       <Reveal>
         <div className="relative rounded-2xl overflow-hidden h-[300px] mb-10">
-          <img src={hero} alt="LOVABLE Couples Bundle" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-[var(--color-noir)]/50 to-transparent" />
+          <img
+            src="https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/15.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xNS5wbmciLCJpYXQiOjE3NzcxODI4MjIsImV4cCI6MTgwODcxODgyMn0.aHEHR3sZU1m3qLc6tgG266RA4jxcLCD5yXgnANQek1E"
+            alt="LOVABLE Couples Bundle"
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-[var(--color-noir)]/40 to-transparent" />
           <div className="absolute inset-0 flex items-end justify-center p-8">
             <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[40px] text-center leading-[1.1]">
               The Complete Couples Bundle
