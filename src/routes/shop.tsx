@@ -12,7 +12,7 @@ const forher = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/
 const forhim = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/8.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy84LnBuZyIsImlhdCI6MTc3NzEzMjk5NSwiZXhwIjoxODA4NjY4OTk1fQ.1Ze3vH74IZ_9etm09fJzNhJiP9aT2RlVjrb5rirLhIw";
 import bottleHer from "@/assets/product-her.png";
 import bottleHim from "@/assets/product-him.png";
-import herThumb1 from "@/assets/her-thumb1.jpg";
+const herThumb1 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Magnesium%20Glycinate%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8NYWduZXNpdW0gR2x5Y2luYXRlICgzKS5wbmciLCJpYXQiOjE3NzcxODQyMzksImV4cCI6MTgwODcyMDIzOX0.UkaaTJxm0FjIOST6dsKRBcAPLdSKKpwLAGpyX6YHhrY";
 import herThumb2 from "@/assets/her-thumb2.jpg";
 import himThumb1 from "@/assets/him-thumb1.jpg";
 import himThumb2 from "@/assets/him-thumb2.jpg";
