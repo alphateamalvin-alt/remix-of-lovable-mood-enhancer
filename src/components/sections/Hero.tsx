@@ -1,8 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "../Reveal";
 
-const HERO_IMAGE_URL =
-  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/1%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xICgxKS5wbmciLCJpYXQiOjE3NzcxODQ3MTEsImV4cCI6MTgwODcyMDcxMX0.tSs6xKIvVmlA0vyMJzsKEE0i3LLV96lOkVU4oG2ORKY";
+const HERO_IMAGE_URL = "/hero-image.png";
 
 function scrollTo(hash: string) {
   return (e: React.MouseEvent) => {
