@@ -5,7 +5,7 @@ import { Reveal } from "../Reveal";
 const items = [
   { q: "How soon will I feel a difference?", a: "Most feel increased energy and mood within 7-14 days. Peak results after 20-30 days of consistent daily use." },
   { q: "Is LOVABLE safe? Any side effects?", a: "Completely safe. Formulated with natural amino acids, minerals, and botanicals. No synthetic drugs, no hormones, no known side effects." },
-  { q: "How do I take it?", a: "2-3 drops under the tongue or mixed in water, coffee, or any drink. 1-2 times daily. Takes 5 seconds." },
+  { q: "How do I take it?", a: "1/2 dropper under the tongue or mixed in water, coffee, or any drink. 1-2 times daily. Takes 5 seconds." },
   { q: "Is this like a blue pill?", a: "No. LOVABLE nourishes your body's own natural systems over time — not a quick artificial fix. It's wellness, not a drug." },
   { q: "What's your return policy?", a: "30-day full money-back guarantee. Return unused portion for a complete refund — no questions, no hassle." },
 ];
