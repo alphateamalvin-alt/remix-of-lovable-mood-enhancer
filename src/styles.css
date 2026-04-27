@@ -64,8 +64,8 @@
   /* Brand palette (oklch equivalents of hex) */
   --noir: oklch(0.145 0 0); /* #0D0D0D */
   --warm-noir: oklch(0.16 0.03 25); /* #1A0A0A */
-  --brand-red: oklch(0.55 0.18 27); /* #C0392B */
-  --brand-red-soft: oklch(0.55 0.18 27 / 0.15);
+  --brand-red: oklch(0.5854 0.2206 28.42); /* #DC2627 */
+  --brand-red-soft: oklch(0.5854 0.2206 28.42 / 0.15);
   --ivory: oklch(0.93 0.02 70); /* #F2EAE0 */
   --ivory-muted: oklch(0.62 0.02 50); /* #9A8880 */
   --gold: oklch(0.66 0.08 75); /* #B8955A */
