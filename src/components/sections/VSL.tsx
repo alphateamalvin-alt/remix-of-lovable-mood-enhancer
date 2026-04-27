@@ -156,7 +156,7 @@ export function VSL() {
     <section id="story" className="bg-[var(--color-warm-noir)] py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
         <Reveal>
-          <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
+          <div className="group/vsl relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
             <div className="aspect-video w-full relative">
               <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
@@ -184,7 +184,7 @@ export function VSL() {
 
             {/* Custom controls bar */}
             {ready && (
-              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 translate-y-2 group-hover/vsl:opacity-100 group-hover/vsl:translate-y-0 focus-within:opacity-100 focus-within:translate-y-0 transition-all duration-300">
                 {/* Progress bar */}
                 <div className="relative h-1 mb-3 group">
                   <div className="absolute inset-0 rounded-full bg-white/25" />
