@@ -148,9 +148,9 @@
     border: 1px solid var(--color-brand-red);
   }
   .btn-primary:hover {
-    background-color: oklch(0.5 0.18 27);
+    background-color: oklch(0.53 0.22 28.42);
     transform: translateY(-1px);
-    box-shadow: 0 10px 30px -10px oklch(0.55 0.18 27 / 0.5);
+    box-shadow: 0 10px 30px -10px oklch(0.5854 0.2206 28.42 / 0.5);
   }
 
   .btn-outline {
