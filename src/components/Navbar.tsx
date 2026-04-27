@@ -14,6 +14,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
@@ -24,6 +25,22 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Hide navbar when hero section has scrolled out of view (only on home)
+  useEffect(() => {
+    if (!isHome) {
+      setHidden(false);
+      return;
+    }
+    const hero = document.getElementById("top");
+    if (!hero) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHidden(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [isHome]);
 
   const handleNav = (hash: string) => (e: React.MouseEvent) => {
     setMobileOpen(false);
