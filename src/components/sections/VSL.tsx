@@ -12,12 +12,22 @@ declare global {
 
 const VIDEO_ID = "gWyNJb5d6Kk";
 
+function formatTime(s: number) {
+  if (!isFinite(s) || s < 0) s = 0;
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+}
+
 export function VSL() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<any>(null);
+  const intervalRef = useRef<number | null>(null);
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
   const [ready, setReady] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     const init = () => {
@@ -42,10 +52,14 @@ export function VSL() {
           onReady: (e: any) => {
             e.target.mute();
             e.target.playVideo();
+            setDuration(e.target.getDuration() || 0);
             setReady(true);
           },
           onStateChange: (e: any) => {
-            if (e.data === window.YT.PlayerState.PLAYING) setPlaying(true);
+            if (e.data === window.YT.PlayerState.PLAYING) {
+              setPlaying(true);
+              setDuration(e.target.getDuration() || 0);
+            }
             if (e.data === window.YT.PlayerState.PAUSED) setPlaying(false);
           },
         },
@@ -69,6 +83,19 @@ export function VSL() {
         init();
       };
     }
+
+    intervalRef.current = window.setInterval(() => {
+      const p = playerRef.current;
+      if (p && typeof p.getCurrentTime === "function") {
+        setCurrent(p.getCurrentTime() || 0);
+        const d = p.getDuration?.() || 0;
+        if (d) setDuration(d);
+      }
+    }, 250);
+
+    return () => {
+      if (intervalRef.current) window.clearInterval(intervalRef.current);
+    };
   }, []);
 
   const handleUnmute = () => {
@@ -93,6 +120,38 @@ export function VSL() {
     }
   };
 
+  const toggleMute = () => {
+    const p = playerRef.current;
+    if (!p) return;
+    if (muted) {
+      p.unMute();
+      p.setVolume(100);
+      setMuted(false);
+    } else {
+      p.mute();
+      setMuted(true);
+    }
+  };
+
+  const restart = () => {
+    const p = playerRef.current;
+    if (!p) return;
+    p.seekTo(0, true);
+    p.playVideo();
+    setPlaying(true);
+    setCurrent(0);
+  };
+
+  const onSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const p = playerRef.current;
+    if (!p || !duration) return;
+    const t = (Number(e.target.value) / 100) * duration;
+    p.seekTo(t, true);
+    setCurrent(t);
+  };
+
+  const progress = duration > 0 ? (current / duration) * 100 : 0;
+
   return (
     <section id="story" className="bg-[var(--color-warm-noir)] py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
@@ -111,7 +170,6 @@ export function VSL() {
                 >
                   <div className="flex flex-col items-center gap-3 text-white">
                     <div className="w-20 h-20 rounded-full bg-[var(--color-brand-red)] flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
-                      {/* Speaker icon */}
                       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
@@ -122,28 +180,93 @@ export function VSL() {
                   </div>
                 </button>
               )}
-
-              {/* Play/Pause control (shown after unmute) */}
-              {ready && !muted && (
-                <button
-                  type="button"
-                  onClick={togglePlay}
-                  className="absolute bottom-4 right-4 z-10 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur flex items-center justify-center text-white transition-colors"
-                  aria-label={playing ? "Pause" : "Play"}
-                >
-                  {playing ? (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <rect x="6" y="5" width="4" height="14" rx="1" />
-                      <rect x="14" y="5" width="4" height="14" rx="1" />
-                    </svg>
-                  ) : (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="6 4 20 12 6 20 6 4" />
-                    </svg>
-                  )}
-                </button>
-              )}
             </div>
+
+            {/* Custom controls bar */}
+            {ready && (
+              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-6 pb-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                {/* Progress bar */}
+                <div className="relative h-1 mb-3 group">
+                  <div className="absolute inset-0 rounded-full bg-white/25" />
+                  <div
+                    className="absolute left-0 top-0 h-full rounded-full bg-[var(--color-brand-red)]"
+                    style={{ width: `${progress}%` }}
+                  />
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    step={0.1}
+                    value={progress}
+                    onChange={onSeek}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    aria-label="Seek video"
+                  />
+                </div>
+
+                <div className="flex items-center gap-3 text-white">
+                  {/* Play/Pause */}
+                  <button
+                    type="button"
+                    onClick={togglePlay}
+                    className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur flex items-center justify-center transition-colors"
+                    aria-label={playing ? "Pause" : "Play"}
+                  >
+                    {playing ? (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="5" width="4" height="14" rx="1" />
+                        <rect x="14" y="5" width="4" height="14" rx="1" />
+                      </svg>
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="6 4 20 12 6 20 6 4" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Mute/Unmute */}
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur flex items-center justify-center transition-colors"
+                    aria-label={muted ? "Unmute" : "Mute"}
+                  >
+                    {muted ? (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                        <line x1="22" y1="9" x2="16" y2="15" />
+                        <line x1="16" y1="9" x2="22" y2="15" />
+                      </svg>
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Restart */}
+                  <button
+                    type="button"
+                    onClick={restart}
+                    className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur flex items-center justify-center transition-colors"
+                    aria-label="Restart from beginning"
+                    title="Restart"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="1 4 1 10 7 10" />
+                      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                  </button>
+
+                  {/* Time */}
+                  <div className="ml-auto text-xs tabular-nums text-white/85">
+                    {formatTime(current)} / {formatTime(duration)}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </Reveal>
 
