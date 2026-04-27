@@ -85,7 +85,6 @@ function ShopPage() {
       <AnnouncementBar />
       <Navbar />
       <main>
-        <ShopHero />
         <ProductTabs initial={variant} />
         <GuaranteeUrgency />
         <HowToOrder />
