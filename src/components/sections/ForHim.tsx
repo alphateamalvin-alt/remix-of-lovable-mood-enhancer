@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "../Reveal";
 
-const FOR_HIM_IMAGE = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/8.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy84LnBuZyIsImlhdCI6MTc3NzEzMjk5NSwiZXhwIjoxODA4NjY4OTk1fQ.1Ze3vH74IZ_9etm09fJzNhJiP9aT2RlVjrb5rirLhIw";
-
-const BOTTLE_URL = "/for-him-product.png";
+const FOR_HIM_IMAGE =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2027,%202026,%2012_03_26%20AM.png";
 
 const benefits = [
   "Supports healthy testosterone levels naturally",
@@ -44,30 +43,29 @@ export function ForHim() {
           </Reveal>
         </div>
 
-        {/* DRAMATIC BOTTLE STAGE */}
-        <div className="order-1 lg:order-2 relative overflow-hidden bg-gradient-to-bl from-black via-[var(--color-warm-noir)] to-[var(--color-noir)] flex items-center justify-center min-h-[70vh] lg:min-h-0">
+        {/* SEAMLESS IMAGE — bleeds to edges, fades on left into bg */}
+        <div className="order-1 lg:order-2 relative overflow-hidden min-h-[70vh] lg:min-h-0">
           <img
             src={FOR_HIM_IMAGE}
-            alt=""
-            aria-hidden
+            alt="LOVABLE for Him"
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover opacity-25"
-            style={{ filter: "blur(30px) saturate(1.2)" }}
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-warm-noir)] via-transparent to-[var(--color-warm-noir)]/60" />
+          {/* Left-edge fade into the warm-noir background */}
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[55%] w-[55%] rounded-full pointer-events-none"
+            className="absolute inset-y-0 left-0 w-40 pointer-events-none hidden lg:block"
             style={{
               background:
-                "radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-red) 55%, transparent), transparent 70%)",
-              filter: "blur(40px)",
+                "linear-gradient(to right, var(--color-warm-noir) 0%, rgba(26,10,10,0.6) 40%, rgba(26,10,10,0) 100%)",
             }}
           />
-          <img
-            src={BOTTLE_URL}
-            alt="LOVABLE for Him dropper bottle"
-            loading="lazy"
-            className="relative z-10 h-[70vh] max-h-[640px] w-auto object-contain drop-shadow-[0_30px_60px_rgba(192,57,43,0.45)]"
+          {/* Mobile: bottom fade */}
+          <div
+            className="lg:hidden absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(26,10,10,0) 0%, var(--color-warm-noir) 100%)",
+            }}
           />
         </div>
       </div>

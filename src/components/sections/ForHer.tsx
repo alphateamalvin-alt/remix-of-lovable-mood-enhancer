@@ -1,10 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "../Reveal";
 
-const FOR_HER_IMAGE = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMiAoMSkucG5nIiwiaWF0IjoxNzc3MTMyNzg2LCJleHAiOjE4MDg2Njg3ODZ9.B-AMqN_dXsCpMyXZQlOCFNt-OQtx30ikTNBNvzfd9Kk";
-
-const BOTTLE_URL =
-  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwOTM0ODcsImV4cCI6MTgwODYyOTQ4N30.CFf7Np6Mbe2sVkMoi-19pQuRX9bY83BdtGeGzXp1mpU";
+const FOR_HER_IMAGE =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/13.png";
 
 const benefits = [
   "Supports natural arousal and healthy blood flow",
@@ -18,31 +16,29 @@ export function ForHer() {
   return (
     <section id="forher" className="bg-[var(--color-noir)]">
       <div className="grid lg:grid-cols-2 min-h-[90vh]">
-        {/* DRAMATIC BOTTLE STAGE */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-[var(--color-warm-noir)] via-[var(--color-noir)] to-black flex items-center justify-center min-h-[70vh] lg:min-h-0">
+        {/* SEAMLESS IMAGE — bleeds to edges, fades on right into bg */}
+        <div className="relative overflow-hidden min-h-[70vh] lg:min-h-0">
           <img
             src={FOR_HER_IMAGE}
-            alt=""
-            aria-hidden
+            alt="LOVABLE for Her"
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover opacity-25"
-            style={{ filter: "blur(30px) saturate(1.2)" }}
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-transparent to-[var(--color-noir)]/60" />
-          {/* Red glow */}
+          {/* Right-edge fade into the dark background */}
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[55%] w-[55%] rounded-full pointer-events-none"
+            className="absolute inset-y-0 right-0 w-40 pointer-events-none hidden lg:block"
             style={{
               background:
-                "radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-red) 55%, transparent), transparent 70%)",
-              filter: "blur(40px)",
+                "linear-gradient(to left, var(--color-noir) 0%, rgba(13,13,13,0.6) 40%, rgba(13,13,13,0) 100%)",
             }}
           />
-          <img
-            src={BOTTLE_URL}
-            alt="LOVABLE for Her dropper bottle"
-            loading="lazy"
-            className="relative z-10 h-[70vh] max-h-[640px] w-auto object-contain drop-shadow-[0_30px_60px_rgba(192,57,43,0.45)]"
+          {/* Mobile: bottom fade */}
+          <div
+            className="lg:hidden absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(13,13,13,0) 0%, var(--color-noir) 100%)",
+            }}
           />
         </div>
 
