@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import logo from "@/assets/final-logo-new.png";
+const logo = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Final%20Lovable%20Logo%20copy.png";
 
 const links = [
   { label: "Home", hash: "" },
