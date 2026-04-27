@@ -64,6 +64,8 @@ export function Navbar() {
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-500 ${
+        hidden ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+      } ${
         scrolled
           ? "bg-[var(--color-noir)]/95 backdrop-blur-md border-b border-white/[0.06]"
           : "bg-transparent border-b border-transparent"
