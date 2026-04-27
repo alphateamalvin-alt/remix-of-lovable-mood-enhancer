@@ -46,7 +46,7 @@ export function Hero() {
       <div className="order-2 md:order-1 relative w-full md:w-1/2 flex items-center justify-center px-6 py-16 md:py-28 md:min-h-[100svh]">
         <div className="max-w-xl w-full text-center md:text-left">
           <Reveal>
-            <p className="eyebrow mb-6">Natural Mood Enhancer Drops</p>
+            <p className="eyebrow mb-6">Natural Lovable Drops</p>
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="text-display text-[var(--color-ivory)] text-[36px] sm:text-5xl md:text-[56px] lg:text-[64px] leading-[1.05]">

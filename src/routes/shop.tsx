@@ -34,7 +34,7 @@ export const Route = createFileRoute("/shop")({
   },
   head: () => ({
     meta: [
-      { title: "Shop LOVABLE — Mood Enhancer Drops for Filipino Couples" },
+      { title: "Shop LOVABLE — Lovable Drops for Filipino Couples" },
       {
         name: "description",
         content:
@@ -160,7 +160,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="her"
             eyebrow="LOVABLE Drops For Her"
-            title="Mood Enhancer Drops For Women"
+            title="Lovable Drops For Women"
             rating="4.9"
             reviews="1,200+"
             description="Formulated with clinically-studied amino acids and vitamins. Supports natural arousal, mood balance, and intimate wellness, safely and naturally."
