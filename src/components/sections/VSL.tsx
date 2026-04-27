@@ -1,20 +1,149 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 
 import { Reveal } from "../Reveal";
 
+declare global {
+  interface Window {
+    YT?: any;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+const VIDEO_ID = "gWyNJb5d6Kk";
+
 export function VSL() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<any>(null);
+  const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(true);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const init = () => {
+      if (!containerRef.current || playerRef.current) return;
+      playerRef.current = new window.YT.Player(containerRef.current, {
+        videoId: VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          rel: 0,
+          modestbranding: 1,
+          showinfo: 0,
+          iv_load_policy: 3,
+          disablekb: 1,
+          fs: 0,
+          playsinline: 1,
+          loop: 1,
+          playlist: VIDEO_ID,
+        },
+        events: {
+          onReady: (e: any) => {
+            e.target.mute();
+            e.target.playVideo();
+            setReady(true);
+          },
+          onStateChange: (e: any) => {
+            if (e.data === window.YT.PlayerState.PLAYING) setPlaying(true);
+            if (e.data === window.YT.PlayerState.PAUSED) setPlaying(false);
+          },
+        },
+      });
+    };
+
+    if (window.YT && window.YT.Player) {
+      init();
+    } else {
+      const existing = document.querySelector<HTMLScriptElement>(
+        'script[src="https://www.youtube.com/iframe_api"]'
+      );
+      if (!existing) {
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+      }
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        prev?.();
+        init();
+      };
+    }
+  }, []);
+
+  const handleUnmute = () => {
+    const p = playerRef.current;
+    if (!p) return;
+    p.unMute();
+    p.setVolume(100);
+    p.playVideo();
+    setMuted(false);
+    setPlaying(true);
+  };
+
+  const togglePlay = () => {
+    const p = playerRef.current;
+    if (!p) return;
+    if (playing) {
+      p.pauseVideo();
+      setPlaying(false);
+    } else {
+      p.playVideo();
+      setPlaying(true);
+    }
+  };
+
   return (
     <section id="story" className="bg-[var(--color-warm-noir)] py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
         <Reveal>
           <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/gWyNJb5d6Kk?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&loop=1&playlist=gWyNJb5d6Kk"
-              title="LOVABLE Story"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="w-full h-auto block aspect-video bg-black pointer-events-none"
-            />
+            <div className="aspect-video w-full relative">
+              <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+
+              {/* Tap-to-unmute overlay */}
+              {ready && muted && (
+                <button
+                  type="button"
+                  onClick={handleUnmute}
+                  className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 hover:bg-black/30 transition-colors group"
+                  aria-label="Tap for sound"
+                >
+                  <div className="flex flex-col items-center gap-3 text-white">
+                    <div className="w-20 h-20 rounded-full bg-[var(--color-brand-red)] flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
+                      {/* Speaker icon */}
+                      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                      </svg>
+                    </div>
+                    <span className="text-sm font-medium tracking-wide uppercase">Tap for sound</span>
+                  </div>
+                </button>
+              )}
+
+              {/* Play/Pause control (shown after unmute) */}
+              {ready && !muted && (
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  className="absolute bottom-4 right-4 z-10 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur flex items-center justify-center text-white transition-colors"
+                  aria-label={playing ? "Pause" : "Play"}
+                >
+                  {playing ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="6" y="5" width="4" height="14" rx="1" />
+                      <rect x="14" y="5" width="4" height="14" rx="1" />
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="6 4 20 12 6 20 6 4" />
+                    </svg>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
         </Reveal>
 
