@@ -15,9 +15,6 @@ export function VSL() {
               allowFullScreen
               className="w-full h-auto block aspect-video bg-black pointer-events-none"
             />
-            {/* Overlay strips covering YouTube branding (top title bar + bottom watermark) */}
-            <div className="absolute top-0 left-0 right-0 h-16 bg-black pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-32 h-12 bg-black pointer-events-none" />
           </div>
         </Reveal>
 
