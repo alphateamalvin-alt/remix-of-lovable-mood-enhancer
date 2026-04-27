@@ -54,7 +54,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-3">
         <Link to="/" onClick={handleNav("")} className="flex items-center">
-          <img src={logo} alt="LOVABLE" className="h-7 w-auto" />
+          <img src={logo} alt="LOVABLE" className="h-5 w-auto" />
         </Link>
 
         <ul className="hidden md:flex items-center gap-8">
