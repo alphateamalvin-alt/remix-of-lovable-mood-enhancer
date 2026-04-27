@@ -8,7 +8,6 @@ import { VSL } from "@/components/sections/VSL";
 import { PainPoints } from "@/components/sections/PainPoints";
 import { ForHer } from "@/components/sections/ForHer";
 import { ForHim } from "@/components/sections/ForHim";
-import { Ingredients } from "@/components/sections/Ingredients";
 import { SocialProof } from "@/components/sections/SocialProof";
 import { Promise } from "@/components/sections/Promise";
 import { FAQ } from "@/components/sections/FAQ";
@@ -46,7 +45,6 @@ function Index() {
         <PainPoints />
         <ForHer />
         <ForHim />
-        <Ingredients />
         <SocialProof />
         <Promise />
         <FAQ />

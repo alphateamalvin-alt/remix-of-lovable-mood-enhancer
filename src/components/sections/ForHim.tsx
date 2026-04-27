@@ -4,6 +4,16 @@ import { Reveal } from "../Reveal";
 const FOR_HIM_IMAGE =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2027,%202026,%2012_03_26%20AM.png";
 
+const MACA_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Maca%20root%20(2).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9NYWNhIHJvb3QgKDIpLnBuZyIsImlhdCI6MTc3NzE4MzI0OCwiZXhwIjoxODA4NzE5MjQ4fQ.9IwEDDT8IOQnYfO9kAzKTAT2jJjjNGnI7dIOdquXh8Q";
+const GINSENG_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Panax%20Ginseng%20(2).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9QYW5heCBHaW5zZW5nICgyKS5wbmciLCJpYXQiOjE3NzcxODMyMjYsImV4cCI6MTgwODcxOTIyNn0.hQ9cXMPekLvRiNorfNuQtMSIW-wmqnujImCcwsgBjLY";
+const TONGKAT_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Tongkat%20Ali%20(2).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9Ub25na2F0IEFsaSAoMikucG5nIiwiaWF0IjoxNzc3MTgzMjAxLCJleHAiOjE4MDg3MTkyMDF9.OwK3TML6C-li3GrNnWxGK_ur_t78zM9DRCyxs6iIGpA";
+
+const ingredients = [
+  { img: MACA_URL, name: "Maca Root", benefit: "Energy & stamina" },
+  { img: GINSENG_URL, name: "Panax Ginseng", benefit: "Endurance & clarity" },
+  { img: TONGKAT_URL, name: "Tongkat Ali", benefit: "Testosterone support" },
+];
+
 const benefits = [
   "Supports healthy testosterone levels naturally",
   "Boosts stamina, energy, and endurance",
@@ -36,6 +46,19 @@ export function ForHim() {
                 </li>
               ))}
             </ul>
+
+            <div className="mt-10 max-w-md">
+              <p className="eyebrow mb-4" style={{ color: "var(--color-brand-red)" }}>Key Ingredients</p>
+              <div className="grid grid-cols-3 gap-3">
+                {ingredients.map((ing) => (
+                  <div key={ing.name} className="glass-card rounded-xl p-3 flex flex-col items-center text-center">
+                    <img src={ing.img} alt={ing.name} loading="lazy" className="w-[80px] h-[80px] object-contain" />
+                    <p className="font-serif text-[var(--color-ivory)] text-[13px] mt-2 leading-tight">{ing.name}</p>
+                    <p className="text-[var(--color-ivory-muted)] text-[11px] mt-1 leading-tight">{ing.benefit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div className="mt-10">
               <Link to="/shop" search={{ variant: "him" }} className="btn-primary">Shop For Him →</Link>

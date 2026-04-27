@@ -4,6 +4,18 @@ import { Reveal } from "../Reveal";
 const FOR_HER_IMAGE =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/13.png";
 
+const CITRULLINE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/L-citrulline%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9MLWNpdHJ1bGxpbmUgKDMpLnBuZyIsImlhdCI6MTc3NzE4MzUzOSwiZXhwIjoxODA4NzE5NTM5fQ.SkCLOpUy6t6X8Caq4gpAK03R2QO4XDygkpPYs7H4ri8";
+const MAGNESIUM_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Magnesium%20Glycinate%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9NYWduZXNpdW0gR2x5Y2luYXRlICgzKS5wbmciLCJpYXQiOjE3NzcxODM0ODIsImV4cCI6MTgwODcxOTQ4Mn0.ngXdLU22A3MY-ZW24TWKlV45wMgLZikLBWjmQKi4VqI";
+const TAURINE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Taurine%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9UYXVyaW5lICgzKS5wbmciLCJpYXQiOjE3NzcxODM1MDgsImV4cCI6MTgwODcxOTUwOH0.W-WaAuPmoF0etLMZxgAraDTtTOl4rNDjLdOISG2KzJM";
+const B6_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Vitamin%20B6%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy9WaXRhbWluIEI2ICgzKS5wbmciLCJpYXQiOjE3NzcxODM1MjIsImV4cCI6MTgwODcxOTUyMn0.0fjewp5ehBVAafXhhGaFPPV3NdXt1F1r4CAsZufX9uo";
+
+const ingredients = [
+  { img: CITRULLINE_URL, name: "L-Citrulline", benefit: "Blood flow & arousal" },
+  { img: MAGNESIUM_URL, name: "Magnesium", benefit: "Mood & balance" },
+  { img: TAURINE_URL, name: "Taurine", benefit: "Energy & wellbeing" },
+  { img: B6_URL, name: "Vitamin B6", benefit: "Hormonal health" },
+];
+
 const benefits = [
   "Supports natural arousal and healthy blood flow",
   "Reduces stress and balances mood naturally",
@@ -62,6 +74,19 @@ export function ForHer() {
                 </li>
               ))}
             </ul>
+
+            <div className="mt-10 max-w-md">
+              <p className="eyebrow mb-4" style={{ color: "var(--color-brand-red)" }}>Key Ingredients</p>
+              <div className="grid grid-cols-4 gap-3">
+                {ingredients.map((ing) => (
+                  <div key={ing.name} className="glass-card rounded-xl p-3 flex flex-col items-center text-center">
+                    <img src={ing.img} alt={ing.name} loading="lazy" className="w-[80px] h-[80px] object-contain" />
+                    <p className="font-serif text-[var(--color-ivory)] text-[13px] mt-2 leading-tight">{ing.name}</p>
+                    <p className="text-[var(--color-ivory-muted)] text-[11px] mt-1 leading-tight">{ing.benefit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div className="mt-10">
               <Link to="/shop" search={{ variant: "her" }} className="btn-primary">Shop For Her →</Link>
