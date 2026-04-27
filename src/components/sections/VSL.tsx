@@ -156,7 +156,7 @@ export function VSL() {
     <section id="story" className="bg-[var(--color-warm-noir)] py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
         <Reveal>
-          <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
+          <div className="group/vsl relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
             <div className="aspect-video w-full relative">
               <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
