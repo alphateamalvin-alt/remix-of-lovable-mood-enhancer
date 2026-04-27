@@ -181,7 +181,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="him"
             eyebrow="LOVABLE Drops For Him"
-            title="Mood Enhancer Drops For Men"
+            title="Lovable Drops For Men"
             rating="4.8"
             reviews="980+"
             description="Powered by Maca Root, Panax Ginseng, and Tongkat Ali. Supports stamina, natural testosterone, circulation, and the confidence to show up fully every time."
