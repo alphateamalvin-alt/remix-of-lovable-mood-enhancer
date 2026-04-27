@@ -8,10 +8,11 @@ export function VSL() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
         <Reveal>
           <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)]">
-            <video
-              controls
-              preload="metadata"
-              src="https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/0425.mov?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8wNDI1Lm1vdiIsImlhdCI6MTc3NzEzMjQzMiwiZXhwIjoxODA4NjY4NDMyfQ.zWaZ-jUbuawlObjN1VUhDqCRnkKwbGySjP_dy2wVtRg"
+            <iframe
+              src="https://www.youtube.com/embed/gWyNJb5d6Kk?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=gWyNJb5d6Kk"
+              title="LOVABLE Story"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
               className="w-full h-auto block aspect-video bg-black"
             />
           </div>
