@@ -19,7 +19,8 @@ import himThumb2 from "@/assets/him-thumb2.jpg";
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
-const BOTTLE_HIM_URL = "/for-him-product.png";
+const BOTTLE_HIM_URL =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwODkyNTksImV4cCI6MTgwODYyNTI1OX0.K5QMIKYRD65B8p2BagU6a3SVO0gCmuwFYS78qwdHmPU";
 
 type Variant = "her" | "him" | "couples";
 
@@ -207,9 +208,9 @@ function ProductTabs({ initial }: { initial: Variant }) {
 function BottleStack({ src, count }: { src: string; count: number }) {
   const items = Array.from({ length: Math.max(1, Math.min(count, 3)) });
   return (
-    <div className="relative flex-shrink-0 h-[60px] w-[72px] flex items-center justify-center">
+    <div className="relative flex-shrink-0 h-[65px] w-[88px] flex items-center justify-center">
       {items.map((_, i) => {
-        const offset = (i - (items.length - 1) / 2) * 14;
+        const offset = (i - (items.length - 1) / 2) * 16;
         const z = items.length - i;
         return (
           <img
@@ -218,7 +219,7 @@ function BottleStack({ src, count }: { src: string; count: number }) {
             alt=""
             loading="lazy"
             aria-hidden={i > 0}
-            className="absolute h-[60px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
+            className="absolute h-[65px] w-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]"
             style={{ transform: `translateX(${offset}px)`, zIndex: z }}
           />
         );
