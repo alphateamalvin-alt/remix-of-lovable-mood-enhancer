@@ -7,14 +7,17 @@ export function VSL() {
     <section id="story" className="bg-[var(--color-warm-noir)] py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
         <Reveal>
-          <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)]">
+          <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
             <iframe
-              src="https://www.youtube.com/embed/gWyNJb5d6Kk?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=gWyNJb5d6Kk"
+              src="https://www.youtube-nocookie.com/embed/gWyNJb5d6Kk?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&loop=1&playlist=gWyNJb5d6Kk"
               title="LOVABLE Story"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-              className="w-full h-auto block aspect-video bg-black"
+              className="w-full h-auto block aspect-video bg-black pointer-events-none"
             />
+            {/* Overlay strips covering YouTube branding (top title bar + bottom watermark) */}
+            <div className="absolute top-0 left-0 right-0 h-16 bg-black pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-32 h-12 bg-black pointer-events-none" />
           </div>
         </Reveal>
 
