@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "../Reveal";
 
-const HERO_IMAGE_URL = "/hero-image.png";
+const HERO_IMAGE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM.png";
 
 function scrollTo(hash: string) {
   return (e: React.MouseEvent) => {
