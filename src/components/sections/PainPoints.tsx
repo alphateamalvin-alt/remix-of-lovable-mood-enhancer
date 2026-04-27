@@ -1,134 +1,82 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "../Reveal";
-import img1 from "@/assets/lifestyle4.jpg";
-import img2 from "@/assets/lifestyle6.jpg";
-import img3 from "@/assets/lifestyle8.jpg";
-import img4 from "@/assets/lifestyle10.jpg";
+import bgImage from "@/assets/painpoints.jpg";
 
-type Row = {
-  image: string;
-  imageSide: "left" | "right";
-  bg: string;
-  label?: string;
-  headline: string;
-  body: string;
-};
-
-const rows: Row[] = [
-  {
-    image: img1,
-    imageSide: "left",
-    bg: "var(--color-noir)",
-    label: "Sound Familiar?",
-    headline: "You love each other… but something feels different.",
-    body: "It's not that the love is gone. It's that something quietly got in the way — stress, time, hormones, life.",
-  },
-  {
-    image: img2,
-    imageSide: "right",
-    bg: "#1A0A0A",
-    headline: "The distance in bed feels wider every night.",
-    body: "You're inches apart. But it feels like miles. And neither of you knows how to close that gap.",
-  },
-  {
-    image: img3,
-    imageSide: "left",
-    bg: "var(--color-noir)",
-    headline: "Together physically. Worlds apart emotionally.",
-    body: "Same bed. Same house. Same life. But the connection that used to come so naturally — it's just not there anymore.",
-  },
-  {
-    image: img4,
-    imageSide: "right",
-    bg: "#1A0A0A",
-    headline: "Neither of you says it. But you both feel it.",
-    body: "There's an unspoken weight between you. You miss each other — even when you're in the same room.",
-  },
+const statements = [
+  "You love each other... but something feels different.",
+  "The distance in bed feels wider every night.",
+  "Together physically. Worlds apart emotionally.",
+  "Neither of you says it. But you both feel it.",
 ];
-
-function PainRow({ row, index }: { row: Row; index: number }) {
-  const imageLeft = row.imageSide === "left";
-
-  const ImageBlock = (
-    <div className="relative w-full h-[55vh] md:h-auto md:min-h-[70vh] overflow-hidden">
-      <img
-        src={row.image}
-        alt=""
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      {/* Edge gradient blending into the text side */}
-      <div
-        className="hidden md:block absolute inset-y-0 w-40 pointer-events-none"
-        style={{
-          [imageLeft ? "right" : "left"]: 0,
-          background: imageLeft
-            ? `linear-gradient(to left, ${row.bg} 0%, color-mix(in oklab, ${row.bg} 60%, transparent) 40%, transparent 100%)`
-            : `linear-gradient(to right, ${row.bg} 0%, color-mix(in oklab, ${row.bg} 60%, transparent) 40%, transparent 100%)`,
-        } as React.CSSProperties}
-      />
-      {/* Mobile bottom fade */}
-      <div
-        className="md:hidden absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-        style={{
-          background: `linear-gradient(to bottom, transparent 0%, ${row.bg} 100%)`,
-        }}
-      />
-    </div>
-  );
-
-  const TextBlock = (
-    <div
-      className="flex items-center px-6 sm:px-10 lg:px-20 py-16 md:py-24 md:min-h-[70vh]"
-      style={{ backgroundColor: row.bg }}
-    >
-      <Reveal>
-        <div className="max-w-xl">
-          {row.label && <p className="eyebrow mb-6">{row.label}</p>}
-          <h3
-            className="font-serif italic text-[var(--color-ivory)] text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] leading-[1.15]"
-          >
-            {row.headline}
-          </h3>
-          <p className="mt-7 text-[var(--color-ivory-muted)] text-[16px] leading-[1.9]">
-            {row.body}
-          </p>
-        </div>
-      </Reveal>
-    </div>
-  );
-
-  return (
-    <div
-      className="grid md:grid-cols-2"
-      style={{ backgroundColor: row.bg }}
-    >
-      {/* Mobile: image always first */}
-      <div className="md:hidden">{ImageBlock}</div>
-      <div className="md:hidden">{TextBlock}</div>
-
-      {/* Desktop: respect imageSide */}
-      <div className="hidden md:block">{imageLeft ? ImageBlock : TextBlock}</div>
-      <div className="hidden md:block">{imageLeft ? TextBlock : ImageBlock}</div>
-    </div>
-  );
-}
 
 export function PainPoints() {
   return (
-    <section className="relative">
-      {rows.map((row, i) => (
-        <PainRow key={i} row={row} index={i} />
-      ))}
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <img
+        src={bgImage}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* Dark overlay */}
+      <div
+        className="absolute inset-0"
+        style={{ backgroundColor: "rgba(0,0,0,0.72)" }}
+        aria-hidden="true"
+      />
 
-      {/* Closing row */}
-      <div className="bg-[var(--color-noir)] py-24 md:py-32 px-6 text-center">
+      {/* Content */}
+      <div className="relative z-10 w-full px-6 py-24 md:py-32">
         <Reveal>
-          <p className="font-serif italic text-[var(--color-ivory)] text-2xl sm:text-3xl md:text-[36px] leading-[1.25] max-w-3xl mx-auto">
-            You're not broken. You just need the right support.
-          </p>
-          <div className="mt-10">
-            <Link to="/shop" className="btn-primary">I'm Ready to Feel Again →</Link>
+          <div className="max-w-[700px] mx-auto text-center">
+            {/* Top label */}
+            <p
+              className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] mb-10"
+              style={{ color: "var(--color-red, #C8102E)" }}
+            >
+              Does This Sound Familiar?
+            </p>
+
+            {/* Statements with gold dividers */}
+            <div className="flex flex-col items-center">
+              {statements.map((statement, i) => (
+                <div key={i} className="flex flex-col items-center w-full">
+                  {i > 0 && (
+                    <div
+                      className="my-8 md:my-10"
+                      style={{
+                        width: "40px",
+                        height: "1px",
+                        backgroundColor: "var(--color-gold, #C9A961)",
+                      }}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <p
+                    className="font-serif italic text-[var(--color-ivory)] text-[26px] md:text-[38px] leading-[1.4]"
+                  >
+                    {statement}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Closing line */}
+            <p className="mt-14 md:mt-16 italic text-[var(--color-ivory-muted)] text-[20px] leading-[1.6]">
+              You're not broken. You just need the right support.
+            </p>
+
+            {/* CTA */}
+            <div className="mt-8">
+              <Link
+                to="/shop"
+                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-semibold tracking-wide text-white transition-transform hover:scale-[1.02]"
+                style={{ backgroundColor: "var(--color-red, #C8102E)" }}
+              >
+                I'm Ready to Feel Again →
+              </Link>
+            </div>
           </div>
         </Reveal>
       </div>
