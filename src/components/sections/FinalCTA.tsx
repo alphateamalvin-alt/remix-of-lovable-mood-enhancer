@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import hero from "@/assets/hero.jpg";
 import { Reveal } from "../Reveal";
+
+const hero = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2002_19_52%20AM.png";
 
 export function FinalCTA() {
   return (
