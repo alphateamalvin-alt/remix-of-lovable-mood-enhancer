@@ -10,6 +10,7 @@ const promises = [
   { icon: "🌟", title: <>Supporting the WHOLE You</>, desc: "Mind, body, energy, and confidence. Not just one thing." },
 ];
 
+// also update Promise headline below
 export function Promise() {
   return (
     <section className="bg-[var(--color-noir)] py-24 md:py-36">
@@ -25,7 +26,7 @@ export function Promise() {
 
         <div>
           {promises.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.06}>
+            <Reveal key={i} delay={i * 0.06}>
               <div className="gold-divider" />
               <div className="flex items-start gap-6 py-8 sm:py-10">
                 <div className="flex-shrink-0 h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[var(--color-brand-red-soft)] border border-[var(--color-brand-red)]/30 flex items-center justify-center text-2xl">
