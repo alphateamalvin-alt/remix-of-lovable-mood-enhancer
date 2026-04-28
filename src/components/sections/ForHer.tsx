@@ -59,11 +59,11 @@ export function ForHer() {
           <Reveal>
             <p className="eyebrow mb-5">For Her</p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[48px] leading-[1.15] max-w-md">
-              Feel Balanced, Vibrant, and Alive Again.
+              Feel <span style={{ color: "#DC2627", fontStyle: "italic" }}>Balanced, Vibrant,</span> and Alive Again.
             </h2>
             <span className="red-rule mt-7 mb-7" />
             <p className="text-[var(--color-ivory-muted)] text-[16px] leading-[1.9] max-w-md">
-              Your body remembers how to feel this way. LOVABLE Drops for Women work with your natural chemistry — not against it — to restore what stress, hormones, and time have quietly taken away. No synthetics. No pressure. Just pure support.
+              Your body remembers how to feel this way. LOVABLE Drops for Women work <span style={{ color: "#F2EAE0", fontWeight: 600 }}>with your natural chemistry</span> — not against it — to restore what stress, hormones, and time have quietly taken away. No synthetics. No pressure. Just pure support.
             </p>
 
             <ul className="mt-8 space-y-3 max-w-md">

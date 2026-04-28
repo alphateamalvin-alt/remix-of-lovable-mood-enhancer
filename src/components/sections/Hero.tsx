@@ -50,12 +50,12 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="text-display text-[var(--color-ivory)] text-[36px] sm:text-5xl md:text-[56px] lg:text-[64px] leading-[1.05]">
-              What If You Could Feel That Deep, Unshakable Connection Again?
+              What If You Could Feel That Deep, <span style={{ color: "#DC2627", fontStyle: "italic" }}>Unshakable Connection</span> Again?
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-7 text-base sm:text-lg text-[var(--color-ivory)]/75 leading-relaxed">
-              The natural way thousands of Filipino couples are quietly reigniting what time tried to take away.
+              The natural way thousands of Filipino couples are <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quietly reigniting</span> what time tried to take away.
             </p>
           </Reveal>
           <Reveal delay={0.3}>

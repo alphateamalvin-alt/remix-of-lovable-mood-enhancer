@@ -34,7 +34,7 @@ export function PainPoints() {
               Does This Sound Familiar?
             </p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[52px] leading-[1.1]">
-              You Love Each Other. But Something Feels... Different.
+              You Love Each Other. But Something Feels... <span style={{ color: "#DC2627", fontStyle: "italic" }}>Different.</span>
             </h2>
           </div>
         </Reveal>

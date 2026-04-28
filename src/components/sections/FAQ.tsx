@@ -19,7 +19,7 @@ export function FAQ() {
           <div className="text-center mb-14">
             <p className="eyebrow mb-5">Questions & Answers</p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[44px] leading-[1.15]">
-              Everything You Need to Know
+              <span style={{ color: "#F2EAE0", fontWeight: 600 }}>Everything</span> You Need to Know
             </h2>
           </div>
         </Reveal>

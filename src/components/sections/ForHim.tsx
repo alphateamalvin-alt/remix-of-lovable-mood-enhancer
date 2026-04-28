@@ -31,11 +31,11 @@ export function ForHim() {
           <Reveal>
             <p className="eyebrow mb-5">For Him</p>
             <h2 className="text-display text-[var(--color-ivory)] text-4xl md:text-[48px] leading-[1.15] max-w-md">
-              Bring Back the Fire. Reclaim Your Confidence.
+              Bring Back the <span style={{ color: "#DC2627", fontStyle: "italic" }}>Fire.</span> Reclaim Your <span style={{ color: "#DC2627", fontStyle: "italic" }}>Confidence.</span>
             </h2>
             <span className="red-rule mt-7 mb-7" />
             <p className="text-[var(--color-ivory-muted)] text-[16px] leading-[1.9] max-w-md">
-              When your mind is ready but your body hesitates, LOVABLE Drops for Men work with your body's natural systems to help you show up strong, present, and confident. Backed by nature. Built for real men.
+              When your mind is ready but your body hesitates, LOVABLE Drops for Men work with your body's natural systems to help you show up <span style={{ color: "#F2EAE0", fontWeight: 600 }}>strong, present, and confident.</span> Backed by nature. Built for real men.
             </p>
 
             <ul className="mt-8 space-y-3 max-w-md">
