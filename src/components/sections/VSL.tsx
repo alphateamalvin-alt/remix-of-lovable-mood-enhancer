@@ -272,29 +272,31 @@ export function VSL() {
         </Reveal>
 
         <Reveal delay={0.15}>
-          <p className="eyebrow mb-5">Watch This First</p>
-          <h2 className="text-display text-[var(--color-ivory)] text-3xl sm:text-4xl md:text-[38px] leading-[1.15]">
-            When Was the Last Time You Truly Felt… Connected?
-          </h2>
-          <p className="mt-6 text-[var(--color-ivory-muted)] text-base leading-[1.85] max-w-xl">
-            Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most honest conversation about intimacy you've heard in years.
-          </p>
+          <div className="h-full flex flex-col justify-center" style={{ padding: "40px" }}>
+            <p className="eyebrow mb-5">Watch This First</p>
+            <h2 className="text-display text-[var(--color-ivory)] leading-[1.2]" style={{ fontSize: "28px" }}>
+              When Was the Last Time You Truly Felt… Connected?
+            </h2>
+            <p className="text-[var(--color-ivory-muted)] max-w-xl" style={{ fontSize: "14px", lineHeight: 1.7, marginTop: "16px" }}>
+              Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most honest conversation about intimacy you've heard in years.
+            </p>
 
-          <ul className="mt-7 space-y-3 max-w-xl">
-            {[
-              "What's actually stealing your connection (it's not what you think)",
-              "Why most solutions fail and what works instead",
-              "How LOVABLE helps your body remember how to feel again",
-            ].map((b) => (
-              <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 text-[15px] leading-relaxed">
-                <span className="mt-2 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
+            <ul className="mt-6 space-y-2.5 max-w-xl">
+              {[
+                "What's actually stealing your connection (it's not what you think)",
+                "Why most solutions fail and what works instead",
+                "How LOVABLE helps your body remember how to feel again",
+              ].map((b) => (
+                <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-relaxed" style={{ fontSize: "13px" }}>
+                  <span className="mt-2 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
 
-          <div className="mt-9">
-            <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
+            <div className="mt-8">
+              <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
+            </div>
           </div>
         </Reveal>
       </div>
