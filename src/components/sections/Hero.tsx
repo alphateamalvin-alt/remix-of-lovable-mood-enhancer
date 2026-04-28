@@ -59,18 +59,50 @@ export function Hero() {
             </p>
           </Reveal>
           <Reveal delay={0.3}>
-            <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start md:justify-start justify-center gap-4">
-              <a href="#forher" onClick={scrollTo("forher")} className="btn-primary">For Her →</a>
-              <a href="#forhim" onClick={scrollTo("forhim")} className="btn-outline">For Him →</a>
-              <a href="#forcouples" onClick={scrollTo("forcouples")} className="btn-gold">For Couples →</a>
+            <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start md:justify-start justify-center gap-5 sm:gap-6">
+              <a
+                href="/shop"
+                className="inline-block bg-[#C0392B] text-white hover:bg-[#a83122] transition-colors"
+                style={{
+                  padding: "15px 36px",
+                  borderRadius: "8px",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "12px",
+                  fontWeight: 800,
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                }}
+              >
+                Shop Now →
+              </a>
+              <div className="flex flex-col items-center sm:items-start">
+                <div className="flex items-center gap-2">
+                  <span style={{ color: "#C0392B", fontSize: "13px", letterSpacing: "1px" }}>★★★★★</span>
+                  <span style={{ color: "#F2EAE0", fontWeight: 600, fontSize: "13px" }}>4.9</span>
+                </div>
+                <p style={{ color: "#9A8880", fontSize: "10px", marginTop: "2px" }}>
+                  Based on 1,200+ verified reviews
+                </p>
+              </div>
             </div>
           </Reveal>
           <Reveal delay={0.45}>
-            <ul className="mt-12 flex flex-wrap items-center md:justify-start justify-center gap-x-6 gap-y-3 text-[12px] tracking-wider uppercase text-[var(--color-ivory)]/60">
-              <li>✓ 100% Natural</li>
-              <li>✓ No Prescription</li>
-              <li>✓ Made in USA</li>
-              <li>✓ 30-Day Guarantee</li>
+            <ul className="mt-8 flex flex-wrap items-center md:justify-start justify-center gap-x-4 gap-y-2">
+              {["30-Day Money Back", "100% Natural", "Made in USA"].map((item) => (
+                <li key={item} className="flex items-center gap-2" style={{ color: "#9A8880", fontSize: "10px" }}>
+                  <span
+                    aria-hidden
+                    style={{
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "9999px",
+                      background: "#C0392B",
+                      display: "inline-block",
+                    }}
+                  />
+                  {item}
+                </li>
+              ))}
             </ul>
           </Reveal>
         </div>
