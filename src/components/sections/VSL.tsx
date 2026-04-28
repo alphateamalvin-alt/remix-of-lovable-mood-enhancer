@@ -154,11 +154,11 @@ export function VSL() {
   const progress = duration > 0 ? (current / duration) * 100 : 0;
 
   return (
-    <section id="story" className="bg-[var(--color-warm-noir)] py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-12 lg:gap-16 lg:grid-cols-[55fr_45fr] items-center">
+    <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-[60px]">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-10 lg:gap-12 lg:grid-cols-[55fr_45fr] items-stretch">
         <Reveal>
-          <div className="group/vsl relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
-            <div className="aspect-video w-full relative">
+          <div className="group/vsl relative overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full" style={{ borderRadius: "12px" }}>
+            <div className="aspect-video w-full relative" style={{ minHeight: "380px" }}>
               <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
               {/* Tap-to-unmute overlay */}
