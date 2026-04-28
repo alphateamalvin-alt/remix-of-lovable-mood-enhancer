@@ -157,9 +157,9 @@ export function VSL() {
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-[60px]">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-10 lg:gap-12 lg:grid-cols-[55fr_45fr] items-stretch">
         <Reveal>
-          <div className="group/vsl relative overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full" style={{ borderRadius: "12px", minHeight: "380px" }}>
-            <div className="absolute inset-0 w-full h-full">
-              <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:object-cover" style={{ width: "100%", height: "100%" }} />
+          <div className="group/vsl relative overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full" style={{ borderRadius: "12px" }}>
+            <div className="aspect-video w-full relative" style={{ minHeight: "380px" }}>
+              <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
               {/* Tap-to-unmute overlay */}
               {ready && muted && (
@@ -272,12 +272,12 @@ export function VSL() {
         </Reveal>
 
         <Reveal delay={0.15}>
-          <div className="h-full flex flex-col justify-center" style={{ padding: "48px" }}>
-            <p className="eyebrow mb-5" style={{ fontSize: "11px", letterSpacing: "3px" }}>Watch This First</p>
-            <h2 className="text-display text-[var(--color-ivory)]" style={{ fontSize: "34px", fontFamily: "'Playfair Display', serif", lineHeight: 1.3 }}>
+          <div className="h-full flex flex-col justify-center" style={{ padding: "40px" }}>
+            <p className="eyebrow mb-5">Watch This First</p>
+            <h2 className="text-display text-[var(--color-ivory)] leading-[1.2]" style={{ fontSize: "28px" }}>
               When Was the Last Time You Truly Felt… Connected?
             </h2>
-            <p className="text-[var(--color-ivory-muted)] max-w-xl" style={{ fontSize: "15px", lineHeight: 1.75, marginTop: "16px" }}>
+            <p className="text-[var(--color-ivory-muted)] max-w-xl" style={{ fontSize: "14px", lineHeight: 1.7, marginTop: "16px" }}>
               Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most honest conversation about intimacy you've heard in years.
             </p>
 
@@ -287,7 +287,7 @@ export function VSL() {
                 "Why most solutions fail and what works instead",
                 "How LOVABLE helps your body remember how to feel again",
               ].map((b) => (
-                <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-relaxed" style={{ fontSize: "14px" }}>
+                <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-relaxed" style={{ fontSize: "13px" }}>
                   <span className="mt-2 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
                   <span>{b}</span>
                 </li>
