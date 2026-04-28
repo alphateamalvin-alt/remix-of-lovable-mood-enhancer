@@ -269,7 +269,7 @@ function ProductDetail({
       {/* LEFT — image gallery */}
       <Reveal>
         <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-[var(--color-warm-noir)] aspect-[4/5]">
-          <img src={active} alt={title} loading="lazy" className="h-full w-full object-cover" />
+          <img src={active} alt="" loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div className="mt-4 grid grid-cols-3 gap-3">
           {thumbnails.slice(1, 4).map((thumb, i) => (
