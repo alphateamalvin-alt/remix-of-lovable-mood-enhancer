@@ -108,7 +108,7 @@ function ShopHero() {
         </Reveal>
         <Reveal delay={0.1}>
           <h1 className="text-display text-[var(--color-ivory)] text-3xl sm:text-4xl md:text-[48px] leading-[1.1]">
-            Start Your Journey Back to Each Other
+            Start Your Journey <span style={{ color: "#DC2627", fontStyle: "italic" }}>Back to Each Other</span>
           </h1>
         </Reveal>
         <Reveal delay={0.2}>
@@ -420,7 +420,7 @@ function CouplesBundle() {
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-[var(--color-noir)]/40 to-transparent" />
           <div className="absolute inset-0 flex items-end justify-center p-8">
             <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[40px] text-center leading-[1.1]">
-              The Complete Couples Bundle
+              The Complete <span style={{ color: "#DC2627", fontStyle: "italic" }}>Couples Bundle</span>
             </h2>
           </div>
         </div>
@@ -428,7 +428,7 @@ function CouplesBundle() {
 
       <Reveal delay={0.1}>
         <p className="text-center text-[var(--color-ivory-muted)] text-base sm:text-lg max-w-xl mx-auto">
-          One For Her. One For Him. One goal. feel each other again.
+          One For Her. One For Him. <span style={{ color: "#F2EAE0", fontWeight: 600 }}>One goal — feel each other again.</span>
         </p>
 
         <div className="glass-card rounded-2xl p-7 mt-9">
@@ -553,7 +553,7 @@ function GuaranteeUrgency() {
               <ShieldCheck size={32} />
             </div>
             <h3 className="text-display text-[var(--color-ivory)] text-2xl sm:text-3xl md:text-[32px] leading-[1.15] max-w-md">
-              Try LOVABLE Risk-Free for 30 Days
+              Try LOVABLE <span style={{ color: "#DC2627", fontStyle: "italic" }}>Risk-Free</span> for 30 Days
             </h3>
             <p className="mt-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.85] max-w-md">
               Not satisfied? Return within 30 days for a full refund — no questions, no hassle.
@@ -595,7 +595,7 @@ function UrgencyCard() {
   return (
     <div className="glass-card rounded-2xl p-7 sm:p-9 border-t-2 border-t-[var(--color-brand-red)]">
       <h3 className="font-serif text-[var(--color-gold)] text-xl sm:text-2xl mb-7">
-        ⚠️ Stock Running Low
+        ⚠️ <span style={{ color: "#B8955A", fontStyle: "italic" }}>Stock Running Low</span>
       </h3>
 
       <div className="space-y-5">
@@ -707,7 +707,7 @@ function FinalShopCTA() {
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center py-24">
         <Reveal>
           <h2 className="text-display text-[var(--color-ivory)] text-4xl sm:text-5xl md:text-[52px] leading-[1.05]">
-            You've Read Enough. Now Feel It.
+            You've Read Enough. <span style={{ color: "#DC2627", fontStyle: "italic" }}>Now Feel It.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
