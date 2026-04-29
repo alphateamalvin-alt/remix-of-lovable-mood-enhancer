@@ -558,7 +558,7 @@ function GuaranteeUrgency() {
               Try LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>Risk-Free</span> for 30 Days
             </h3>
             <p className="mt-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.85] max-w-md">
-              Not satisfied? Return within 30 days for a full refund — no questions, no hassle.
+              Not satisfied? Return within 30 days for a full refund. No questions, no hassle.
             </p>
             <ul className="mt-6 space-y-3 max-w-md">
               {["Full refund guaranteed", "No questions asked", "Easy return process"].map((b) => (
