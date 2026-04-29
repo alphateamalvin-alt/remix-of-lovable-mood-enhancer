@@ -186,7 +186,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
-            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span> — every time.</>}
+            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span>, every time.</>}
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
