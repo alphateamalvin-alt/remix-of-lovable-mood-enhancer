@@ -42,7 +42,7 @@ const panels: Panel[] = [
     quote:
       "Together physically. <span style='color:#DC2627; font-style:italic;'>Worlds apart</span> emotionally.",
     description:
-      "The connection that used to come naturally — it's just not there anymore.",
+      "The connection that used to come naturally. It's just not there anymore.",
   },
   {
     image:
