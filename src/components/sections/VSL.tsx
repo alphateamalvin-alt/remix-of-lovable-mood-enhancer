@@ -157,9 +157,9 @@ export function VSL() {
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-stretch">
         <Reveal className="self-stretch h-full min-h-[260px] [&>*]:h-full">
-          <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full w-full">
-            <div className="aspect-video lg:aspect-auto w-full h-full relative">
-              <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+          <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] h-full w-full" style={{ background: "transparent" }}>
+            <div className="aspect-video lg:aspect-auto w-full h-full relative overflow-hidden">
+              <div ref={containerRef} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full h-full min-w-[177.78%] min-h-[100%] lg:min-w-[177.78%] [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:block" style={{ aspectRatio: "16/9" }} />
 
               {/* Tap-to-unmute overlay */}
               {ready && muted && (
