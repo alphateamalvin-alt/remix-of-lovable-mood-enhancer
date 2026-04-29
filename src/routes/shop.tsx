@@ -283,8 +283,8 @@ function ProductDetail({
             src={active}
             alt=""
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-contain"
-            style={{ objectPosition: "center top" }}
+            className={`absolute inset-0 h-full w-full ${active === mainImage ? "object-cover" : "object-contain"}`}
+            style={{ objectPosition: "center center" }}
           />
           <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
         </div>
