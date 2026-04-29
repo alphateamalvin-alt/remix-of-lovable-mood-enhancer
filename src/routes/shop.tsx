@@ -5,6 +5,7 @@ import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SocialProofToast } from "@/components/SocialProofToast";
+import { StickyUrgencyBar } from "@/components/StickyUrgencyBar";
 import { Reveal } from "@/components/Reveal";
 
 import hero from "@/assets/hero.jpg";
@@ -92,6 +93,7 @@ function ShopPage() {
       </main>
       <Footer />
       <SocialProofToast />
+      <StickyUrgencyBar />
     </div>
   );
 }
