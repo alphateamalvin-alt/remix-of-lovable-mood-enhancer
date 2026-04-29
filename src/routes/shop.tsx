@@ -165,7 +165,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
             reviews="1,200+"
-            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span> — safely and naturally.</>}
+            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
             mainImage={forher}
             thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
             bundles={herBundles}
