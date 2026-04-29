@@ -162,7 +162,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           <ProductDetail
             key="her"
             eyebrow="LOVABLE Drops For Her"
-            title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
+            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
             reviews="1,200+"
             description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
