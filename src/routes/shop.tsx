@@ -271,9 +271,10 @@ function ProductDetail({
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full aspect-square mx-auto overflow-hidden bg-[var(--color-warm-noir)]"
+          className="relative w-full mx-auto overflow-hidden bg-[var(--color-warm-noir)]"
           style={{
             maxWidth: 560,
+            aspectRatio: "4 / 5",
             borderRadius: 14,
             border: "0.5px solid rgba(184, 149, 90, 0.22)",
           }}
@@ -282,8 +283,8 @@ function ProductDetail({
             src={active}
             alt=""
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: "center" }}
+            className="absolute inset-0 h-full w-full object-contain"
+            style={{ objectPosition: "center top" }}
           />
         </div>
         <div className="mt-3 grid grid-cols-3 gap-3" style={{ maxWidth: 560 }}>
