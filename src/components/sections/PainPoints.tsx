@@ -18,7 +18,7 @@ const panels: Panel[] = [
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/1.%20Couple%20Drifting%20Apart.png",
     alt: "Couple drifting apart",
     number: "01",
-    label: "Drifting",
+    label: "DRIFTING",
     quote:
       "It's been weeks since we last <span style='color:#DC2627; font-style:italic;'>touched</span> without it being routine.",
     description: "When intimacy becomes habit, you stop feeling each other.",
@@ -28,7 +28,7 @@ const panels: Panel[] = [
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/2.%20Distance%20in%20Bed.png",
     alt: "Distance in bed",
     number: "02",
-    label: "Distance",
+    label: "DISTANCE",
     quote:
       "The distance in bed feels <span style='color:#DC2627; font-style:italic;'>wider every night</span>, and neither of you knows how to close it.",
     description: "Same bed. Same house. But miles between you.",
@@ -38,7 +38,7 @@ const panels: Panel[] = [
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/3.%20Together%20But%20Apart.png",
     alt: "Together but worlds apart",
     number: "03",
-    label: "Disconnect",
+    label: "APART",
     quote:
       "Together physically. <span style='color:#DC2627; font-style:italic;'>Worlds apart</span> emotionally.",
     description:
@@ -49,7 +49,7 @@ const panels: Panel[] = [
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/4.%20Drained%20Energy.png",
     alt: "Drained energy",
     number: "04",
-    label: "Drained",
+    label: "DRAINED",
     quote:
       "Stress and the years have <span style='color:#DC2627; font-style:italic;'>quietly drained</span> the energy you used to share.",
     description: "Your body remembers. But your energy doesn't keep up anymore.",
@@ -59,7 +59,7 @@ const panels: Panel[] = [
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/5.%20Missing%20The%20Past.png",
     alt: "Missing the past",
     number: "05",
-    label: "Missing",
+    label: "MISSING",
     quote:
       "You remember how it used to feel. <span style='color:#DC2627; font-style:italic;'>And you miss it.</span>",
     description: "The energy. The wanting. The spontaneity. Where did it go?",
@@ -69,7 +69,7 @@ const panels: Panel[] = [
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/6.%20Silent%20Struggle.png",
     alt: "Silent struggle",
     number: "06",
-    label: "Silent",
+    label: "SILENT",
     quote:
       "Neither of you talks about it. <span style='color:#DC2627; font-style:italic;'>But you both feel it.</span>",
     description:
@@ -77,8 +77,11 @@ const panels: Panel[] = [
   },
 ];
 
+const EASE = "cubic-bezier(0.4, 0, 0.2, 1)";
+
 export function PainPoints() {
   const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState<number | null>(null);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
 
@@ -94,8 +97,11 @@ export function PainPoints() {
   const useTap = isMobile || isTablet;
 
   const handleEnter = (i: number) => {
+    setHovered(i);
     if (!useTap) setActive(i);
   };
+
+  const handleLeave = () => setHovered(null);
 
   const handleClick = (i: number) => {
     if (useTap) {
@@ -113,7 +119,10 @@ export function PainPoints() {
   return (
     <section
       id="pain-points"
-      style={{ background: "#0D0D0D" }}
+      style={{
+        background:
+          "radial-gradient(ellipse at 50% 50%, rgba(26,10,10,0.7) 0%, transparent 70%), #0D0D0D",
+      }}
       className="w-full py-[60px] px-6 md:py-20 md:px-10"
     >
       <div className="mx-auto" style={{ maxWidth: "1280px" }}>
@@ -157,18 +166,33 @@ export function PainPoints() {
           <div
             className={isMobile ? "flex flex-col" : "flex flex-row"}
             style={{
-              gap: "4px",
+              gap: "1px",
               borderRadius: "12px",
               overflow: "hidden",
               maxWidth: "1200px",
               margin: "0 auto",
               height: isMobile ? "auto" : isTablet ? "380px" : "420px",
+              background: "rgba(184, 149, 90, 0.18)",
             }}
           >
             {panels.map((p, i) => {
               const isActive = active === i;
+              const isHover = hovered === i;
               const flex = isActive ? 4 : 1;
               const mobileHeight = isActive ? "280px" : "100px";
+
+              const imageFilter = isActive
+                ? "brightness(1.22) contrast(1.15) saturate(1.05)"
+                : isHover
+                  ? "brightness(1.1) contrast(1.12) saturate(1.05)"
+                  : "brightness(0.9) contrast(1.1) saturate(1.05)";
+
+              const imageTransform =
+                isHover && !isActive ? "scale(1.02)" : "scale(1)";
+
+              const border = isActive
+                ? "1px solid rgba(220, 38, 39, 0.25)"
+                : "1px solid rgba(242, 234, 224, 0.06)";
 
               return (
                 <div
@@ -178,6 +202,7 @@ export function PainPoints() {
                   aria-label={p.label}
                   aria-expanded={isActive}
                   onMouseEnter={() => handleEnter(i)}
+                  onMouseLeave={handleLeave}
                   onClick={() => handleClick(i)}
                   onKeyDown={(e) => handleKey(e, i)}
                   className="relative overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2627]"
@@ -185,11 +210,10 @@ export function PainPoints() {
                     flex: isMobile ? "0 0 auto" : flex,
                     height: isMobile ? mobileHeight : "100%",
                     width: isMobile ? "100%" : "auto",
-                    transition: isMobile
-                      ? "height 0.6s cubic-bezier(0.4,0,0.2,1)"
-                      : "flex 0.6s cubic-bezier(0.4,0,0.2,1)",
+                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}`,
                     minWidth: 0,
                     background: "#1A0A0A",
+                    border,
                   }}
                 >
                   {/* Background image */}
@@ -197,16 +221,31 @@ export function PainPoints() {
                     src={p.image}
                     alt={p.alt}
                     className="absolute inset-0 w-full h-full object-cover"
+                    style={{
+                      filter: imageFilter,
+                      transform: imageTransform,
+                      transition: `filter 400ms ease-out, transform 500ms ${EASE}`,
+                    }}
                   />
 
-                  {/* Overlay */}
+                  {/* Warm top light */}
                   <div
-                    className="absolute inset-0"
+                    className="absolute inset-0 pointer-events-none"
                     style={{
+                      background:
+                        "radial-gradient(ellipse at top, rgba(184,149,90,0.08), transparent 60%)",
+                    }}
+                  />
+
+                  {/* Cinematic vignette + bottom gradient for legibility */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      boxShadow: "inset 0 0 80px rgba(0,0,0,0.5)",
                       background: isActive
-                        ? "linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.85) 100%)"
-                        : "linear-gradient(180deg, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.95) 100%)",
-                      transition: "background 0.5s ease",
+                        ? "linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.3) 40%, transparent 70%)"
+                        : "linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.57) 100%)",
+                      transition: `background 500ms ${EASE}`,
                     }}
                   />
 
@@ -224,7 +263,10 @@ export function PainPoints() {
                       fontSize: "24px",
                       fontWeight: 700,
                       color: "#DC2627",
-                      transition: "all 0.5s ease",
+                      textShadow: isActive
+                        ? "none"
+                        : "0 0 16px rgba(220, 38, 39, 0.5)",
+                      transition: `all 500ms ${EASE}`,
                     }}
                   >
                     {p.number}
@@ -235,18 +277,19 @@ export function PainPoints() {
                     <span
                       style={{
                         position: "absolute",
-                        bottom: "32px",
+                        bottom: "40px",
                         left: "50%",
                         transform: "translateX(-50%) rotate(-90deg)",
                         transformOrigin: "center",
                         fontFamily: "Montserrat, sans-serif",
                         fontSize: "11px",
-                        letterSpacing: "3px",
+                        fontWeight: 600,
+                        letterSpacing: "0.3em",
                         textTransform: "uppercase",
-                        color: "rgba(242,234,224,0.5)",
+                        color: "rgba(242,234,224,0.65)",
                         whiteSpace: "nowrap",
                         opacity: isActive ? 0 : 1,
-                        transition: "opacity 0.3s ease",
+                        transition: `opacity 400ms ${EASE}`,
                         pointerEvents: "none",
                       }}
                     >
@@ -254,7 +297,7 @@ export function PainPoints() {
                     </span>
                   )}
 
-                  {/* Mobile collapsed label (horizontal) */}
+                  {/* Mobile collapsed label */}
                   {isMobile && !isActive && (
                     <span
                       style={{
@@ -263,9 +306,10 @@ export function PainPoints() {
                         left: "32px",
                         fontFamily: "Montserrat, sans-serif",
                         fontSize: "11px",
-                        letterSpacing: "3px",
+                        fontWeight: 600,
+                        letterSpacing: "0.3em",
                         textTransform: "uppercase",
-                        color: "rgba(242,234,224,0.6)",
+                        color: "rgba(242,234,224,0.65)",
                       }}
                     >
                       {p.label}
@@ -281,9 +325,16 @@ export function PainPoints() {
                       right: "32px",
                       opacity: isActive ? 1 : 0,
                       transition: isActive
-                        ? "opacity 0.4s ease 0.2s"
-                        : "opacity 0.2s ease",
+                        ? `opacity 400ms ${EASE} 200ms`
+                        : `opacity 200ms ${EASE}`,
                       pointerEvents: isActive ? "auto" : "none",
+                      backdropFilter: isActive ? "blur(3px)" : "none",
+                      WebkitBackdropFilter: isActive ? "blur(3px)" : "none",
+                      padding: "12px 14px",
+                      borderRadius: "6px",
+                      background: isActive
+                        ? "rgba(13,13,13,0.15)"
+                        : "transparent",
                     }}
                   >
                     <p
