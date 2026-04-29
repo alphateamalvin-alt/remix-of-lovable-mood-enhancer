@@ -123,9 +123,9 @@ export function PainPoints() {
         background:
           "radial-gradient(ellipse at 50% 50%, rgba(26,10,10,0.7) 0%, transparent 70%), #0D0D0D",
       }}
-      className="w-full py-[60px] px-6 md:py-20 md:px-10"
+      className="w-full py-[60px] md:py-20"
     >
-      <div className="mx-auto" style={{ maxWidth: "1280px" }}>
+      <div className="mx-auto px-4 md:px-6" style={{ maxWidth: "1400px" }}>
         <Reveal>
           <div
             className="text-center mx-auto"
