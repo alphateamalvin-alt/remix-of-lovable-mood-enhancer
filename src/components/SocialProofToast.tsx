@@ -1,19 +1,61 @@
 import { useEffect, useState } from "react";
-import { Heart } from "lucide-react";
 
-const messages = [
-  "🛒 Ana from Quezon City just ordered 2 Bottles!",
-  "❤️ Miguel from Cebu just ordered the Duo Pack!",
-  "⭐ Jasmine from Manila just ordered 3 Bottles!",
-  "🔥 Carlo from Davao just ordered For Him!",
-  "💕 Sarah & Paolo just ordered the Couples Bundle!",
+const FOR_HER_IMG =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
+const FOR_HIM_IMG =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwODkyNTksImV4cCI6MTgwODYyNTI1OX0.K5QMIKYRD65B8p2BagU6a3SVO0gCmuwFYS78qwdHmPU";
+
+type Toast = { name: string; city: string; product: string; time: string };
+
+const toasts: Toast[] = [
+  { name: "Maria", city: "Quezon City", product: "Couples Bundle", time: "3 minutes ago" },
+  { name: "John", city: "Makati", product: "2 bottles For Him", time: "7 minutes ago" },
+  { name: "Beth", city: "Cebu", product: "1 bottle For Her", time: "12 minutes ago" },
+  { name: "Carlo", city: "Davao", product: "3 bottles For Him", time: "18 minutes ago" },
+  { name: "Jasmine", city: "Pasig", product: "Couples Bundle", time: "24 minutes ago" },
+  { name: "Mark", city: "BGC, Taguig", product: "2 bottles For Him", time: "31 minutes ago" },
+  { name: "Anna", city: "Manila", product: "1 bottle For Her", time: "38 minutes ago" },
+  { name: "Paolo & Liza", city: "Antipolo", product: "Couples Bundle", time: "45 minutes ago" },
 ];
+
+const URGENCY_DISMISSED_KEY = "lovable-urgency-dismissed";
+
+function imageFor(product: string) {
+  if (/for him/i.test(product)) return FOR_HIM_IMG;
+  return FOR_HER_IMG;
+}
 
 export function SocialProofToast() {
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [closed, setClosed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [urgencyDismissed, setUrgencyDismissed] = useState(false);
 
+  // Mobile detection
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 767px)");
+    const onChange = () => setIsMobile(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Watch urgency bar dismissal (poll sessionStorage; cheap)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const check = () => {
+      setUrgencyDismissed(sessionStorage.getItem(URGENCY_DISMISSED_KEY) === "1");
+    };
+    check();
+    const id = setInterval(check, 500);
+    return () => clearInterval(id);
+  }, []);
+
+  // Rotation
+  useEffect(() => {
+    if (closed) return;
     let mounted = true;
     let hideTimer: ReturnType<typeof setTimeout>;
     let cycleTimer: ReturnType<typeof setTimeout>;
@@ -26,9 +68,9 @@ export function SocialProofToast() {
         setVisible(false);
         cycleTimer = setTimeout(() => {
           if (!mounted) return;
-          setIdx((i) => (i + 1) % messages.length);
+          setIdx((i) => (i + 1) % toasts.length);
           show();
-        }, 60000);
+        }, 8000);
       }, 5000);
     };
 
@@ -39,22 +81,89 @@ export function SocialProofToast() {
       clearTimeout(hideTimer);
       clearTimeout(cycleTimer);
     };
-  }, []);
+  }, [closed]);
+
+  if (closed) return null;
+
+  const t = toasts[idx];
+  const bottom = isMobile
+    ? urgencyDismissed ? 16 : 80
+    : urgencyDismissed ? 20 : 90;
 
   return (
     <div
-      className={`fixed bottom-5 left-5 z-50 transition-all duration-500 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"
-      }`}
+      role="status"
+      aria-live="polite"
+      style={{
+        position: "fixed",
+        bottom,
+        left: isMobile ? 16 : 20,
+        right: isMobile ? 16 : "auto",
+        maxWidth: isMobile ? "none" : 320,
+        zIndex: 40,
+        background: "rgba(26,10,10,0.95)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: "0.5px solid rgba(220,38,39,0.3)",
+        borderRadius: 12,
+        padding: "14px 16px",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+        fontFamily: "Montserrat, sans-serif",
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateX(0)" : "translateX(-100%)",
+        transition: visible
+          ? "opacity 0.5s ease, transform 0.5s ease, bottom 0.3s ease"
+          : "opacity 0.4s ease, transform 0.4s ease, bottom 0.3s ease",
+        pointerEvents: visible ? "auto" : "none",
+      }}
     >
-      <div className="glass-card flex items-center gap-3 rounded-full pl-3 pr-5 py-2.5 shadow-2xl shadow-black/40 max-w-[90vw]">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-brand-red)]">
-          <Heart size={14} className="text-white fill-white" />
-        </span>
-        <span className="text-[12px] sm:text-sm text-[var(--color-ivory)] font-medium whitespace-nowrap overflow-hidden text-ellipsis">
-          {messages[idx]}
-        </span>
+      <img
+        src={imageFor(t.product)}
+        alt=""
+        width={40}
+        height={40}
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: 8,
+          objectFit: "cover",
+          flexShrink: 0,
+          background: "#2a0d0d",
+        }}
+      />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ color: "#F2EAE0", fontWeight: 600, fontSize: 12, lineHeight: 1.3 }}>
+          {t.name} from {t.city}
+        </div>
+        <div style={{ color: "#9A8880", fontSize: 11, lineHeight: 1.4, marginTop: 2 }}>
+          ordered {t.product}
+        </div>
+        <div style={{ color: "#B8955A", fontSize: 10, lineHeight: 1.4, marginTop: 3, display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ color: "#DC2627", fontSize: 10 }}>✓</span>
+          {t.time} · Verified
+        </div>
       </div>
+      <button
+        onClick={() => setClosed(true)}
+        aria-label="Close notification"
+        style={{
+          position: "absolute",
+          top: 6,
+          right: 8,
+          background: "transparent",
+          border: "none",
+          color: "#9A8880",
+          fontSize: 14,
+          lineHeight: 1,
+          cursor: "pointer",
+          padding: 2,
+        }}
+      >
+        ×
+      </button>
     </div>
   );
 }
