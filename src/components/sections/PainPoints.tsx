@@ -15,7 +15,7 @@ type Panel = {
 const panels: Panel[] = [
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_qtby4dqtby4dqtby.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/1.%20Couple%20Drifting%20Apart.png",
     alt: "Couple drifting apart",
     number: "01",
     label: "Drifting",
@@ -25,7 +25,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_cqs8wjcqs8wjcqs8.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/2.%20Distance%20in%20Bed.png",
     alt: "Distance in bed",
     number: "02",
     label: "Distance",
@@ -35,8 +35,8 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_fys7j3fys7j3fys7.png",
-    alt: "Together but apart",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/3.%20Together%20But%20Apart.png",
+    alt: "Together but worlds apart",
     number: "03",
     label: "Disconnect",
     quote:
@@ -46,7 +46,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_apje8iapje8iapje.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/4.%20Drained%20Energy.png",
     alt: "Drained energy",
     number: "04",
     label: "Drained",
@@ -56,7 +56,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_qtby4dqtby4dqtby.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/5.%20Missing%20The%20Past.png",
     alt: "Missing the past",
     number: "05",
     label: "Missing",
@@ -66,7 +66,7 @@ const panels: Panel[] = [
   },
   {
     image:
-      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_cqs8wjcqs8wjcqs8.png",
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/6.%20Silent%20Struggle.png",
     alt: "Silent struggle",
     number: "06",
     label: "Silent",
@@ -189,6 +189,7 @@ export function PainPoints() {
                       ? "height 0.6s cubic-bezier(0.4,0,0.2,1)"
                       : "flex 0.6s cubic-bezier(0.4,0,0.2,1)",
                     minWidth: 0,
+                    background: "#1A0A0A",
                   }}
                 >
                   {/* Background image */}
