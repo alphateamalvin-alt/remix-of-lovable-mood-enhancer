@@ -62,7 +62,7 @@ export function Hero() {
             <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start md:justify-start justify-center gap-5 sm:gap-6">
               <a
                 href="/shop"
-                className="inline-block bg-[#C0392B] text-white hover:bg-[#a83122] transition-colors"
+                className="inline-block bg-[#DC2627] text-white hover:bg-[#b8201f] transition-colors"
                 style={{
                   padding: "15px 36px",
                   borderRadius: "8px",
@@ -77,7 +77,7 @@ export function Hero() {
               </a>
               <div className="flex flex-col items-center sm:items-start">
                 <div className="flex items-center gap-2">
-                  <span style={{ color: "#C0392B", fontSize: "13px", letterSpacing: "1px" }}>★★★★★</span>
+                  <span style={{ color: "#DC2627", fontSize: "13px", letterSpacing: "1px" }}>★★★★★</span>
                   <span style={{ color: "#F2EAE0", fontWeight: 600, fontSize: "13px" }}>4.9</span>
                 </div>
                 <p style={{ color: "#9A8880", fontSize: "10px", marginTop: "2px" }}>
@@ -96,7 +96,7 @@ export function Hero() {
                       width: "14px",
                       height: "14px",
                       borderRadius: "9999px",
-                      background: "#C0392B",
+                      background: "#DC2627",
                       display: "inline-block",
                     }}
                   />
