@@ -18,7 +18,7 @@ export function FinalCTA() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-7 text-[var(--color-ivory)]/80 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Join thousands of Filipino couples who chose to <span style={{ color: "#F2EAE0", fontWeight: 600 }}>reignite their connection</span> — naturally.
+            Join thousands of Filipino couples who chose to <span style={{ color: "#F2EAE0", fontWeight: 600 }}>reignite their connection</span>. Naturally.
           </p>
         </Reveal>
         <Reveal delay={0.2}>
