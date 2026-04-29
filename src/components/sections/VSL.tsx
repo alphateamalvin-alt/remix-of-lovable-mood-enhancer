@@ -155,18 +155,13 @@ export function VSL() {
 
   return (
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-stretch">
-        <Reveal className="self-stretch h-full min-h-[260px] [&>*]:h-full">
-          <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] h-full w-full" style={{ background: "transparent" }}>
-            <div className="aspect-video lg:aspect-auto w-full h-full relative overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-start">
+        <Reveal>
+          <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] w-full" style={{ background: "transparent" }}>
+            <div className="aspect-video w-full relative overflow-hidden">
               <div
                 ref={containerRef}
-                className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
-                style={{
-                  width: "max(100%, calc(100% * 16 / 9))",
-                  height: "max(100%, calc(100% * 9 / 16))",
-                  aspectRatio: "16 / 9",
-                }}
+                className="pointer-events-none absolute inset-0 [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
               />
 
               {/* Tap-to-unmute overlay */}
