@@ -189,6 +189,7 @@ export function PainPoints() {
                       ? "height 0.6s cubic-bezier(0.4,0,0.2,1)"
                       : "flex 0.6s cubic-bezier(0.4,0,0.2,1)",
                     minWidth: 0,
+                    background: "#1A0A0A",
                   }}
                 >
                   {/* Background image */}
