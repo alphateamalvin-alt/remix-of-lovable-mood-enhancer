@@ -1,31 +1,115 @@
+import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "../Reveal";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const cards = [
+type Panel = {
+  image: string;
+  alt: string;
+  number: string;
+  label: string;
+  quote: string;
+  description: string;
+};
+
+const panels: Panel[] = [
   {
     image:
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_qtby4dqtby4dqtby.png",
+    alt: "Couple drifting apart",
     number: "01",
-    quote: "It's been weeks since we last touched without it being a routine.",
-    tease: "Couples like you found their way back in 2 weeks.",
+    label: "Drifting",
+    quote:
+      "It's been weeks since we last <span style='color:#DC2627; font-style:italic;'>touched</span> without it being routine.",
+    description: "When intimacy becomes habit, you stop feeling each other.",
   },
   {
     image:
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_cqs8wjcqs8wjcqs8.png",
+    alt: "Distance in bed",
     number: "02",
-    quote: "Together in the same room. But somehow worlds apart.",
-    tease: "Real connection — naturally restored.",
+    label: "Distance",
+    quote:
+      "The distance in bed feels <span style='color:#DC2627; font-style:italic;'>wider every night</span> — and neither of you knows how to close it.",
+    description: "Same bed. Same house. But miles between you.",
   },
   {
     image:
       "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_fys7j3fys7j3fys7.png",
+    alt: "Together but apart",
     number: "03",
-    quote: "Stress and the years quietly took the energy you used to share.",
-    tease: "Your body remembers — it just needs a little help.",
+    label: "Disconnect",
+    quote:
+      "Together physically. <span style='color:#DC2627; font-style:italic;'>Worlds apart</span> emotionally.",
+    description:
+      "The connection that used to come naturally — it's just not there anymore.",
+  },
+  {
+    image:
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_apje8iapje8iapje.png",
+    alt: "Drained energy",
+    number: "04",
+    label: "Drained",
+    quote:
+      "Stress and the years have <span style='color:#DC2627; font-style:italic;'>quietly drained</span> the energy you used to share.",
+    description: "Your body remembers — but your energy doesn't keep up anymore.",
+  },
+  {
+    image:
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_qtby4dqtby4dqtby.png",
+    alt: "Missing the past",
+    number: "05",
+    label: "Missing",
+    quote:
+      "You remember how it used to feel. <span style='color:#DC2627; font-style:italic;'>And you miss it.</span>",
+    description: "The energy. The wanting. The spontaneity. Where did it go?",
+  },
+  {
+    image:
+      "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/Gemini_Generated_Image_cqs8wjcqs8wjcqs8.png",
+    alt: "Silent struggle",
+    number: "06",
+    label: "Silent",
+    quote:
+      "Neither of you talks about it. <span style='color:#DC2627; font-style:italic;'>But you both feel it.</span>",
+    description:
+      "An unspoken weight. You miss each other — even in the same room.",
   },
 ];
 
 export function PainPoints() {
+  const [active, setActive] = useState(0);
+  const isMobile = useIsMobile();
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth <= 1024);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const useTap = isMobile || isTablet;
+
+  const handleEnter = (i: number) => {
+    if (!useTap) setActive(i);
+  };
+
+  const handleClick = (i: number) => {
+    if (useTap) {
+      setActive((prev) => (prev === i && isMobile ? -1 : i));
+    }
+  };
+
+  const handleKey = (e: React.KeyboardEvent, i: number) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setActive((prev) => (prev === i && isMobile ? -1 : i));
+    }
+  };
+
   return (
     <section
       id="pain-points"
@@ -34,15 +118,18 @@ export function PainPoints() {
     >
       <div className="mx-auto" style={{ maxWidth: "1280px" }}>
         <Reveal>
-          <div className="text-center mx-auto" style={{ maxWidth: "720px", marginBottom: "48px" }}>
+          <div
+            className="text-center mx-auto"
+            style={{ maxWidth: "720px", marginBottom: "48px" }}
+          >
             <p
               style={{
                 fontFamily: "Montserrat, sans-serif",
-                fontSize: "10px",
+                fontSize: "11px",
                 fontWeight: 600,
                 letterSpacing: "3px",
                 textTransform: "uppercase",
-                color: "#A81716",
+                color: "#DC2627",
                 marginBottom: "16px",
               }}
             >
@@ -59,97 +146,185 @@ export function PainPoints() {
               }}
             >
               You Love Each Other. But Something Feels...{" "}
-              <span style={{ color: "#A81716", fontStyle: "italic" }}>Different.</span>
+              <span style={{ color: "#DC2627", fontStyle: "italic" }}>
+                Different.
+              </span>
             </h2>
           </div>
         </Reveal>
 
-        <div
-          className="grid grid-cols-1 md:grid-cols-3"
-          style={{ gap: "16px" }}
-        >
-          {cards.map((c, i) => (
-            <Reveal key={c.number} delay={i * 0.08}>
-              <div
-                className="group relative overflow-hidden cursor-pointer"
-                style={{
-                  borderRadius: "12px",
-                  aspectRatio: "3 / 4",
-                  transition: "transform 0.4s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <img
-                  src={c.image}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+        <Reveal>
+          <div
+            className={isMobile ? "flex flex-col" : "flex flex-row"}
+            style={{
+              gap: "4px",
+              borderRadius: "12px",
+              overflow: "hidden",
+              maxWidth: "1200px",
+              margin: "0 auto",
+              height: isMobile ? "auto" : isTablet ? "380px" : "420px",
+            }}
+          >
+            {panels.map((p, i) => {
+              const isActive = active === i;
+              const flex = isActive ? 4 : 1;
+              const mobileHeight = isActive ? "280px" : "100px";
+
+              return (
                 <div
-                  className="absolute inset-0"
+                  key={i}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={p.label}
+                  aria-expanded={isActive}
+                  onMouseEnter={() => handleEnter(i)}
+                  onClick={() => handleClick(i)}
+                  onKeyDown={(e) => handleKey(e, i)}
+                  className="relative overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2627]"
                   style={{
-                    background:
-                      "linear-gradient(180deg, transparent 30%, rgba(13,13,13,0.95) 100%)",
+                    flex: isMobile ? "0 0 auto" : flex,
+                    height: isMobile ? mobileHeight : "100%",
+                    width: isMobile ? "100%" : "auto",
+                    transition: isMobile
+                      ? "height 0.6s cubic-bezier(0.4,0,0.2,1)"
+                      : "flex 0.6s cubic-bezier(0.4,0,0.2,1)",
+                    minWidth: 0,
                   }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 flex flex-col"
-                  style={{ padding: "28px 24px", gap: "10px" }}
                 >
+                  {/* Background image */}
+                  <img
+                    src={p.image}
+                    alt={p.alt}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+
+                  {/* Overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: isActive
+                        ? "linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.85) 100%)"
+                        : "linear-gradient(180deg, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.95) 100%)",
+                      transition: "background 0.5s ease",
+                    }}
+                  />
+
+                  {/* Number */}
                   <span
                     style={{
+                      position: "absolute",
+                      top: "24px",
+                      left: isActive ? "32px" : "50%",
+                      transform: isActive
+                        ? "translateX(0)"
+                        : "translateX(-50%)",
                       fontFamily: "'Playfair Display', serif",
                       fontStyle: "italic",
-                      fontSize: "16px",
+                      fontSize: "24px",
                       fontWeight: 700,
-                      color: "#A81716",
+                      color: "#DC2627",
+                      transition: "all 0.5s ease",
                     }}
                   >
-                    {c.number}
+                    {p.number}
                   </span>
-                  <p
+
+                  {/* Collapsed vertical label */}
+                  {!isMobile && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        bottom: "32px",
+                        left: "50%",
+                        transform: "translateX(-50%) rotate(-90deg)",
+                        transformOrigin: "center",
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "3px",
+                        textTransform: "uppercase",
+                        color: "rgba(242,234,224,0.5)",
+                        whiteSpace: "nowrap",
+                        opacity: isActive ? 0 : 1,
+                        transition: "opacity 0.3s ease",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      {p.label}
+                    </span>
+                  )}
+
+                  {/* Mobile collapsed label (horizontal) */}
+                  {isMobile && !isActive && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        bottom: "24px",
+                        left: "32px",
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "3px",
+                        textTransform: "uppercase",
+                        color: "rgba(242,234,224,0.6)",
+                      }}
+                    >
+                      {p.label}
+                    </span>
+                  )}
+
+                  {/* Expanded content */}
+                  <div
                     style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontStyle: "italic",
-                      fontSize: "18px",
-                      fontWeight: 400,
-                      color: "#F2EAE0",
-                      lineHeight: 1.4,
+                      position: "absolute",
+                      bottom: "32px",
+                      left: "32px",
+                      right: "32px",
+                      opacity: isActive ? 1 : 0,
+                      transition: isActive
+                        ? "opacity 0.4s ease 0.2s"
+                        : "opacity 0.2s ease",
+                      pointerEvents: isActive ? "auto" : "none",
                     }}
                   >
-                    {c.quote}
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontSize: "11px",
-                      fontWeight: 400,
-                      fontStyle: "italic",
-                      color: "#B8955A",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {c.tease}
-                  </p>
+                    <p
+                      className="text-[18px] md:text-[26px]"
+                      style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontStyle: "italic",
+                        fontWeight: 400,
+                        color: "#F2EAE0",
+                        lineHeight: 1.3,
+                      }}
+                      dangerouslySetInnerHTML={{ __html: p.quote }}
+                    />
+                    <p
+                      className="text-[12px] md:text-[13px]"
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: 300,
+                        fontStyle: "italic",
+                        color: "#B8955A",
+                        lineHeight: 1.6,
+                        marginTop: "12px",
+                      }}
+                    >
+                      {p.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        </Reveal>
 
         <Reveal>
-          <div className="text-center" style={{ marginTop: "48px" }}>
+          <div className="text-center" style={{ marginTop: "56px" }}>
             <p
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontStyle: "italic",
-                fontSize: "20px",
+                fontSize: "22px",
                 color: "#9A8880",
-                marginBottom: "20px",
+                marginBottom: "24px",
               }}
             >
               If even ONE of these felt familiar...
@@ -158,7 +333,7 @@ export function PainPoints() {
               to="/shop"
               className="inline-block"
               style={{
-                background: "#A81716",
+                background: "#DC2627",
                 color: "#FFFFFF",
                 padding: "16px 38px",
                 borderRadius: "8px",
@@ -171,11 +346,11 @@ export function PainPoints() {
                 transition: "background 0.3s ease, transform 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#8A1212";
+                e.currentTarget.style.background = "#B8221F";
                 e.currentTarget.style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#A81716";
+                e.currentTarget.style.background = "#DC2627";
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >
@@ -188,12 +363,12 @@ export function PainPoints() {
                 color: "#9A8880",
                 fontWeight: 400,
                 letterSpacing: "1px",
-                marginTop: "16px",
+                marginTop: "18px",
               }}
             >
               30-Day Money Back{" "}
-              <span style={{ color: "#A81716" }}>•</span> 1,200+ Filipino Couples{" "}
-              <span style={{ color: "#A81716" }}>•</span> Discreet Shipping
+              <span style={{ color: "#DC2627" }}>•</span> 1,200+ Filipino Couples{" "}
+              <span style={{ color: "#DC2627" }}>•</span> Discreet Shipping
             </p>
           </div>
         </Reveal>
