@@ -17,13 +17,13 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LOVABLE — Natural Mood Enhancer Drops for Filipino Couples" },
+      { title: "LOVABLE: Natural Mood Enhancer Drops for Filipino Couples" },
       {
         name: "description",
         content:
-          "Reignite intimacy naturally. LOVABLE Drops for Her & Him — 100% natural, no prescription, 30-day money-back guarantee. Free PH shipping ₱899+.",
+          "Reignite intimacy naturally. LOVABLE Drops for Her & Him. 100% natural, no prescription, 30-day money-back guarantee. Free PH shipping ₱899+.",
       },
-      { property: "og:title", content: "LOVABLE — Reignite What Time Tried to Take Away" },
+      { property: "og:title", content: "LOVABLE: Reignite What Time Tried to Take Away" },
       {
         property: "og:description",
         content:

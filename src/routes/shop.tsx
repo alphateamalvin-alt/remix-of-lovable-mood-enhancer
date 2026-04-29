@@ -35,13 +35,13 @@ export const Route = createFileRoute("/shop")({
   },
   head: () => ({
     meta: [
-      { title: "Shop LOVABLE — Lovable Drops for Filipino Couples" },
+      { title: "Shop LOVABLE: Lovable Drops for Filipino Couples" },
       {
         name: "description",
         content:
           "Order LOVABLE Drops for Her, Him, or the Couples Bundle. Free PH shipping ₱899+, COD available, 30-day money-back guarantee.",
       },
-      { property: "og:title", content: "Shop LOVABLE — Reignite Naturally" },
+      { property: "og:title", content: "Shop LOVABLE: Reignite Naturally" },
       {
         property: "og:description",
         content: "Choose your LOVABLE: For Her, For Him, or the Couples Bundle.",
@@ -165,7 +165,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
             reviews="1,200+"
-            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span> — safely and naturally.</>}
+            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
             mainImage={forher}
             thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
             bundles={herBundles}
@@ -186,7 +186,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
             title={<>Mood Enhancer Drops <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
-            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span> — every time.</>}
+            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span>, every time.</>}
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
@@ -268,7 +268,7 @@ function ProductDetail({
 
   return (
     <div className="grid gap-12 lg:grid-cols-[55fr_45fr] items-start">
-      {/* LEFT — image gallery */}
+      {/* LEFT: image gallery */}
       <Reveal>
         <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-[var(--color-warm-noir)] aspect-[4/5]">
           <img src={active} alt="" loading="lazy" className="h-full w-full object-cover" />
@@ -288,7 +288,7 @@ function ProductDetail({
         </div>
       </Reveal>
 
-      {/* RIGHT — details */}
+      {/* RIGHT: details */}
       <Reveal delay={0.1}>
         <p className="eyebrow mb-4">{eyebrow}</p>
         <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[36px] leading-[1.15]">
@@ -363,7 +363,7 @@ function ProductDetail({
           rel="noopener noreferrer"
           className="btn-primary mt-7 !w-full !py-4 text-[12px]"
         >
-          Order Now — ₱{selectedBundle.price.toLocaleString()} →
+          Order Now, ₱{selectedBundle.price.toLocaleString()} →
         </a>
 
         {/* Trust chips */}
@@ -430,7 +430,7 @@ function CouplesBundle() {
 
       <Reveal delay={0.1}>
         <p className="text-center text-[var(--color-ivory-muted)] text-base sm:text-lg max-w-xl mx-auto">
-          One For Her. One For Him. <span style={{ color: "#F2EAE0", fontWeight: 600 }}>One goal — feel each other again.</span>
+          One For Her. One For Him. <span style={{ color: "#F2EAE0", fontWeight: 600 }}>One goal: feel each other again.</span>
         </p>
 
         <div className="glass-card rounded-2xl p-7 mt-9">
@@ -531,7 +531,7 @@ function CouplesBundle() {
           rel="noopener noreferrer"
           className="btn-primary mt-7 !w-full !py-4 text-[12px]"
         >
-          Get the Couples Bundle — ₱{selectedBundle.price.toLocaleString()} →
+          Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()} →
         </a>
 
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
@@ -558,7 +558,7 @@ function GuaranteeUrgency() {
               Try LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>Risk-Free</span> for 30 Days
             </h3>
             <p className="mt-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.85] max-w-md">
-              Not satisfied? Return within 30 days for a full refund — no questions, no hassle.
+              Not satisfied? Return within 30 days for a full refund. No questions, no hassle.
             </p>
             <ul className="mt-6 space-y-3 max-w-md">
               {["Full refund guaranteed", "No questions asked", "Easy return process"].map((b) => (
@@ -653,7 +653,7 @@ function StockBar({ label, filled, text }: { label: string; filled: number; text
 function HowToOrder() {
   const steps = [
     { icon: "🛒", text: "Choose your bundle" },
-    { icon: "💳", text: "Checkout — GCash, Maya, Card, or COD" },
+    { icon: "💳", text: "Checkout via GCash, Maya, Card, or COD" },
     { icon: "📦", text: "We ship within 24-48 hours" },
     { icon: "❤️", text: "Receive in 2-5 days. Feel the difference." },
   ];

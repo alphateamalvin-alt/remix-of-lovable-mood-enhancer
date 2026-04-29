@@ -28,7 +28,7 @@ export function ForHer() {
   return (
     <section id="forher" className="bg-[var(--color-noir)]">
       <div className="grid lg:grid-cols-2 min-h-[90vh]">
-        {/* SEAMLESS IMAGE — bleeds to edges, fades on right into bg */}
+        {/* SEAMLESS IMAGE: bleeds to edges, fades on right into bg */}
         <div className="relative overflow-hidden min-h-[70vh] lg:min-h-0">
           <img
             src={FOR_HER_IMAGE}
@@ -63,7 +63,7 @@ export function ForHer() {
             </h2>
             <span className="red-rule mt-7 mb-7" />
             <p className="text-[var(--color-ivory-muted)] text-[16px] leading-[1.9] max-w-md">
-              Your body remembers how to feel this way. LOVABLE Drops for Women work <span style={{ color: "#F2EAE0", fontWeight: 600 }}>with your natural chemistry</span> — not against it — to restore what stress, hormones, and time have quietly taken away. No synthetics. No pressure. Just pure support.
+              Your body remembers how to feel this way. LOVABLE Drops for Women work <span style={{ color: "#F2EAE0", fontWeight: 600 }}>with your natural chemistry</span>, not against it, to restore what stress, hormones, and time have quietly taken away. No synthetics. No pressure. Just pure support.
             </p>
 
             <ul className="mt-8 space-y-3 max-w-md">

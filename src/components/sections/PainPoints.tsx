@@ -30,7 +30,7 @@ const panels: Panel[] = [
     number: "02",
     label: "Distance",
     quote:
-      "The distance in bed feels <span style='color:#DC2627; font-style:italic;'>wider every night</span> — and neither of you knows how to close it.",
+      "The distance in bed feels <span style='color:#DC2627; font-style:italic;'>wider every night</span>, and neither of you knows how to close it.",
     description: "Same bed. Same house. But miles between you.",
   },
   {
@@ -42,7 +42,7 @@ const panels: Panel[] = [
     quote:
       "Together physically. <span style='color:#DC2627; font-style:italic;'>Worlds apart</span> emotionally.",
     description:
-      "The connection that used to come naturally — it's just not there anymore.",
+      "The connection that used to come naturally. It's just not there anymore.",
   },
   {
     image:
@@ -52,7 +52,7 @@ const panels: Panel[] = [
     label: "Drained",
     quote:
       "Stress and the years have <span style='color:#DC2627; font-style:italic;'>quietly drained</span> the energy you used to share.",
-    description: "Your body remembers — but your energy doesn't keep up anymore.",
+    description: "Your body remembers. But your energy doesn't keep up anymore.",
   },
   {
     image:
@@ -73,7 +73,7 @@ const panels: Panel[] = [
     quote:
       "Neither of you talks about it. <span style='color:#DC2627; font-style:italic;'>But you both feel it.</span>",
     description:
-      "An unspoken weight. You miss each other — even in the same room.",
+      "An unspoken weight. You miss each other, even in the same room.",
   },
 ];
 

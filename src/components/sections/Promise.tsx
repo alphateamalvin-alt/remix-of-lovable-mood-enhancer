@@ -4,7 +4,7 @@ const RED = { color: "#A81716", fontWeight: 600 } as const;
 
 const promises = [
   { icon: "🌿", title: <>Chemical-Free, Without Pressure</>, desc: "No synthetic drugs. Just pure botanicals that work with your body." },
-  { icon: "💯", title: <>Results You'll Feel — <span style={RED}>Or You Don't Pay</span></>, desc: "30-day full money-back guarantee. No questions asked." },
+  { icon: "💯", title: <>Results You'll Feel, <span style={RED}>Or You Don't Pay</span></>, desc: "30-day full money-back guarantee. No questions asked." },
   { icon: "🔬", title: <>Completely Natural. <span style={RED}>Works Naturally.</span></>, desc: "Formulated to work with your body, never against it." },
   { icon: "❤️", title: <>Stronger Relationships. <span style={RED}>Real Intimacy.</span></>, desc: "Supporting your connection, not just a symptom." },
   { icon: "🌟", title: <>Supporting the WHOLE You</>, desc: "Mind, body, energy, and confidence. Not just one thing." },
