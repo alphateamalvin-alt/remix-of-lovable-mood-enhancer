@@ -35,13 +35,13 @@ export const Route = createFileRoute("/shop")({
   },
   head: () => ({
     meta: [
-      { title: "Shop LOVABLE — Lovable Drops for Filipino Couples" },
+      { title: "Shop LOVABLE: Lovable Drops for Filipino Couples" },
       {
         name: "description",
         content:
           "Order LOVABLE Drops for Her, Him, or the Couples Bundle. Free PH shipping ₱899+, COD available, 30-day money-back guarantee.",
       },
-      { property: "og:title", content: "Shop LOVABLE — Reignite Naturally" },
+      { property: "og:title", content: "Shop LOVABLE: Reignite Naturally" },
       {
         property: "og:description",
         content: "Choose your LOVABLE: For Her, For Him, or the Couples Bundle.",
