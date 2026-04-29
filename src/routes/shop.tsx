@@ -418,56 +418,67 @@ function MiniFaq({ q, a }: { q: string; a: string }) {
 }
 
 function CouplesBundle() {
+  const couplesMain =
+    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/15.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xNS5wbmciLCJpYXQiOjE3NzcxODI4MjIsImV4cCI6MTgwODcxODgyMn0.aHEHR3sZU1m3qLc6tgG266RA4jxcLCD5yXgnANQek1E";
+  const thumbnails = [couplesMain, forher, forhim, bottleHer];
+
+  const [active, setActive] = useState(couplesMain);
   const defaultB = couplesBundles.find((b) => b.badge === "BEST SELLER") ?? couplesBundles[0];
   const [selected, setSelected] = useState(defaultB.id);
   const selectedBundle = couplesBundles.find((b) => b.id === selected) ?? defaultB;
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
+      {/* LEFT: image gallery */}
       <Reveal>
-        <div className="relative rounded-2xl overflow-hidden h-[300px] mb-10">
+        <div
+          className="relative w-full mx-auto overflow-hidden bg-[var(--color-warm-noir)]"
+          style={{
+            maxWidth: 560,
+            aspectRatio: "4 / 5",
+            borderRadius: 14,
+            border: "0.5px solid rgba(184, 149, 90, 0.22)",
+          }}
+        >
           <img
-            src="https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/15.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xNS5wbmciLCJpYXQiOjE3NzcxODI4MjIsImV4cCI6MTgwODcxODgyMn0.aHEHR3sZU1m3qLc6tgG266RA4jxcLCD5yXgnANQek1E"
+            src={active}
             alt="LOVABLE Couples Bundle"
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-contain"
+            style={{ objectPosition: "center top" }}
           />
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-[var(--color-noir)]/40 to-transparent" />
-          <div className="absolute inset-0 flex items-end justify-center p-8">
-            <h2 className="text-display text-[var(--color-ivory)] text-3xl md:text-[40px] text-center leading-[1.1]">
-              The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
-            </h2>
-          </div>
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-3" style={{ maxWidth: 560 }}>
+          {thumbnails.slice(1, 4).map((thumb, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(thumb)}
+              className={`aspect-square rounded-xl overflow-hidden ring-1 transition-all ${
+                active === thumb ? "ring-[var(--color-brand-red)]" : "ring-white/10 hover:ring-white/30"
+              }`}
+            >
+              <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
+            </button>
+          ))}
         </div>
       </Reveal>
 
+      {/* RIGHT: details */}
       <Reveal delay={0.1}>
-        <p className="text-center text-[var(--color-ivory-muted)] text-base sm:text-lg max-w-xl mx-auto">
+        <p className="eyebrow mb-3">LOVABLE Couples Bundle</p>
+        <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
+          The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
+        </h2>
+        <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
+          <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
+          <span>4.9 · 2,000+ reviews</span>
+        </div>
+        <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
           One For Her. One For Him. <span style={{ color: "#F2EAE0", fontWeight: 600 }}>One goal: feel each other again.</span>
         </p>
 
-        <div className="glass-card rounded-2xl p-7 mt-9">
-          <h3 className="text-[11px] tracking-[0.22em] uppercase text-[var(--color-brand-red)] font-semibold mb-5">
-            What's Included
-          </h3>
-          <ul className="space-y-3">
-            {[
-              "1x LOVABLE For Her (30ml)",
-              "1x LOVABLE For Him (30ml)",
-              "FREE Couples Intimacy Guide (₱800 value)",
-              "FREE Nationwide Shipping",
-              "30-Day Money Back Guarantee",
-            ].map((line) => (
-              <li key={line} className="flex gap-3 items-start text-[var(--color-ivory)]/90 text-[15px]">
-                <span className="text-[var(--color-brand-red)] mt-0.5">✓</span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-8 space-y-3">
+        {/* Bundles */}
+        <div className="mt-6 space-y-3">
           {couplesBundles.map((b) => {
             const isSelected = selected === b.id;
             const borderClass =
@@ -484,14 +495,14 @@ function CouplesBundle() {
                 onClick={() => setSelected(b.id)}
                 className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
                   isSelected ? "bg-white/[0.04]" : "bg-transparent"
-                } p-5 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
+                } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
               >
                 <span
                   className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
                     isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
                   }`}
                 >
-                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                  {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
                 </span>
                 <div className="relative flex-shrink-0 h-[60px] w-[88px] flex items-center justify-center">
                   {Array.from({ length: Number(b.id) || 1 }).slice(0, 3).flatMap((_, setIdx, arr) => {
@@ -539,6 +550,7 @@ function CouplesBundle() {
           })}
         </div>
 
+        {/* CTA */}
         <a
           href="https://lovablecouple.shop/"
           target="_blank"
@@ -548,10 +560,32 @@ function CouplesBundle() {
           Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()} →
         </a>
 
+        {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
           <span>🚚 Free Shipping</span>
           <span>💳 GCash, Maya, COD</span>
           <span>🔄 30-Day Guarantee</span>
+        </div>
+
+        {/* What's Included */}
+        <div className="glass-card rounded-2xl p-6 mt-7">
+          <h3 className="text-[11px] tracking-[0.22em] uppercase text-[var(--color-brand-red)] font-semibold mb-4">
+            What's Included
+          </h3>
+          <ul className="space-y-2.5">
+            {[
+              "1x LOVABLE For Her (30ml)",
+              "1x LOVABLE For Him (30ml)",
+              "FREE Couples Intimacy Guide (₱800 value)",
+              "FREE Nationwide Shipping",
+              "30-Day Money Back Guarantee",
+            ].map((line) => (
+              <li key={line} className="flex gap-3 items-start text-[var(--color-ivory)]/90 text-[14px]">
+                <span className="text-[var(--color-brand-red)] mt-0.5">✓</span>
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Reveal>
     </div>
