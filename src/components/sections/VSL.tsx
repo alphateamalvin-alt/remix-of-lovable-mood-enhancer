@@ -158,7 +158,7 @@ export function VSL() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-start">
         <Reveal>
             <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] w-full" style={{ background: "transparent" }}>
-            <div className="aspect-[4/3] w-full relative overflow-hidden bg-black">
+            <div className="aspect-video w-full relative overflow-hidden bg-black">
               <div
                 ref={containerRef}
                 className="pointer-events-none absolute inset-0 [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
