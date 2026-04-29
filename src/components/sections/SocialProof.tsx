@@ -66,7 +66,7 @@ export function SocialProof() {
                   "{t.quote}"
                 </p>
                 <p className="mt-8 text-[12px] tracking-[0.18em] uppercase text-[var(--color-ivory)]/70">
-                  — {t.who}
+                  {t.who}
                 </p>
               </div>
             </article>
