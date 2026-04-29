@@ -38,11 +38,11 @@ const cards: Card[] = [
       "Every batch verified for purity and potency. Certificate of Analysis available upon request.",
   },
   {
-    image: "/promise-guarantee.jpg",
-    alt: "Money-back guarantee",
-    title: "2-Week Money-Back",
+    image: "/promise-daily.jpg",
+    alt: "Safe for daily long-term use",
+    title: "Built for Daily Use",
     description:
-      "Feel the difference within 2 weeks or get every peso back. No questions, no awkwardness.",
+      "Safe for consistent, long-term use with cumulative benefits over 2 to 3 months. No tolerance buildup, no dependency.",
   },
   {
     image: "/promise-fda.jpg",
