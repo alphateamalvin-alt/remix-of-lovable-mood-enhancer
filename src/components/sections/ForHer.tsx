@@ -77,12 +77,14 @@ export function ForHer() {
 
             <div className="mt-10 max-w-md">
               <p className="eyebrow mb-4" style={{ color: "var(--color-brand-red)" }}>Key Ingredients</p>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-4 gap-2">
                 {ingredients.map((ing) => (
-                  <div key={ing.name} className="glass-card rounded-xl p-3 flex flex-col items-center text-center">
-                    <img src={ing.img} alt={ing.name} loading="lazy" className="w-[80px] h-[80px] object-contain" />
-                    <p className="font-serif text-[var(--color-ivory)] text-[13px] mt-2 leading-tight">{ing.name}</p>
-                    <p className="text-[var(--color-ivory-muted)] text-[11px] mt-1 leading-tight">{ing.benefit}</p>
+                  <div key={ing.name} className="glass-card rounded-xl p-2 flex flex-col items-center text-center overflow-hidden">
+                    <div className="w-full aspect-square flex items-center justify-center">
+                      <img src={ing.img} alt={ing.name} loading="lazy" className="max-w-full max-h-full w-auto h-auto object-contain" />
+                    </div>
+                    <p className="font-serif text-[var(--color-ivory)] text-[12px] mt-1.5 leading-tight">{ing.name}</p>
+                    <p className="text-[var(--color-ivory-muted)] text-[10px] mt-0.5 leading-tight">{ing.benefit}</p>
                   </div>
                 ))}
               </div>
