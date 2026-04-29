@@ -123,9 +123,9 @@ export function PainPoints() {
         background:
           "radial-gradient(ellipse at 50% 50%, rgba(26,10,10,0.7) 0%, transparent 70%), #0D0D0D",
       }}
-      className="w-full py-[60px] px-6 md:py-20 md:px-10"
+      className="w-full py-[60px] md:py-20"
     >
-      <div className="mx-auto" style={{ maxWidth: "1280px" }}>
+      <div className="mx-auto px-4 md:px-6" style={{ maxWidth: "1400px" }}>
         <Reveal>
           <div
             className="text-center mx-auto"
@@ -166,20 +166,17 @@ export function PainPoints() {
           <div
             className={isMobile ? "flex flex-col" : "flex flex-row"}
             style={{
-              gap: "1px",
-              borderRadius: "12px",
-              overflow: "hidden",
-              maxWidth: "1200px",
+              gap: "8px",
+              maxWidth: "1400px",
               margin: "0 auto",
               height: isMobile ? "auto" : isTablet ? "380px" : "420px",
-              background: "rgba(184, 149, 90, 0.18)",
             }}
           >
             {panels.map((p, i) => {
               const isActive = active === i;
               const isHover = hovered === i;
               const flex = isActive ? 4 : 1;
-              const mobileHeight = isActive ? "280px" : "100px";
+              const mobileHeight = isActive ? "400px" : "200px";
 
               const imageFilter = isActive
                 ? "brightness(1.22) contrast(1.15) saturate(1.05)"
@@ -191,8 +188,12 @@ export function PainPoints() {
                 isHover && !isActive ? "scale(1.02)" : "scale(1)";
 
               const border = isActive
-                ? "1px solid rgba(220, 38, 39, 0.25)"
-                : "1px solid rgba(242, 234, 224, 0.06)";
+                ? "1px solid rgba(220, 38, 39, 0.3)"
+                : "1px solid rgba(242, 234, 224, 0.08)";
+
+              const boxShadow = isActive
+                ? "0 8px 32px rgba(0,0,0,0.4), 0 12px 48px rgba(220,38,39,0.12)"
+                : "0 8px 32px rgba(0,0,0,0.4)";
 
               return (
                 <div
@@ -210,10 +211,12 @@ export function PainPoints() {
                     flex: isMobile ? "0 0 auto" : flex,
                     height: isMobile ? mobileHeight : "100%",
                     width: isMobile ? "100%" : "auto",
-                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}`,
+                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}, box-shadow 500ms ${EASE}`,
                     minWidth: 0,
                     background: "#1A0A0A",
                     border,
+                    borderRadius: "16px",
+                    boxShadow,
                   }}
                 >
                   {/* Background image */}
@@ -241,7 +244,7 @@ export function PainPoints() {
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
-                      boxShadow: "inset 0 0 80px rgba(0,0,0,0.5)",
+                      boxShadow: "inset 0 0 80px rgba(0,0,0,0.45)",
                       background: isActive
                         ? "linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.3) 40%, transparent 70%)"
                         : "linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.57) 100%)",
