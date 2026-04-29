@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "../Reveal";
+import { HeroFX } from "../HeroFX";
 
 const HERO_IMAGE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM.png";
 
@@ -17,8 +18,9 @@ export function Hero() {
       id="top"
       className="relative min-h-[100svh] flex flex-col md:flex-row bg-[#0D0D0D] overflow-hidden"
     >
+      <HeroFX />
       {/* Mobile: image on top (40vh). Desktop: right side 50% */}
-      <div className="order-1 md:order-2 relative w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh]">
+      <div className="order-1 md:order-2 relative w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-10">
         <img
           src={HERO_IMAGE_URL}
           alt="Filipino couple in tender embrace"
@@ -43,7 +45,7 @@ export function Hero() {
       </div>
 
       {/* Left side: text content */}
-      <div className="order-2 md:order-1 relative w-full md:w-1/2 flex items-center justify-center px-6 py-16 md:py-28 md:min-h-[100svh]">
+      <div className="order-2 md:order-1 relative z-10 w-full md:w-1/2 flex items-center justify-center px-6 py-16 md:py-28 md:min-h-[100svh]">
         <div className="max-w-xl w-full text-center md:text-left">
           <Reveal>
             <p className="eyebrow mb-6">Natural Lovable Drops</p>
