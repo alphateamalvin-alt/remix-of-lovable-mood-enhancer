@@ -531,7 +531,7 @@ function CouplesBundle() {
           rel="noopener noreferrer"
           className="btn-primary mt-7 !w-full !py-4 text-[12px]"
         >
-          Get the Couples Bundle — ₱{selectedBundle.price.toLocaleString()} →
+          Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()} →
         </a>
 
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
