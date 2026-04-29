@@ -156,7 +156,7 @@ export function VSL() {
   return (
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] lg:grid-rows-[1fr_auto] items-stretch">
-        <Reveal className="self-stretch h-full min-h-[260px] lg:row-span-2 [&>*]:h-full">
+        <Reveal className="self-stretch h-full min-h-[260px] [&>*]:h-full">
           <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full w-full">
             <div className="aspect-video lg:aspect-auto w-full h-full relative">
               <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
