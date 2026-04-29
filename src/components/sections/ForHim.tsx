@@ -66,7 +66,7 @@ export function ForHim() {
           </Reveal>
         </div>
 
-        {/* SEAMLESS IMAGE — bleeds to edges, fades on left into bg */}
+        {/* SEAMLESS IMAGE: bleeds to edges, fades on left into bg */}
         <div className="order-1 lg:order-2 relative overflow-hidden min-h-[70vh] lg:min-h-0">
           <img
             src={FOR_HIM_IMAGE}
