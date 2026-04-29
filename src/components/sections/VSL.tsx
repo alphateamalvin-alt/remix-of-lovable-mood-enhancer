@@ -161,8 +161,7 @@ export function VSL() {
             <div className="aspect-video w-full relative overflow-hidden bg-black">
               <div
                 ref={containerRef}
-                className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
-                style={{ width: "calc(100% * 16 / 9 * 9 / 16 * 1.5)", height: "150%" }}
+                className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] [&>iframe]:block [&>iframe]:w-full [&>iframe]:h-full"
               />
 
               {/* Tap-to-unmute overlay */}
