@@ -458,8 +458,14 @@ function MiniFaq({ q, a }: { q: string; a: string }) {
 
 function CouplesBundle() {
   const couplesMain =
-    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/15.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xNS5wbmciLCJpYXQiOjE3NzcxODI4MjIsImV4cCI6MTgwODcxODgyMn0.aHEHR3sZU1m3qLc6tgG266RA4jxcLCD5yXgnANQek1E";
-  const thumbnails = [couplesMain, forher, forhim, bottleHer];
+    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2011_46_31%20PM.png";
+  const couples2 =
+    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM%20(1).png";
+  const couples3 =
+    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2002_19_52%20AM%20(1).png";
+  const couples4 =
+    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2004_28_13%20PM.png";
+  const thumbnails = [couplesMain, couples2, couples3, couples4];
 
   const [active, setActive] = useState(couplesMain);
   const defaultB = couplesBundles.find((b) => b.badge === "BEST SELLER") ?? couplesBundles[0];
