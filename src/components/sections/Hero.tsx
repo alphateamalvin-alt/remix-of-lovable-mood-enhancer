@@ -77,11 +77,11 @@ export function Hero() {
               </a>
               <div className="flex flex-col items-center sm:items-start">
                 <div className="flex items-center gap-2">
-                  <span style={{ color: "#A81716", fontSize: "13px", letterSpacing: "1px" }}>★★★★★</span>
-                  <span style={{ color: "#F2EAE0", fontWeight: 600, fontSize: "13px" }}>4.9</span>
+                  <span style={{ color: "#F5C518", fontSize: "13px", letterSpacing: "1px" }}>★★★★<span style={{ color: "#F5C518", opacity: 0.4 }}>★</span></span>
+                  <span style={{ color: "#F2EAE0", fontWeight: 600, fontSize: "13px" }}>4.7</span>
                 </div>
                 <p style={{ color: "#9A8880", fontSize: "10px", marginTop: "2px" }}>
-                  Based on 1,200+ verified reviews
+                  Based on 847 verified reviews
                 </p>
               </div>
             </div>
