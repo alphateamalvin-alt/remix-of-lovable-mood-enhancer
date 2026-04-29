@@ -271,28 +271,30 @@ export function VSL() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.15}>
-          <div>
-            <p className="eyebrow mb-5">Watch This First</p>
-            <h2 className="text-display text-[var(--color-ivory)] leading-[1.1] text-3xl md:text-4xl lg:text-5xl">
-              When Was the Last Time You Truly Felt… <span style={{ color: "#A81716", fontStyle: "italic" }}>Connected?</span>
-            </h2>
-            <p className="mt-5 text-[var(--color-ivory-muted)] max-w-xl text-base md:text-lg leading-relaxed">
-              Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most <span style={{ color: "#F2EAE0", fontWeight: 600 }}>honest conversation about intimacy</span> you've heard in years.
-            </p>
+        <Reveal delay={0.15} className="self-stretch">
+          <div className="flex flex-col h-full">
+            <div className="text-content flex-1">
+              <p className="eyebrow mb-5">Watch This First</p>
+              <h2 className="text-display text-[var(--color-ivory)] leading-[1.1] text-3xl md:text-4xl lg:text-5xl">
+                When Was the Last Time You Truly Felt… <span style={{ color: "#A81716", fontStyle: "italic" }}>Connected?</span>
+              </h2>
+              <p className="mt-5 text-[var(--color-ivory-muted)] max-w-xl text-base md:text-lg leading-relaxed">
+                Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most <span style={{ color: "#F2EAE0", fontWeight: 600 }}>honest conversation about intimacy</span> you've heard in years.
+              </p>
 
-            <ul className="mt-6 space-y-3 max-w-xl">
-              {[
-                "What's actually stealing your connection (it's not what you think)",
-                "Why most solutions fail and what works instead",
-                "How LOVABLE helps your body remember how to feel again",
-              ].map((b) => (
-                <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-relaxed text-sm md:text-base">
-                  <span className="mt-2 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
+              <ul className="mt-6 space-y-3 max-w-xl">
+                {[
+                  "What's actually stealing your connection (it's not what you think)",
+                  "Why most solutions fail and what works instead",
+                  "How LOVABLE helps your body remember how to feel again",
+                ].map((b) => (
+                  <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-relaxed text-sm md:text-base">
+                    <span className="mt-2 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="mt-8">
               <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
