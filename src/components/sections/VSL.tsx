@@ -155,10 +155,10 @@ export function VSL() {
 
   return (
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-10 lg:gap-12 lg:grid-cols-2 items-center">
-        <Reveal>
-          <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black">
-            <div className="aspect-video w-full relative">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-10 lg:gap-12 lg:grid-cols-[55%_45%] items-stretch">
+        <Reveal className="self-stretch h-full min-h-[260px] [&>*]:h-full">
+          <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full w-full">
+            <div className="aspect-video lg:aspect-auto w-full h-full relative">
               <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
               {/* Tap-to-unmute overlay */}
