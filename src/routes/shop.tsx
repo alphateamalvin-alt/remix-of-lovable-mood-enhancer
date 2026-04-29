@@ -271,7 +271,7 @@ function ProductDetail({
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full mx-auto overflow-hidden bg-[var(--color-warm-noir)]"
+          className="relative w-full mx-auto overflow-hidden bg-[var(--color-warm-noir)] group"
           style={{
             maxWidth: 560,
             aspectRatio: "4 / 5",
@@ -286,6 +286,7 @@ function ProductDetail({
             className="absolute inset-0 h-full w-full object-contain"
             style={{ objectPosition: "center top" }}
           />
+          <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
         </div>
         <div className="mt-3 grid grid-cols-3 gap-3" style={{ maxWidth: 560 }}>
           {thumbnails.slice(1, 4).map((thumb, i) => (
