@@ -10,43 +10,43 @@ type Card = {
 
 const cards: Card[] = [
   {
-    image: "/promise-botanicals.jpg",
-    alt: "Natural botanical ingredients",
+    image: "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Pure%20Botanicals.png",
+    alt: "Pure botanical ingredients in LOVABLE drops",
     title: "Pure Botanicals",
     description:
       "No synthetic hormones, no dangerous chemicals. Only clinically-researched ingredients that work with your body's chemistry.",
   },
   {
-    image: "/promise-science.jpg",
-    alt: "Peer-reviewed scientific research",
+    image: "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Peer-reviewed%20Scientific%20Research.png",
+    alt: "Peer-reviewed scientific research backing LOVABLE ingredients",
     title: "Backed by Science",
     description:
       "Ingredients studied in the British Journal of Nutrition, Journal of Sexual Medicine, and Fertility and Sterility Journal.",
   },
   {
-    image: "/promise-couple.jpg",
-    alt: "Separate formulas for him and her",
+    image: "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Separate%20Formulas%20for%20him%20and%20for%20her.png",
+    alt: "Separate precision formulas for him and for her",
     title: "Couple-Formulated",
     description:
       "Separate precision formulas for Him and Her, designed by hormonal wellness experts. Not one-size-fits-all.",
   },
   {
-    image: "/promise-tested.jpg",
-    alt: "Third-party laboratory testing",
+    image: "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Third%20party%20tested.png",
+    alt: "Third-party laboratory tested for purity and potency",
     title: "Third-Party Tested",
     description:
       "Every batch verified for purity and potency. Certificate of Analysis available upon request.",
   },
   {
-    image: "/promise-daily.jpg",
-    alt: "Safe for daily long-term use",
+    image: "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Built%20For%20Daily%20Use.png",
+    alt: "Safe for consistent daily long-term use",
     title: "Built for Daily Use",
     description:
       "Safe for consistent, long-term use with cumulative benefits over 2 to 3 months. No tolerance buildup, no dependency.",
   },
   {
-    image: "/promise-fda.jpg",
-    alt: "FDA-registered USA facility",
+    image: "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/FDA-Reg%20-%20GMP%20Certified.png",
+    alt: "FDA-registered and GMP-certified USA facility",
     title: "Made in USA",
     description:
       "Manufactured in FDA-registered, GMP-certified USA facilities with premium-grade ingredients and verified safety.",
