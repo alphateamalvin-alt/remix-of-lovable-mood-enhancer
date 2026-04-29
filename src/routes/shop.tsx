@@ -363,7 +363,7 @@ function ProductDetail({
           rel="noopener noreferrer"
           className="btn-primary mt-7 !w-full !py-4 text-[12px]"
         >
-          Order Now — ₱{selectedBundle.price.toLocaleString()} →
+          Order Now, ₱{selectedBundle.price.toLocaleString()} →
         </a>
 
         {/* Trust chips */}
