@@ -244,7 +244,7 @@ export function PainPoints() {
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
-                      boxShadow: "inset 0 0 80px rgba(0,0,0,0.5)",
+                      boxShadow: "inset 0 0 80px rgba(0,0,0,0.45)",
                       background: isActive
                         ? "linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.3) 40%, transparent 70%)"
                         : "linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.57) 100%)",
