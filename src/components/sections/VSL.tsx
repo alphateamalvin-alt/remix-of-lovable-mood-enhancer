@@ -155,7 +155,7 @@ export function VSL() {
 
   return (
     <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] lg:grid-rows-[1fr_auto] items-stretch">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-stretch">
         <Reveal className="self-stretch h-full min-h-[260px] [&>*]:h-full">
           <div className="group/vsl relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(192,57,43,0.35)] bg-black h-full w-full">
             <div className="aspect-video lg:aspect-auto w-full h-full relative">
@@ -271,13 +271,13 @@ export function VSL() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.15} className="self-stretch lg:col-start-2 lg:row-start-1">
+        <Reveal delay={0.15}>
           <div className="text-content">
-            <p className="eyebrow mb-3" style={{ fontSize: "11px", letterSpacing: "0.25em" }}>Watch This First</p>
-            <h2 className="text-display text-[var(--color-ivory)] leading-[1.3] text-3xl md:text-4xl lg:text-[32px] font-bold">
+            <p className="eyebrow mb-3">Watch This First</p>
+            <h2 className="text-display text-[var(--color-ivory)] leading-[1.1] text-4xl md:text-5xl lg:text-[44px]">
               When Was the Last Time You Truly Felt… <span style={{ color: "#A81716", fontStyle: "italic" }}>Connected?</span>
             </h2>
-            <p className="mt-4 text-[var(--color-ivory-muted)] max-w-xl text-sm leading-[1.75] font-light">
+            <p className="mt-5 text-[var(--color-ivory-muted)] max-w-xl text-base md:text-[17px] leading-[1.7] font-light">
               Before you scroll, watch this short video. It's the story of thousands of Filipino couples and maybe yours too. What you'll see might be the most <span style={{ color: "#F2EAE0", fontWeight: 600 }}>honest conversation about intimacy</span> you've heard in years.
             </p>
 
@@ -287,18 +287,18 @@ export function VSL() {
                 "Why most solutions fail and what works instead",
                 "How LOVABLE helps your body remember how to feel again",
               ].map((b) => (
-                <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-[1.6] text-[13px]">
-                  <span className="mt-2 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
+                <li key={b} className="flex gap-3 items-start text-[var(--color-ivory)]/90 leading-[1.6] text-[15px] md:text-base">
+                  <span className="mt-3 inline-block w-5 h-px bg-[var(--color-brand-red)] flex-shrink-0" />
                   <span>{b}</span>
                 </li>
               ))}
             </ul>
+
+            <div className="mt-8">
+              <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
+            </div>
           </div>
         </Reveal>
-
-        <div className="lg:col-start-2 lg:row-start-2">
-          <Link to="/shop" className="btn-primary">Get LOVABLE Now →</Link>
-        </div>
       </div>
     </section>
   );
