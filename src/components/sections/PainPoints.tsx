@@ -156,9 +156,9 @@ export function PainPoints() {
                 marginBottom: "32px",
               }}
             >
-              You Still Love Them. But the{" "}
+              You Still Love Each Other. But{" "}
               <span style={{ color: "#DC2627", fontStyle: "italic" }}>
-                Hunger is Gone.
+                Something&rsquo;s Missing.
               </span>
             </h2>
             <p
