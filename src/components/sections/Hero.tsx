@@ -27,6 +27,7 @@ export function Hero() {
         .hero-image {
           position: absolute;
           inset: 0;
+          width: 100%;
           height: 100%;
           object-fit: cover;
           object-position: center right;
@@ -56,7 +57,24 @@ export function Hero() {
           }
         }
         @media (max-width: 767px) {
-          .hero-image { width: 100%; margin-left: 0; }
+          .hero-image-container {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none;
+            margin-top: 32px;
+            border-radius: 14px;
+          }
+          .hero-image {
+            width: 100%;
+            margin-left: 0;
+            object-fit: contain;
+            object-position: center;
+            mask-image: none;
+            -webkit-mask-image: none;
+            background: #0A0606;
+          }
           .hero-bridge { display: none; }
         }
         .hero-bridge {
@@ -92,26 +110,17 @@ export function Hero() {
         }}
       />
       <HeroFX />
-      {/* Mobile: image on top (40vh). Desktop: right side 50% */}
+      {/* Mobile: image stacks BELOW text (order-2). Desktop: right side 50% */}
       <div
-        className="hero-image-container order-1 md:order-2 w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-[1]"
+        className="hero-image-container order-2 md:order-2 w-full md:w-1/2 md:h-auto md:min-h-[100svh] z-[1]"
       >
         <img
           src={HERO_IMAGE_URL}
-          alt="Filipino couple in tender embrace"
+          alt="Filipino couple in tender embrace holding LOVABLE bottles"
           className="hero-image"
         />
         {/* Bridge gradient that paints over any seam on the left edge (desktop only) */}
         <div aria-hidden className="hero-bridge" />
-        {/* Mobile: gradient on bottom edge to blend into text below */}
-        <div
-          className="md:hidden absolute inset-x-0 bottom-0 h-24 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(10,6,6,0) 0%, #0A0606 100%)",
-            zIndex: 2,
-          }}
-        />
       </div>
 
       {/* Left side: text content */}
