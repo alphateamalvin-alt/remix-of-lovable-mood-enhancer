@@ -266,21 +266,26 @@ function ProductTabs({ initial }: { initial: Variant }) {
           .variant-tabs {
             top: 56px;
             padding: 12px 16px;
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
           }
           html[data-shop-nav-hidden="true"] .variant-tabs {
             top: 0;
           }
         }
         .variant-tabs.is-stuck {
-          background: rgba(10, 6, 6, 0.92);
+          background: rgba(13, 13, 13, 0.45);
+          backdrop-filter: blur(40px) saturate(1.5);
+          -webkit-backdrop-filter: blur(40px) saturate(1.5);
           padding: 14px 24px;
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.04) inset,
-            0 24px 48px rgba(0, 0, 0, 0.25),
-            0 8px 16px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
         }
         @media (max-width: 767px) {
-          .variant-tabs.is-stuck { padding: 10px 16px; }
+          .variant-tabs.is-stuck {
+            padding: 10px 16px;
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+          }
         }
         .variant-tabs.is-stuck .tab-pill {
           padding: 9px 18px !important;
