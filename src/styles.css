@@ -634,3 +634,183 @@ h1, h2 {
     animation: none !important;
   }
 }
+
+/* ============================================
+   .btn-pulse-shine — Heartbeat + Metallic Shine
+   Applied only to top-priority conversion CTAs
+   ============================================ */
+@keyframes heartbeat-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 rgba(220, 38, 39, 0.6),
+      0 4px 12px rgba(220, 38, 39, 0.3),
+      0 1px 0 rgba(242, 234, 224, 0.15) inset;
+  }
+  14% {
+    transform: scale(1.04);
+    box-shadow:
+      0 0 0 6px rgba(220, 38, 39, 0.35),
+      0 8px 20px rgba(220, 38, 39, 0.5),
+      0 1px 0 rgba(242, 234, 224, 0.2) inset;
+  }
+  28% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 12px rgba(220, 38, 39, 0.15),
+      0 6px 16px rgba(220, 38, 39, 0.35),
+      0 1px 0 rgba(242, 234, 224, 0.15) inset;
+  }
+  42% {
+    transform: scale(1.03);
+    box-shadow:
+      0 0 0 18px rgba(220, 38, 39, 0.08),
+      0 8px 18px rgba(220, 38, 39, 0.45),
+      0 1px 0 rgba(242, 234, 224, 0.2) inset;
+  }
+  70% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 24px rgba(220, 38, 39, 0),
+      0 4px 12px rgba(220, 38, 39, 0.3),
+      0 1px 0 rgba(242, 234, 224, 0.15) inset;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 rgba(220, 38, 39, 0.6),
+      0 4px 12px rgba(220, 38, 39, 0.3),
+      0 1px 0 rgba(242, 234, 224, 0.15) inset;
+  }
+}
+
+@keyframes shine-sweep {
+  0% { left: -150%; }
+  60% { left: 150%; }
+  100% { left: 150%; }
+}
+
+.btn-pulse-shine {
+  position: relative;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #DC2627 0%, #C61F20 50%, #DC2627 100%);
+  color: #F2EAE0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  z-index: 1;
+  animation: heartbeat-pulse 2.4s ease-in-out infinite;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-pulse-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 70%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-sweep 3.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-pulse-shine > * {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-pulse-shine:hover {
+  animation-play-state: paused;
+  transform: scale(1.06);
+  will-change: transform, box-shadow;
+  background: linear-gradient(135deg, #E83436 0%, #DC2627 50%, #E83436 100%);
+  box-shadow:
+    0 0 0 8px rgba(220, 38, 39, 0.2),
+    0 12px 32px rgba(220, 38, 39, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(242, 234, 224, 0.25) inset;
+  letter-spacing: 3px;
+}
+
+.btn-pulse-shine:hover::before {
+  animation-duration: 1.2s;
+}
+
+.btn-pulse-shine:active {
+  transform: scale(1.01);
+  transition-duration: 80ms;
+  box-shadow:
+    0 0 0 4px rgba(220, 38, 39, 0.3),
+    0 4px 12px rgba(220, 38, 39, 0.4),
+    0 1px 0 rgba(242, 234, 224, 0.15) inset;
+}
+
+.btn-pulse-shine:focus-visible {
+  outline: 3px solid #B8955A;
+  outline-offset: 4px;
+}
+
+.btn-pulse-shine .arrow {
+  display: inline-block;
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-pulse-shine:hover .arrow {
+  transform: translateX(6px);
+}
+
+/* Compact variant (sticky urgency bar) */
+.btn-pulse-shine.btn-pulse-compact {
+  padding: 14px 28px;
+  font-size: 12px;
+}
+
+/* Medium variant (shop add-to-cart) */
+.btn-pulse-shine.btn-pulse-medium {
+  padding: 16px 36px;
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-pulse-shine {
+    animation: none;
+    box-shadow:
+      0 4px 12px rgba(220, 38, 39, 0.3),
+      0 1px 0 rgba(242, 234, 224, 0.15) inset;
+  }
+  .btn-pulse-shine::before {
+    animation: none;
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .btn-pulse-shine.btn-mobile-block {
+    width: 100%;
+    min-height: 52px;
+    font-size: 13px;
+  }
+}
