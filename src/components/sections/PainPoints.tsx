@@ -145,7 +145,7 @@ export function PainPoints() {
               Does This Sound Familiar?
             </p>
             <h2
-              className="text-[32px] md:text-[44px] lg:text-[56px]"
+              className="section-headline-mobile text-[26px] md:text-[44px] lg:text-[56px]"
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontWeight: 400,
