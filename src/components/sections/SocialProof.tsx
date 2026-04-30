@@ -114,7 +114,8 @@ export function SocialProof() {
                   marginRight: "24px",
                   borderRadius: "14px",
                   border: "0.5px solid rgba(184, 149, 90, 0.22)",
-                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                  boxShadow:
+                    "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 12px 32px rgba(0, 0, 0, 0.5), 0 24px 56px rgba(0, 0, 0, 0.3)",
                   background: "#1A0A0A",
                 }}
               >
