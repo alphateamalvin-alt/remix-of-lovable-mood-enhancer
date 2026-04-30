@@ -194,31 +194,79 @@ function ProductTabs({ initial }: { initial: Variant }) {
           position: sticky;
           top: 0;
           z-index: 50;
-          background: rgba(13, 13, 13, 0.92);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-bottom: 0.5px solid rgba(184, 149, 90, 0.18);
+          background: linear-gradient(
+            180deg,
+            rgba(13, 13, 13, 0.95) 0%,
+            rgba(13, 13, 13, 0.85) 100%
+          );
+          backdrop-filter: blur(20px) saturate(1.2);
+          -webkit-backdrop-filter: blur(20px) saturate(1.2);
+          border-bottom: none;
           transition: background 300ms ease, box-shadow 300ms ease, padding 300ms ease;
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0);
-          padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
-          margin-bottom: 24px;
+          padding: calc(20px + env(safe-area-inset-top, 0px)) 16px 20px;
+          margin-bottom: 32px;
+        }
+        .variant-tabs::after {
+          content: '';
+          position: absolute;
+          bottom: -20px;
+          left: 0;
+          right: 0;
+          height: 20px;
+          background: linear-gradient(
+            to bottom,
+            rgba(13, 13, 13, 0.6) 0%,
+            transparent 100%
+          );
+          pointer-events: none;
         }
         @media (min-width: 768px) {
-          .variant-tabs { padding: calc(16px + env(safe-area-inset-top, 0px)) 24px 16px; margin-bottom: 40px; }
+          .variant-tabs {
+            padding: calc(24px + env(safe-area-inset-top, 0px)) 24px 24px;
+            margin-bottom: 48px;
+          }
         }
         .variant-tabs.is-stuck {
-          background: rgba(10, 6, 6, 0.95);
-          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.04) inset,
+            0 16px 40px rgba(0, 0, 0, 0.3),
+            0 4px 8px rgba(0, 0, 0, 0.2);
           animation: stick-down 300ms cubic-bezier(0.4, 0, 0.2, 1);
-          padding-top: calc(10px + env(safe-area-inset-top, 0px));
-          padding-bottom: 10px;
+          padding-top: calc(18px + env(safe-area-inset-top, 0px));
+          padding-bottom: 18px;
         }
         .variant-tabs.is-stuck .tab-pill {
           padding: 9px 18px !important;
           font-size: 10.5px !important;
         }
+        .tab-pill {
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.06) inset,
+            0 4px 12px rgba(0, 0, 0, 0.3),
+            0 8px 24px rgba(0, 0, 0, 0.2);
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tab-pill.active {
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.15) inset,
+            0 6px 16px rgba(220, 38, 39, 0.35),
+            0 12px 32px rgba(0, 0, 0, 0.3);
+          transform: translateY(-1px);
+        }
+        .tab-pill:not(.active):hover {
+          transform: translateY(-2px);
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.08) inset,
+            0 8px 20px rgba(0, 0, 0, 0.4),
+            0 16px 32px rgba(220, 38, 39, 0.1);
+          border-color: rgba(220, 38, 39, 0.3);
+        }
         .variant-tabs.is-stuck .tab-pill.active {
-          box-shadow: 0 0 0 3px rgba(220, 38, 39, 0.15), 0 4px 12px rgba(220, 38, 39, 0.3);
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.15) inset,
+            0 0 0 3px rgba(220, 38, 39, 0.15),
+            0 6px 16px rgba(220, 38, 39, 0.35);
         }
         .variant-tabs-inner {
           display: flex;
@@ -235,6 +283,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
         @media (min-width: 640px) {
           .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
         }
+        .product-display { padding-top: 48px; }
         @keyframes stick-down {
           from { transform: translateY(-4px); opacity: 0.85; }
           to { transform: translateY(0); opacity: 1; }
