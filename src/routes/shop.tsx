@@ -24,9 +24,24 @@ const BOTTLE_HER_URL =
 const BOTTLE_HIM_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwODkyNTksImV4cCI6MTgwODYyNTI1OX0.K5QMIKYRD65B8p2BagU6a3SVO0gCmuwFYS78qwdHmPU";
 
-type Variant = "her" | "him" | "couples";
+type Variant = ShopVariant;
 
 type ShopSearch = { variant?: Variant };
+
+const META_BY_VARIANT: Record<Variant, { title: string; description: string }> = {
+  her: {
+    title: "LOVABLE For Her | Mood Enhancer Drops for Women",
+    description: "Support natural arousal and intimate wellness. Premium botanicals for women, formulated by hormonal wellness experts.",
+  },
+  him: {
+    title: "LOVABLE For Him | Mood Enhancer Drops for Men",
+    description: "Support stamina, focus, and confidence. Premium botanicals for men, formulated by hormonal wellness experts.",
+  },
+  couples: {
+    title: "LOVABLE Couples Bundle | Sync Your Intimacy",
+    description: "For couples na pareho ng goal. Synced formulas for Her and Him, designed to be taken together. Free shipping + 30-day guarantee.",
+  },
+};
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => {
@@ -34,21 +49,18 @@ export const Route = createFileRoute("/shop")({
     if (v === "her" || v === "him" || v === "couples") return { variant: v };
     return {};
   },
-  head: () => ({
-    meta: [
-      { title: "Shop LOVABLE: Lovable Drops for Filipino Couples" },
-      {
-        name: "description",
-        content:
-          "Order LOVABLE Drops for Her, Him, or the Couples Bundle. Free PH shipping ₱899+, COD available, 30-day money-back guarantee.",
-      },
-      { property: "og:title", content: "Shop LOVABLE: Reignite Naturally" },
-      {
-        property: "og:description",
-        content: "Choose your LOVABLE: For Her, For Him, or the Couples Bundle.",
-      },
-    ],
-  }),
+  head: ({ match }) => {
+    const v = (match.search as ShopSearch).variant ?? "her";
+    const meta = META_BY_VARIANT[v];
+    return {
+      meta: [
+        { title: meta.title },
+        { name: "description", content: meta.description },
+        { property: "og:title", content: meta.title },
+        { property: "og:description", content: meta.description },
+      ],
+    };
+  },
   component: ShopPage,
 });
 
