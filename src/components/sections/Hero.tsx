@@ -62,19 +62,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.3}>
             <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start md:justify-start justify-center gap-5 sm:gap-6">
-              <a
-                href="/shop"
-                className="inline-block bg-[#A81716] text-white hover:bg-[#8a1212] transition-colors"
-                style={{
-                  padding: "15px 36px",
-                  borderRadius: "8px",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "12px",
-                  fontWeight: 800,
-                  letterSpacing: "2px",
-                  textTransform: "uppercase",
-                }}
-              >
+              <a href="/shop" className="btn-primary">
                 Shop Now →
               </a>
               <div className="flex flex-col items-center sm:items-start">
