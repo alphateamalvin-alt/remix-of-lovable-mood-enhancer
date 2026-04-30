@@ -164,14 +164,54 @@ function ProductTabs({ initial }: { initial: Variant }) {
   ];
 
   const [scrolled, setScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    onScroll();
+    let lastY = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      setScrolled(y > 80);
+      if (y > lastY && y > 200) {
+        setNavHidden(true);
+      } else if (y < lastY - 4) {
+        setNavHidden(false);
+      }
+      if (y < 80) setNavHidden(false);
+      lastY = y;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Tag the document so scoped CSS can target the global Navbar from this route only
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const root = document.documentElement;
+    root.setAttribute("data-shop", "true");
+    return () => {
+      root.removeAttribute("data-shop");
+      root.removeAttribute("data-shop-nav-hidden");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (navHidden) {
+      document.documentElement.setAttribute("data-shop-nav-hidden", "true");
+    } else {
+      document.documentElement.removeAttribute("data-shop-nav-hidden");
+    }
+  }, [navHidden]);
 
   const handleTabClick = (id: Variant) => {
     setTab(id);
@@ -191,6 +231,13 @@ function ProductTabs({ initial }: { initial: Variant }) {
   return (
     <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
       <style>{`
+        /* Hide the global Navbar on /shop when scrolling down */
+        html[data-shop="true"] header {
+          transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        html[data-shop-nav-hidden="true"] header {
+          transform: translateY(-100%);
+        }
         .variant-tabs {
           position: fixed;
           top: 64px;
@@ -201,9 +248,15 @@ function ProductTabs({ initial }: { initial: Variant }) {
           backdrop-filter: blur(20px) saturate(1.2);
           -webkit-backdrop-filter: blur(20px) saturate(1.2);
           border-bottom: none;
-          transition: background 300ms ease, box-shadow 300ms ease, padding 300ms ease;
+          transition: top 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                      background 300ms ease,
+                      box-shadow 300ms ease,
+                      padding 300ms ease;
           box-shadow: 0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.18);
           padding: 18px 24px;
+        }
+        html[data-shop-nav-hidden="true"] .variant-tabs {
+          top: 0;
         }
         .variant-tabs::after {
           content: '';
@@ -224,6 +277,9 @@ function ProductTabs({ initial }: { initial: Variant }) {
           .variant-tabs {
             top: 56px;
             padding: 12px 16px;
+          }
+          html[data-shop-nav-hidden="true"] .variant-tabs {
+            top: 0;
           }
         }
         .variant-tabs.is-stuck {
