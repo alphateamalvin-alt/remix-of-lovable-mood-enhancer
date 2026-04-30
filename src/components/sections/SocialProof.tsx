@@ -509,54 +509,64 @@ export function SocialProof() {
           {stories.map((s, i) => {
             const isActive = i === active;
             return (
-              <button
+              <div
                 key={s.src}
-                onClick={() => userInteract(i)}
-                aria-label={`Show story from ${s.name}`}
-                aria-current={isActive}
-                className="shrink-0 overflow-hidden focus:outline-none"
-                style={{
-                  width: "var(--sp-thumb-w, 110px)",
-                  aspectRatio: "16 / 9",
-                  flexShrink: 0,
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  border: isActive
-                    ? "1px solid #DC2627"
-                    : "0.5px solid rgba(184, 149, 90, 0.22)",
-                  opacity: isActive ? 1 : 0.55,
-                  transform: isActive ? "scale(1.05)" : "scale(1)",
-                  boxShadow: isActive
-                    ? "0 8px 20px rgba(220, 38, 39, 0.25)"
-                    : "none",
-                  transition: "all 300ms ease",
-                  scrollSnapAlign: "center",
-                  background: "#1A0A0A",
-                  padding: 0,
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.opacity = "0.85";
-                    e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.5)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.opacity = "0.55";
-                    e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.22)";
-                  }
-                }}
+                className="shrink-0 relative"
+                style={{ width: "var(--sp-thumb-w, 110px)", flexShrink: 0 }}
               >
-                <img
-                  src={s.src}
-                  alt={s.alt}
-                  loading="lazy"
-                  width={220}
-                  height={124}
-                  className="block w-full h-full"
-                  style={{ objectFit: "cover", objectPosition: "center" }}
-                />
-              </button>
+                {isActive && (
+                  <span
+                    aria-hidden
+                    key={`ring-${progressKey}`}
+                    className={`sp-thumb-ring run ${paused ? "paused" : ""}`}
+                  />
+                )}
+                <button
+                  onClick={() => userInteract(i)}
+                  aria-label={`Show story from ${s.name}`}
+                  aria-current={isActive}
+                  className="block w-full overflow-hidden focus:outline-none"
+                  style={{
+                    aspectRatio: "16 / 9",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    border: isActive
+                      ? "1px solid #DC2627"
+                      : "0.5px solid rgba(184, 149, 90, 0.22)",
+                    opacity: isActive ? 1 : 0.55,
+                    transform: isActive ? "scale(1.05)" : "scale(1)",
+                    boxShadow: isActive
+                      ? "0 8px 20px rgba(220, 38, 39, 0.3)"
+                      : "none",
+                    transition: "all 300ms ease",
+                    scrollSnapAlign: "center",
+                    background: "#1A0A0A",
+                    padding: 0,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.opacity = "0.85";
+                      e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.5)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.opacity = "0.55";
+                      e.currentTarget.style.border = "0.5px solid rgba(184, 149, 90, 0.22)";
+                    }
+                  }}
+                >
+                  <img
+                    src={s.src}
+                    alt={s.alt}
+                    loading="lazy"
+                    width={220}
+                    height={124}
+                    className="block w-full h-full"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                </button>
+              </div>
             );
           })}
           <style>{`
