@@ -684,7 +684,7 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
 
       {/* RIGHT: details */}
       <Reveal delay={0.1}>
-        <CrossTabNav active="couples" setTab={setTab} />
+        
         <p className="eyebrow mb-3">LOVABLE Couples Bundle</p>
         <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
           The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
