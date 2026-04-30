@@ -218,12 +218,42 @@ export function SocialProof() {
           to { width: 100%; }
         }
         @keyframes sp-fade-in {
+          from { opacity: 0; transform: translateY(8px) scale(1.02); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes sp-quote-in {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .sp-fade { animation: sp-fade-in 500ms ease-out; }
+        @keyframes sp-thumb-ring {
+          from { --sp-ring: 0%; }
+          to { --sp-ring: 100%; }
+        }
+        .sp-fade { animation: sp-fade-in 500ms ease-out both; will-change: opacity, transform; }
+        .sp-quote, .sp-name, .sp-verified, .sp-divider, .sp-quote-mark {
+          animation: sp-quote-in 400ms ease-out 200ms both;
+        }
         .sp-thumbs::-webkit-scrollbar { display: none; }
         .sp-thumbs { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .sp-paused-dim { opacity: 0.5 !important; animation-play-state: paused !important; }
+        .sp-thumb-ring {
+          position: absolute;
+          inset: -3px;
+          border-radius: 11px;
+          padding: 1.5px;
+          background: conic-gradient(#B8955A var(--sp-ring, 0%), transparent 0);
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+                  mask-composite: exclude;
+          pointer-events: none;
+        }
+        .sp-thumb-ring.run { animation: sp-thumb-ring 7s linear forwards; }
+        .sp-thumb-ring.paused { animation-play-state: paused; opacity: 0.5; }
+        @media (prefers-reduced-motion: reduce) {
+          .sp-fade, .sp-quote, .sp-name, .sp-verified, .sp-divider, .sp-quote-mark { animation: none !important; }
+          .sp-progress-wrap { display: none !important; }
+          .sp-thumb-ring { display: none; }
+        }
 
         /* Mobile-first stacking for the featured story */
         .sp-featured { display: block; }
