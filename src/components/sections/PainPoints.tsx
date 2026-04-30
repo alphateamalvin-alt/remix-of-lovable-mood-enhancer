@@ -316,32 +316,55 @@ export function PainPoints() {
                     </span>
                   )}
 
-                  {/* Mobile collapsed label */}
+                  {/* Mobile collapsed: small horizontal "01 · DRIFTING" label */}
                   {isMobile && !isActive && (
                     <span
                       style={{
                         position: "absolute",
-                        bottom: "24px",
-                        left: "32px",
+                        bottom: "72px",
+                        left: "24px",
                         fontFamily: "Montserrat, sans-serif",
-                        fontSize: "11px",
+                        fontSize: "10px",
                         fontWeight: 600,
-                        letterSpacing: "0.3em",
+                        letterSpacing: "0.25em",
                         textTransform: "uppercase",
-                        color: "rgba(242,234,224,0.65)",
+                        color: "rgba(242,234,224,0.6)",
                       }}
                     >
-                      {p.label}
+                      {p.number} · {p.label}
                     </span>
+                  )}
+
+                  {/* Mobile collapsed: 2-line quote teaser */}
+                  {isMobile && !isActive && (
+                    <p
+                      style={{
+                        position: "absolute",
+                        bottom: "20px",
+                        left: "24px",
+                        right: "24px",
+                        fontFamily: "'Playfair Display', serif",
+                        fontStyle: "italic",
+                        fontSize: "16px",
+                        fontWeight: 400,
+                        color: "#F2EAE0",
+                        lineHeight: 1.35,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                      dangerouslySetInnerHTML={{ __html: p.quote }}
+                    />
                   )}
 
                   {/* Expanded content */}
                   <div
                     style={{
                       position: "absolute",
-                      bottom: "32px",
-                      left: "32px",
-                      right: "32px",
+                      bottom: isMobile ? "24px" : "32px",
+                      left: isMobile ? "24px" : "32px",
+                      right: isMobile ? "24px" : "32px",
                       opacity: isActive ? 1 : 0,
                       transition: isActive
                         ? `opacity 400ms ${EASE} 200ms`
@@ -357,7 +380,7 @@ export function PainPoints() {
                     }}
                   >
                     <p
-                      className="text-[18px] md:text-[26px]"
+                      className="text-[20px] md:text-[26px]"
                       style={{
                         fontFamily: "'Playfair Display', serif",
                         fontStyle: "italic",
