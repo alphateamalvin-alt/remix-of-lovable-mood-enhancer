@@ -271,24 +271,24 @@ function ProductDetail({
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full mx-auto overflow-hidden bg-[var(--color-noir)] group"
+          className="relative w-full overflow-hidden group"
           style={{
-            maxWidth: 560,
             aspectRatio: "1 / 1",
             borderRadius: 14,
             border: "0.5px solid rgba(184, 149, 90, 0.22)",
+            background: "transparent",
           }}
         >
           <img
             src={active}
             alt=""
             loading="lazy"
-            className={`absolute inset-0 h-full w-full block ${active === mainImage ? "object-cover" : "object-contain"}`}
-            style={{ objectPosition: "center 30%", aspectRatio: "1 / 1" }}
+            className="absolute inset-0 h-full w-full block object-cover"
+            style={{ objectPosition: "center 30%" }}
           />
           <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
         </div>
-        <div className="mt-3 grid grid-cols-3 gap-3" style={{ maxWidth: 560 }}>
+        <div className="mt-3 grid grid-cols-3 gap-3">
           {thumbnails.slice(1, 4).map((thumb, i) => (
             <button
               key={i}
@@ -485,12 +485,12 @@ function CouplesBundle() {
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full mx-auto overflow-hidden bg-[var(--color-noir)] group"
+          className="relative w-full overflow-hidden group"
           style={{
-            maxWidth: 560,
             aspectRatio: "1 / 1",
             borderRadius: 14,
             border: "0.5px solid rgba(184, 149, 90, 0.22)",
+            background: "transparent",
           }}
         >
           <img
@@ -498,11 +498,11 @@ function CouplesBundle() {
             alt="LOVABLE Couples Bundle"
             loading="lazy"
             className="absolute inset-0 h-full w-full block object-cover"
-            style={{ objectPosition: "center 35%", aspectRatio: "1 / 1" }}
+            style={{ objectPosition: "center 35%" }}
           />
           <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
         </div>
-        <div className="mt-3 grid grid-cols-3 gap-3" style={{ maxWidth: 560 }}>
+        <div className="mt-3 grid grid-cols-3 gap-3">
           {thumbnails.slice(1, 4).map((thumb, i) => (
             <button
               key={i}
