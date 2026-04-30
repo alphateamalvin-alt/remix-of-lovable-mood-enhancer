@@ -16,8 +16,23 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] flex flex-col md:flex-row bg-[#0D0D0D] overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col md:flex-row bg-tier-1 overflow-hidden"
+      style={{ boxShadow: "inset 0 0 240px rgba(0, 0, 0, 0.6)" }}
     >
+      {/* Warm radial glow behind headline area */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none hidden md:block"
+        style={{
+          top: "10%",
+          left: 0,
+          width: "60%",
+          height: "80%",
+          background:
+            "radial-gradient(ellipse at 30% 50%, rgba(220, 38, 39, 0.06) 0%, transparent 50%)",
+          zIndex: 1,
+        }}
+      />
       <HeroFX />
       {/* Mobile: image on top (40vh). Desktop: right side 50% */}
       <div className="order-1 md:order-2 relative w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-10">
