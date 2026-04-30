@@ -16,9 +16,67 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] flex flex-col md:flex-row bg-tier-1 overflow-hidden"
-      style={{ boxShadow: "inset 0 0 240px rgba(0, 0, 0, 0.6)" }}
+      className="relative min-h-[100svh] flex flex-col md:flex-row overflow-hidden"
+      style={{
+        background: "#0A0606",
+        boxShadow: "inset 0 0 240px rgba(0, 0, 0, 0.6)",
+      }}
     >
+      <style>{`
+        .hero-image-container { position: relative; overflow: hidden; }
+        .hero-image {
+          position: absolute;
+          inset: 0;
+          height: 100%;
+          object-fit: cover;
+          object-position: center right;
+        }
+        @media (min-width: 768px) {
+          .hero-image {
+            width: 110%;
+            margin-left: -5%;
+            mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              rgba(0,0,0,0.05) 5%,
+              rgba(0,0,0,0.2) 12%,
+              rgba(0,0,0,0.5) 22%,
+              rgba(0,0,0,0.8) 32%,
+              black 42%
+            );
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              rgba(0,0,0,0.05) 5%,
+              rgba(0,0,0,0.2) 12%,
+              rgba(0,0,0,0.5) 22%,
+              rgba(0,0,0,0.8) 32%,
+              black 42%
+            );
+          }
+        }
+        @media (max-width: 767px) {
+          .hero-image { width: 100%; margin-left: 0; }
+          .hero-bridge { display: none; }
+        }
+        .hero-bridge {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 60%;
+          height: 100%;
+          background: linear-gradient(
+            to right,
+            #0A0606 0%,
+            rgba(10, 6, 6, 0.95) 20%,
+            rgba(10, 6, 6, 0.7) 40%,
+            rgba(10, 6, 6, 0.3) 65%,
+            transparent 100%
+          );
+          z-index: 2;
+          pointer-events: none;
+        }
+      `}</style>
       {/* Warm radial glow behind headline area */}
       <div
         aria-hidden
@@ -30,37 +88,28 @@ export function Hero() {
           height: "80%",
           background:
             "radial-gradient(ellipse at 30% 50%, rgba(220, 38, 39, 0.06) 0%, transparent 50%)",
-          zIndex: 1,
+          zIndex: 3,
         }}
       />
       <HeroFX />
       {/* Mobile: image on top (40vh). Desktop: right side 50% */}
       <div
-        className="order-1 md:order-2 relative w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-10"
-        style={{
-          boxShadow:
-            "0 24px 64px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.4)",
-        }}
+        className="hero-image-container order-1 md:order-2 w-full md:w-1/2 h-[40vh] md:h-auto md:min-h-[100svh] z-[1]"
       >
         <img
           src={HERO_IMAGE_URL}
           alt="Filipino couple in tender embrace"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="hero-image"
         />
-        {/* Subtle dark gradient on the LEFT edge to blend into text section (desktop only) */}
-        <div
-          className="hidden md:block absolute inset-y-0 left-0 w-32 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to right, #0D0D0D 0%, rgba(13,13,13,0.6) 40%, rgba(13,13,13,0) 100%)",
-          }}
-        />
+        {/* Bridge gradient that paints over any seam on the left edge (desktop only) */}
+        <div aria-hidden className="hero-bridge" />
         {/* Mobile: gradient on bottom edge to blend into text below */}
         <div
           className="md:hidden absolute inset-x-0 bottom-0 h-24 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(13,13,13,0) 0%, #0D0D0D 100%)",
+              "linear-gradient(to bottom, rgba(10,6,6,0) 0%, #0A0606 100%)",
+            zIndex: 2,
           }}
         />
       </div>
