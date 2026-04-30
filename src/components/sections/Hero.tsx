@@ -133,14 +133,14 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1
-              className="text-[44px] md:text-[56px] lg:text-[72px]"
+              className="hero-headline-mobile text-[40px] md:text-[56px] lg:text-[72px]"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 color: "#F2EAE0",
-                lineHeight: 1.05,
+                lineHeight: 1.1,
                 fontWeight: 400,
                 letterSpacing: "-0.025em",
-                marginBottom: "24px",
+                marginBottom: "20px",
               }}
             >
               Feel That{" "}
@@ -195,7 +195,7 @@ export function Hero() {
                   />
                   For when comfort isn't enough.
                 </span>
-                <a href="/shop" className="btn-primary">
+                <a href="/shop" className="btn-primary btn-mobile-block">
                   Shop Now →
                 </a>
               </div>

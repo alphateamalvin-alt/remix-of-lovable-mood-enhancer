@@ -60,6 +60,8 @@ export function SocialProofToast() {
     let hideTimer: ReturnType<typeof setTimeout>;
     let cycleTimer: ReturnType<typeof setTimeout>;
 
+    const visibleDuration = isMobile ? 5000 : 8000;
+
     const show = () => {
       if (!mounted) return;
       setVisible(true);
@@ -71,7 +73,7 @@ export function SocialProofToast() {
           setIdx((i) => (i + 1) % toasts.length);
           show();
         }, 8000);
-      }, 5000);
+      }, visibleDuration);
     };
 
     const initial = setTimeout(show, 5000);
@@ -81,7 +83,7 @@ export function SocialProofToast() {
       clearTimeout(hideTimer);
       clearTimeout(cycleTimer);
     };
-  }, [closed]);
+  }, [closed, isMobile]);
 
   if (closed) return null;
 
@@ -98,8 +100,8 @@ export function SocialProofToast() {
         position: "fixed",
         bottom,
         left: isMobile ? 16 : 20,
-        right: isMobile ? 16 : "auto",
-        maxWidth: isMobile ? "none" : 320,
+        right: isMobile ? "auto" : "auto",
+        maxWidth: isMobile ? 260 : 320,
         zIndex: 40,
         background: "rgba(26,10,10,0.95)",
         backdropFilter: "blur(12px)",
@@ -152,15 +154,20 @@ export function SocialProofToast() {
         aria-label="Close notification"
         style={{
           position: "absolute",
-          top: 6,
-          right: 8,
+          top: 0,
+          right: 0,
+          width: 32,
+          height: 32,
           background: "transparent",
           border: "none",
           color: "#9A8880",
-          fontSize: 14,
+          fontSize: 16,
           lineHeight: 1,
           cursor: "pointer",
-          padding: 2,
+          padding: 0,
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         ×

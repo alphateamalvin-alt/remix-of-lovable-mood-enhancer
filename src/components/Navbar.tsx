@@ -98,39 +98,39 @@ export function Navbar() {
 
         <button
           onClick={() => setMobileOpen(true)}
-          className="md:hidden text-ivory p-2"
+          className="md:hidden text-ivory tap-target -mr-2"
           aria-label="Open menu"
         >
-          <Menu size={22} />
+          <Menu size={24} />
         </button>
       </nav>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-[var(--color-noir)]/98 backdrop-blur-xl flex flex-col">
+        <div className="fixed inset-0 z-50 bg-[var(--color-noir)]/98 backdrop-blur-xl flex flex-col safe-top">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
             <img src={logo} alt="LOVABLE" className="h-5 w-auto" />
-            <button onClick={() => setMobileOpen(false)} aria-label="Close menu" className="p-2">
-              <X size={22} />
+            <button onClick={() => setMobileOpen(false)} aria-label="Close menu" className="tap-target -mr-2">
+              <X size={24} />
             </button>
           </div>
-          <ul className="flex flex-col items-center justify-center flex-1 gap-8">
+          <ul className="flex flex-col items-stretch flex-1 px-6 pt-4">
             {links.map((l) => (
               <li key={l.label}>
                 <a
                   href={l.hash ? `#${l.hash}` : "/"}
                   onClick={handleNav(l.hash)}
-                  className="font-serif text-3xl text-[var(--color-ivory)]"
+                  className="flex items-center min-h-[56px] text-[16px] font-medium tracking-[0.18em] uppercase text-[var(--color-ivory)] border-b border-white/[0.05] active:bg-[var(--color-brand-red)] active:text-white transition-colors"
                 >
                   {l.label}
                 </a>
               </li>
             ))}
-            <li>
-              <Link to="/shop" search={{}} onClick={() => setMobileOpen(false)} className="btn-primary mt-6">
-                Shop Now →
-              </Link>
-            </li>
           </ul>
+          <div className="px-6 pb-8 safe-bottom">
+            <Link to="/shop" search={{}} onClick={() => setMobileOpen(false)} className="btn-primary btn-mobile-block">
+              Shop Now →
+            </Link>
+          </div>
         </div>
       )}
     </header>
