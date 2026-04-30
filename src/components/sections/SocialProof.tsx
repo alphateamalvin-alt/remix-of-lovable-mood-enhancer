@@ -571,14 +571,11 @@ export function SocialProof() {
           })}
           <style>{`
             .sp-thumbs { --sp-thumb-w: 72px; --sp-thumb-gap: 8px; --sp-thumb-pad: 16px 12px; }
-            .sp-thumbs button { width: 72px !important; }
             @media (min-width: 768px) and (max-width: 1023px) {
               .sp-thumbs { --sp-thumb-w: 90px; --sp-thumb-gap: 12px; --sp-thumb-pad: 8px 0; }
-              .sp-thumbs button { width: 90px !important; }
             }
             @media (min-width: 1024px) {
               .sp-thumbs { --sp-thumb-w: 110px; --sp-thumb-gap: 12px; --sp-thumb-pad: 8px 0; }
-              .sp-thumbs button { width: 110px !important; }
             }
           `}</style>
         </div>
