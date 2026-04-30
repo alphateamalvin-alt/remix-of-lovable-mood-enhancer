@@ -163,18 +163,14 @@ function ProductTabs({ initial }: { initial: Variant }) {
     { id: "couples", label: "Couples Bundle" },
   ];
 
-  const sentinelRef = useRef<HTMLDivElement>(null);
-  const [stuck, setStuck] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const el = sentinelRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(
-      ([entry]) => setStuck(!entry.isIntersecting),
-      { threshold: 0, rootMargin: "0px 0px 0px 0px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
+    if (typeof window === "undefined") return;
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleTabClick = (id: Variant) => {
@@ -182,7 +178,12 @@ function ProductTabs({ initial }: { initial: Variant }) {
     if (typeof window !== "undefined") {
       requestAnimationFrame(() => {
         const target = document.querySelector(".product-display") as HTMLElement | null;
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const offset = 100;
+          const top = rect.top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
       });
     }
   };
@@ -191,50 +192,50 @@ function ProductTabs({ initial }: { initial: Variant }) {
     <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
       <style>{`
         .variant-tabs {
-          position: sticky;
-          top: 0;
-          z-index: 50;
-          background: linear-gradient(
-            180deg,
-            rgba(13, 13, 13, 0.95) 0%,
-            rgba(13, 13, 13, 0.85) 100%
-          );
+          position: fixed;
+          top: 64px;
+          left: 0;
+          right: 0;
+          z-index: 45;
+          background: rgba(13, 13, 13, 0.85);
           backdrop-filter: blur(20px) saturate(1.2);
           -webkit-backdrop-filter: blur(20px) saturate(1.2);
           border-bottom: none;
           transition: background 300ms ease, box-shadow 300ms ease, padding 300ms ease;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0);
-          padding: calc(20px + env(safe-area-inset-top, 0px)) 16px 20px;
-          margin-bottom: 32px;
+          box-shadow: 0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.18);
+          padding: 18px 24px;
         }
         .variant-tabs::after {
           content: '';
           position: absolute;
-          bottom: -20px;
+          bottom: -32px;
           left: 0;
           right: 0;
-          height: 20px;
+          height: 32px;
           background: linear-gradient(
             to bottom,
-            rgba(13, 13, 13, 0.6) 0%,
+            rgba(13, 13, 13, 0.4) 0%,
             transparent 100%
           );
           pointer-events: none;
+          z-index: -1;
         }
-        @media (min-width: 768px) {
+        @media (max-width: 767px) {
           .variant-tabs {
-            padding: calc(24px + env(safe-area-inset-top, 0px)) 24px 24px;
-            margin-bottom: 48px;
+            top: 56px;
+            padding: 12px 16px;
           }
         }
         .variant-tabs.is-stuck {
+          background: rgba(10, 6, 6, 0.92);
+          padding: 14px 24px;
           box-shadow:
             0 1px 0 rgba(242, 234, 224, 0.04) inset,
-            0 16px 40px rgba(0, 0, 0, 0.3),
-            0 4px 8px rgba(0, 0, 0, 0.2);
-          animation: stick-down 300ms cubic-bezier(0.4, 0, 0.2, 1);
-          padding-top: calc(18px + env(safe-area-inset-top, 0px));
-          padding-bottom: 18px;
+            0 24px 48px rgba(0, 0, 0, 0.25),
+            0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        @media (max-width: 767px) {
+          .variant-tabs.is-stuck { padding: 10px 16px; }
         }
         .variant-tabs.is-stuck .tab-pill {
           padding: 9px 18px !important;
@@ -283,14 +284,13 @@ function ProductTabs({ initial }: { initial: Variant }) {
         @media (min-width: 640px) {
           .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
         }
-        .product-display { padding-top: 48px; }
-        @keyframes stick-down {
-          from { transform: translateY(-4px); opacity: 0.85; }
-          to { transform: translateY(0); opacity: 1; }
+        .variant-tabs-spacer { height: 80px; }
+        @media (max-width: 767px) {
+          .variant-tabs-spacer { height: 64px; }
         }
+        .product-display { padding-top: 24px; }
       `}</style>
-      <div ref={sentinelRef} aria-hidden style={{ height: 1 }} />
-      <div className={`variant-tabs ${stuck ? "is-stuck" : ""}`}>
+      <div className={`variant-tabs ${scrolled ? "is-stuck" : ""}`}>
         <div className="variant-tabs-inner mx-auto max-w-7xl" role="tablist" aria-label="Product variant">
           {tabs.map((t) => {
             const active = tab === t.id;
@@ -312,6 +312,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
           })}
         </div>
       </div>
+      <div aria-hidden className="variant-tabs-spacer" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
 
         {tab === "her" && (
