@@ -755,49 +755,348 @@ function TrustAssurance() {
 
 function HowToOrder() {
   const steps = [
-    { icon: "🛒", text: "Choose your bundle" },
-    { icon: "💳", text: "Checkout via GCash, Maya, Card, or COD" },
-    { icon: "📦", text: "We ship within 24-48 hours" },
-    { icon: "❤️", text: "Receive in 2-5 days. Feel the difference." },
+    {
+      n: "01",
+      titleBefore: "Half a dropper, ",
+      accent: "sublingual",
+      titleAfter: ".",
+      desc: "Place half a dropper (about 0.5 ml) under your tongue. Hold for 30 seconds before swallowing for best absorption.",
+    },
+    {
+      n: "02",
+      titleBefore: "Once or twice ",
+      accent: "daily",
+      titleAfter: ".",
+      desc: "Take in the morning to start your day, or about 30 minutes before intimacy. Pick the rhythm that fits your day.",
+    },
+    {
+      n: "03",
+      titleBefore: "Stay ",
+      accent: "consistent",
+      titleAfter: ".",
+      desc: "Effects build gradually over 2 to 3 weeks. Most couples feel a noticeable shift by week 2. The longer you stay on, the deeper the effect.",
+    },
   ];
 
   return (
-    <section className="bg-[var(--color-noir)] py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 text-center">
+    <section className="howuse-section">
+      <div className="howuse-container">
         <Reveal>
-          <p className="eyebrow mb-5">How It Works</p>
-          <h2 className="text-display text-[var(--color-ivory)] text-3xl sm:text-4xl md:text-[44px] leading-[1.1]">
-            Getting LOVABLE Is Simple
-          </h2>
+          <div className="howuse-header">
+            <p className="howuse-eyebrow">HOW TO USE LOVABLE</p>
+            <h2 className="howuse-headline">
+              Simple as <span className="howuse-headline-accent">one drop a day.</span>
+            </h2>
+            <p className="howuse-subtitle">No prep, no rituals. Just consistency.</p>
+          </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <Reveal key={s.text} delay={i * 0.06}>
-              <div className="glass-card rounded-2xl p-7 h-full text-left">
-                <div className="text-3xl mb-4">{s.icon}</div>
-                <div className="text-[12px] tracking-[0.18em] uppercase text-[var(--color-brand-red)] font-semibold mb-2">
-                  Step {i + 1}
-                </div>
-                <p className="text-[var(--color-ivory)]/90 text-[15px] leading-relaxed">{s.text}</p>
+        <div className="howuse-grid">
+          <Reveal delay={0.2} className="howuse-anchor-wrap">
+            <div className="howuse-anchor">
+              <div className="howuse-bottles">
+                <img
+                  src={BOTTLE_HIM_URL}
+                  alt="LOVABLE For Him bottle"
+                  className="howuse-bottle howuse-bottle-him"
+                  loading="lazy"
+                />
+                <img
+                  src={BOTTLE_HER_URL}
+                  alt="LOVABLE For Her bottle"
+                  className="howuse-bottle howuse-bottle-her"
+                  loading="lazy"
+                />
               </div>
-            </Reveal>
-          ))}
+              <p className="howuse-dose">0.5 ml</p>
+              <p className="howuse-dose-unit">PER DROP</p>
+              <span className="howuse-divider" />
+              <p className="howuse-dose-detail">
+                Half a dropper sublingually. 1 to 2 times daily. Effects build over 2 to 3 weeks.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="howuse-steps">
+            {steps.map((s, i) => (
+              <Reveal key={s.n} delay={0.3 + i * 0.1}>
+                <div className="howuse-step">
+                  <div className="howuse-step-num">{s.n}</div>
+                  <div>
+                    <h3 className="howuse-step-title">
+                      {s.titleBefore}
+                      <em className="howuse-step-accent">{s.accent}</em>
+                      {s.titleAfter}
+                    </h3>
+                    <p className="howuse-step-desc">{s.desc}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
 
-        <Reveal delay={0.2}>
-          <div className="mt-14 grid gap-6 sm:grid-cols-2">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/70">
-              <span className="text-[var(--color-brand-red)] font-semibold">Payment:</span>
-              <span>GCash</span><span>·</span><span>Maya</span><span>·</span><span>Visa</span><span>·</span><span>Mastercard</span><span>·</span><span>COD</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/70">
-              <span className="text-[var(--color-brand-red)] font-semibold">Delivery:</span>
-              <span>J&T Express</span><span>·</span><span>Ninja Van</span><span>·</span><span>Flash</span>
-            </div>
+        <Reveal delay={0.7}>
+          <div className="howuse-tip">
+            <span className="howuse-tip-icon">i</span>
+            <p className="howuse-tip-text">
+              For best results, take LOVABLE on an empty stomach or 30 minutes before meals. Store in a cool, dry place.
+            </p>
           </div>
         </Reveal>
       </div>
+
+      <style>{`
+        .howuse-section {
+          background: #160808;
+          padding: 100px 0;
+        }
+        .howuse-container {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+        .howuse-header {
+          text-align: center;
+          margin-bottom: 64px;
+        }
+        .howuse-eyebrow {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: #DC2627;
+          margin: 0 0 20px;
+          font-weight: 600;
+        }
+        .howuse-headline {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 36px;
+          color: #F2EAE0;
+          margin: 0 0 16px;
+          font-weight: 500;
+          line-height: 1.15;
+        }
+        .howuse-headline-accent {
+          font-style: italic;
+          color: #B8955A;
+        }
+        .howuse-subtitle {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px;
+          color: #9A8880;
+          max-width: 480px;
+          margin: 0 auto;
+          line-height: 1.6;
+        }
+        .howuse-grid {
+          display: grid;
+          grid-template-columns: 320px 1fr;
+          gap: 48px;
+          max-width: 960px;
+          margin: 0 auto;
+          align-items: start;
+        }
+        .howuse-anchor-wrap {
+          position: sticky;
+          top: 80px;
+        }
+        .howuse-anchor {
+          position: relative;
+          background: linear-gradient(180deg, #1F0F0C 0%, #0D0606 100%);
+          border: 0.5px solid rgba(184, 149, 90, 0.3);
+          border-radius: 14px;
+          padding: 36px 24px;
+          text-align: center;
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.06) inset,
+            0 16px 48px rgba(0, 0, 0, 0.5);
+        }
+        .howuse-bottles {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          gap: 0;
+          margin: 0 auto 24px;
+          width: 200px;
+        }
+        .howuse-bottles::before {
+          content: '';
+          position: absolute;
+          inset: -10% -10% -10% -10%;
+          background: radial-gradient(circle, rgba(220, 38, 39, 0.18) 0%, transparent 60%);
+          filter: blur(20px);
+          z-index: 0;
+          pointer-events: none;
+        }
+        .howuse-bottle {
+          width: 95px;
+          height: auto;
+          position: relative;
+          filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))
+                  drop-shadow(0 4px 8px rgba(220, 38, 39, 0.15));
+        }
+        .howuse-bottle-him {
+          transform: rotate(-4deg);
+          z-index: 1;
+          margin-right: -16px;
+        }
+        .howuse-bottle-her {
+          transform: rotate(4deg);
+          z-index: 2;
+        }
+        .howuse-dose {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          color: #F2EAE0;
+          font-size: 36px;
+          font-weight: 400;
+          line-height: 1;
+          margin: 0;
+        }
+        .howuse-dose-unit {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #B8955A;
+          margin: 8px 0 0;
+        }
+        .howuse-divider {
+          display: block;
+          width: 30px;
+          height: 0.5px;
+          background: rgba(184, 149, 90, 0.5);
+          margin: 18px auto;
+        }
+        .howuse-dose-detail {
+          font-family: 'Montserrat', sans-serif;
+          font-style: italic;
+          font-size: 11px;
+          color: rgba(154, 136, 128, 0.85);
+          line-height: 1.6;
+          margin: 0 auto;
+          max-width: 220px;
+        }
+        .howuse-steps {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+        .howuse-step {
+          display: grid;
+          grid-template-columns: 50px 1fr;
+          gap: 24px;
+          padding: 28px 0;
+          border-bottom: 0.5px solid rgba(184, 149, 90, 0.18);
+          align-items: start;
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .howuse-steps > div:last-child .howuse-step {
+          border-bottom: none;
+        }
+        .howuse-step:hover {
+          padding-left: 8px;
+          border-bottom-color: rgba(220, 38, 39, 0.3);
+        }
+        .howuse-step:hover .howuse-step-num {
+          color: #D4B27A;
+        }
+        .howuse-step-num {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          color: #B8955A;
+          font-size: 36px;
+          line-height: 1;
+          transition: color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .howuse-step-title {
+          font-family: 'Playfair Display', Georgia, serif;
+          color: #F2EAE0;
+          font-size: 19px;
+          font-weight: 400;
+          line-height: 1.3;
+          margin: 0 0 8px;
+        }
+        .howuse-step-accent {
+          font-style: italic;
+          color: #DC2627;
+        }
+        .howuse-step-desc {
+          font-family: 'Montserrat', sans-serif;
+          color: rgba(154, 136, 128, 0.85);
+          font-size: 13px;
+          line-height: 1.6;
+          margin: 0;
+        }
+        .howuse-tip {
+          margin: 40px auto 0;
+          max-width: 960px;
+          padding: 18px 24px;
+          background: rgba(184, 149, 90, 0.06);
+          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+        .howuse-tip-icon {
+          width: 24px;
+          height: 24px;
+          border-radius: 999px;
+          border: 0.5px solid #B8955A;
+          color: #B8955A;
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          font-size: 13px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .howuse-tip-text {
+          font-family: 'Montserrat', sans-serif;
+          font-style: italic;
+          font-size: 12px;
+          color: rgba(242, 234, 224, 0.7);
+          margin: 0;
+          line-height: 1.5;
+        }
+        @media (max-width: 1023px) {
+          .howuse-grid {
+            grid-template-columns: 280px 1fr;
+            gap: 36px;
+          }
+        }
+        @media (max-width: 767px) {
+          .howuse-section {
+            padding: 60px 0;
+          }
+          .howuse-headline {
+            font-size: 28px;
+          }
+          .howuse-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .howuse-anchor-wrap {
+            position: static;
+          }
+          .howuse-bottles {
+            width: 180px;
+          }
+          .howuse-bottle {
+            width: 85px;
+          }
+          .howuse-step-num {
+            font-size: 30px;
+          }
+          .howuse-step-title {
+            font-size: 17px;
+          }
+        }
+      `}</style>
     </section>
   );
 }
