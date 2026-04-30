@@ -60,6 +60,8 @@ export function SocialProofToast() {
     let hideTimer: ReturnType<typeof setTimeout>;
     let cycleTimer: ReturnType<typeof setTimeout>;
 
+    const visibleDuration = isMobile ? 5000 : 8000;
+
     const show = () => {
       if (!mounted) return;
       setVisible(true);
@@ -71,7 +73,7 @@ export function SocialProofToast() {
           setIdx((i) => (i + 1) % toasts.length);
           show();
         }, 8000);
-      }, 5000);
+      }, visibleDuration);
     };
 
     const initial = setTimeout(show, 5000);
@@ -81,7 +83,7 @@ export function SocialProofToast() {
       clearTimeout(hideTimer);
       clearTimeout(cycleTimer);
     };
-  }, [closed]);
+  }, [closed, isMobile]);
 
   if (closed) return null;
 
