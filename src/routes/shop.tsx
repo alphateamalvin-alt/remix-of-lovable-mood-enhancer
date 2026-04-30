@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronLeft, ChevronRight, Plus, ShieldCheck } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -87,7 +87,7 @@ function ShopPage() {
       <Navbar />
       <main>
         <ProductTabs initial={variant} />
-        <GuaranteeUrgency />
+        <TrustAssurance />
         <HowToOrder />
         <FinalShopCTA />
       </main>
@@ -653,109 +653,103 @@ function CouplesBundle() {
   );
 }
 
-function GuaranteeUrgency() {
-  return (
-    <section className="bg-[var(--color-warm-noir)] py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 grid gap-10 lg:grid-cols-2 items-stretch">
-        {/* Guarantee */}
-        <Reveal>
-          <div className="h-full flex flex-col">
-            <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-brand-red-soft)] text-[var(--color-brand-red)] mb-6">
-              <ShieldCheck size={32} />
-            </div>
-            <h3 className="text-display text-[var(--color-ivory)] text-2xl sm:text-3xl md:text-[32px] leading-[1.15] max-w-md">
-              Try LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>Risk-Free</span> for 30 Days
-            </h3>
-            <p className="mt-5 text-[var(--color-ivory-muted)] text-[15px] leading-[1.85] max-w-md">
-              Not satisfied? Return within 30 days for a full refund. No questions, no hassle.
-            </p>
-            <ul className="mt-6 space-y-3 max-w-md">
-              {["Full refund guaranteed", "No questions asked", "Easy return process"].map((b) => (
-                <li key={b} className="flex gap-3 items-center text-[var(--color-ivory)]/90 text-[15px]">
-                  <span className="text-[var(--color-brand-red)]">✓</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
-
-        {/* Urgency */}
-        <Reveal delay={0.1}>
-          <UrgencyCard />
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function UrgencyCard() {
-  const [time, setTime] = useState(() => 24 * 60 * 60);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTime((t) => (t > 0 ? t - 1 : 0));
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const hh = String(Math.floor(time / 3600)).padStart(2, "0");
-  const mm = String(Math.floor((time % 3600) / 60)).padStart(2, "0");
-  const ss = String(time % 60).padStart(2, "0");
+function TrustAssurance() {
+  const items = [
+    {
+      num: "01",
+      head: "Try it",
+      accent: "risk-free",
+      desc: "30-day full refund. No questions, no awkwardness.",
+    },
+    {
+      num: "02",
+      head: "Shipped",
+      accent: "discreetly",
+      desc: "Plain unmarked packaging via J&T, Ninja Van, or Flash.",
+    },
+    {
+      num: "03",
+      head: "Backed by",
+      accent: "the FDA",
+      desc: "FDA-registered, GMP-certified USA facility.",
+    },
+  ];
 
   return (
-    <div className="glass-card rounded-2xl p-7 sm:p-9 border-t-2 border-t-[var(--color-brand-red)]">
-      <h3 className="font-serif text-[var(--color-gold)] text-xl sm:text-2xl mb-7">
-        ⚠️ <span style={{ color: "#B8955A", fontStyle: "italic" }}>Stock Running Low</span>
-      </h3>
-
-      <div className="space-y-5">
-        <StockBar label="For Her" filled={8} text="Only 23 bottles left" />
-        <StockBar label="For Him" filled={7} text="Only 31 bottles left" />
-      </div>
-
-      <div className="mt-8 pt-7 border-t border-white/[0.08]">
-        <p className="text-[12px] tracking-[0.18em] uppercase text-[var(--color-ivory)]/70 mb-3 text-center">
-          Current promo price expires in:
+    <section className="bg-[#0D0D0D] py-[40px] md:py-[60px]">
+      <div className="mx-auto max-w-[1100px] px-6">
+        <p
+          className="text-center mb-8"
+          style={{
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "10px",
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: "#B8955A",
+          }}
+        >
+          Why Couples Trust LOVABLE
         </p>
-        <div className="flex items-center justify-center gap-3 sm:gap-4">
-          {[hh, mm, ss].map((d, i) => (
-            <div key={i} className="flex items-center gap-3 sm:gap-4">
-              <div className="font-serif text-[var(--color-gold)] text-4xl sm:text-5xl tabular-nums">{d}</div>
-              {i < 2 && <div className="text-[var(--color-gold)]/60 text-3xl">:</div>}
-            </div>
+        <div className="mx-auto max-w-[900px] grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 py-6">
+          {items.map((it, i) => (
+            <Reveal key={it.num} delay={i * 0.08}>
+              <div className="trust-item h-full">
+                <span className="trust-num">{it.num}</span>
+                <h3 className="trust-head">
+                  {it.head}{" "}
+                  <span className="trust-accent">{it.accent}</span>
+                </h3>
+                <p className="trust-desc">{it.desc}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
-
-      <a
-        href="https://lovablecouple.shop/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn-pulse-shine btn-pulse-medium mt-8 !w-full"
-      >
-        <span>Secure My Order Now</span> <span className="arrow">→</span>
-      </a>
-    </div>
-  );
-}
-
-function StockBar({ label, filled, text }: { label: string; filled: number; text: string }) {
-  return (
-    <div>
-      <div className="flex items-center justify-between text-[13px] mb-2">
-        <span className="text-[var(--color-ivory)]/85 font-medium">{label}</span>
-        <span className="text-[var(--color-brand-red)] font-medium">{text}</span>
-      </div>
-      <div className="flex gap-1">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <div
-            key={i}
-            className={`h-2 flex-1 rounded-sm ${i < filled ? "bg-[var(--color-brand-red)]" : "bg-white/10"}`}
-          />
-        ))}
-      </div>
-    </div>
+      <style>{`
+        .trust-item {
+          padding: 0 0 0 20px;
+          border-left: 1px solid rgba(184, 149, 90, 0.3);
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .trust-item:hover {
+          padding-left: 24px;
+          border-left: 2px solid rgba(220, 38, 39, 0.5);
+        }
+        .trust-item:hover .trust-num { color: #D4B27A; }
+        .trust-num {
+          display: block;
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          color: #B8955A;
+          font-size: 13px;
+          letter-spacing: 2px;
+          margin-bottom: 8px;
+          transition: color 300ms ease;
+        }
+        .trust-head {
+          font-family: 'Playfair Display', Georgia, serif;
+          color: #F2EAE0;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 1.3;
+          margin-bottom: 6px;
+        }
+        .trust-accent {
+          color: #DC2627;
+          font-style: italic;
+        }
+        .trust-desc {
+          font-family: 'Montserrat', sans-serif;
+          color: rgba(154, 136, 128, 0.85);
+          font-size: 12px;
+          line-height: 1.5;
+          margin: 0;
+        }
+        @media (max-width: 767px) {
+          .trust-item { border-left-width: 2px; }
+        }
+      `}</style>
+    </section>
   );
 }
 
