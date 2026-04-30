@@ -335,6 +335,14 @@ function ProductDetail({
                 className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
                   isSelected ? "bg-white/[0.04]" : "bg-transparent"
                 } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
+                style={
+                  isSelected
+                    ? {
+                        boxShadow:
+                          "inset 0 0 0 1px rgba(220, 38, 39, 0.4), 0 12px 32px rgba(220, 38, 39, 0.15)",
+                      }
+                    : undefined
+                }
               >
                 <span
                   className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
