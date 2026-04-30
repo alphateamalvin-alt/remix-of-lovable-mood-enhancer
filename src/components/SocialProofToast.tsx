@@ -104,10 +104,11 @@ export function SocialProofToast() {
         background: "rgba(26,10,10,0.95)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        border: "0.5px solid rgba(220,38,39,0.3)",
+        border: "0.5px solid rgba(184, 149, 90, 0.25)",
         borderRadius: 12,
         padding: "14px 16px",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+        boxShadow:
+          "0 1px 0 rgba(242, 234, 224, 0.06) inset, 0 16px 36px rgba(0, 0, 0, 0.55), 0 4px 8px rgba(0, 0, 0, 0.3)",
         fontFamily: "Montserrat, sans-serif",
         display: "flex",
         alignItems: "center",
