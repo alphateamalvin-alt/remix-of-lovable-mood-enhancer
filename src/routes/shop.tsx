@@ -145,6 +145,17 @@ function ProductTabs({ initial }: { initial: Variant }) {
     setTab(initial);
   }, [initial]);
 
+  // Broadcast active variant to global shop store (for the sticky bar)
+  useEffect(() => {
+    const defaults: Record<Variant, { price: number; label: string }> = {
+      her: { price: 899, label: "2 Bottles" },
+      him: { price: 899, label: "2 Bottles" },
+      couples: { price: 1899, label: "2 Sets" },
+    };
+    const d = defaults[tab];
+    setShopState({ variant: tab, price: d.price, bundleLabel: d.label });
+  }, [tab]);
+
   const tabs: { id: Variant; label: string }[] = [
     { id: "her", label: "For Her" },
     { id: "him", label: "For Him" },
@@ -176,6 +187,8 @@ function ProductTabs({ initial }: { initial: Variant }) {
         {tab === "her" && (
           <ProductDetail
             key="her"
+            variant="her"
+            setTab={setTab}
             eyebrow="LOVABLE Drops For Her"
             title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
@@ -186,36 +199,28 @@ function ProductTabs({ initial }: { initial: Variant }) {
             bundles={herBundles}
             bottleImage={BOTTLE_HER_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforher"
-            faq={[
-              { q: "How do I use it?", a: "2-3 drops under tongue or in any drink, 1-2x daily." },
-              { q: "When will I feel results?", a: "Most feel a difference in 7-14 days." },
-              { q: "What's in it?", a: "L-Citrulline, Magnesium Glycinate, Taurine, Vitamin B6." },
-            ]}
           />
         )}
 
         {tab === "him" && (
           <ProductDetail
             key="him"
+            variant="him"
+            setTab={setTab}
             eyebrow="LOVABLE Drops For Him"
             title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
-            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span>, every time.</>}
+            description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
             bottleImage={BOTTLE_HIM_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforhim"
-            faq={[
-              { q: "Is this like a blue pill?", a: "No. Works naturally with your body's own systems." },
-              { q: "How fast does it work?", a: "Energy in 7-14 days. Peak results at 30 days." },
-              { q: "Safe daily?", a: "Yes. 100% natural, no known side effects." },
-            ]}
           />
         )}
 
-        {tab === "couples" && <CouplesBundle />}
+        {tab === "couples" && <CouplesBundle setTab={setTab} />}
       </div>
     </section>
   );
