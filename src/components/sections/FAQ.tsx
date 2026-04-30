@@ -18,7 +18,7 @@ const items = [
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="bg-[var(--color-warm-noir)] py-24 md:py-36">
+    <section id="faq" className="bg-tier-3 section-divider relative py-24 md:py-36">
       <div className="mx-auto max-w-3xl px-6 lg:px-10">
         <Reveal>
           <div className="text-center mb-14">
