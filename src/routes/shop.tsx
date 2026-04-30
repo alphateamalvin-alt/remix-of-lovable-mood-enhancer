@@ -250,6 +250,8 @@ function BottleStack({ src, count }: { src: string; count: number }) {
 }
 
 function ProductDetail({
+  variant,
+  setTab,
   eyebrow,
   title,
   rating,
@@ -260,8 +262,9 @@ function ProductDetail({
   bundles,
   bottleImage,
   checkoutUrl,
-  faq,
 }: {
+  variant: Variant;
+  setTab: (v: Variant) => void;
   eyebrow: string;
   title: React.ReactNode;
   rating: string;
@@ -272,7 +275,6 @@ function ProductDetail({
   bundles: Bundle[];
   bottleImage: string;
   checkoutUrl: string;
-  faq: { q: string; a: string }[];
 }) {
   const [active, setActive] = useState(mainImage);
   const defaultBundle = bundles.find((b) => b.badge === "BEST SELLER") ?? bundles[0];
@@ -285,6 +287,12 @@ function ProductDetail({
   }, [mainImage]);
 
   const selectedBundle = bundles.find((b) => b.id === selected) ?? defaultBundle;
+
+  // Broadcast selected price/label to global store for the sticky bar
+  useEffect(() => {
+    setShopState({ variant, price: selectedBundle.price, bundleLabel: selectedBundle.label });
+  }, [variant, selectedBundle.price, selectedBundle.label]);
+
 
   return (
     <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
