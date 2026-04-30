@@ -244,34 +244,23 @@ function ProductTabs({ initial }: { initial: Variant }) {
           left: 0;
           right: 0;
           z-index: 45;
-          background: rgba(13, 13, 13, 0.85);
-          backdrop-filter: blur(20px) saturate(1.2);
-          -webkit-backdrop-filter: blur(20px) saturate(1.2);
+          background: rgba(13, 13, 13, 0.35);
+          backdrop-filter: blur(32px) saturate(1.4);
+          -webkit-backdrop-filter: blur(32px) saturate(1.4);
           border-bottom: none;
           transition: top 300ms cubic-bezier(0.4, 0, 0.2, 1),
                       background 300ms ease,
                       box-shadow 300ms ease,
-                      padding 300ms ease;
-          box-shadow: 0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.18);
+                      padding 300ms ease,
+                      backdrop-filter 300ms ease;
+          box-shadow: none;
           padding: 18px 24px;
         }
         html[data-shop-nav-hidden="true"] .variant-tabs {
           top: 0;
         }
         .variant-tabs::after {
-          content: '';
-          position: absolute;
-          bottom: -32px;
-          left: 0;
-          right: 0;
-          height: 32px;
-          background: linear-gradient(
-            to bottom,
-            rgba(13, 13, 13, 0.4) 0%,
-            transparent 100%
-          );
-          pointer-events: none;
-          z-index: -1;
+          display: none;
         }
         @media (max-width: 767px) {
           .variant-tabs {
