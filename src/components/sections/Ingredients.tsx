@@ -62,7 +62,7 @@ export function Ingredients() {
         <div className={`mt-14 grid gap-6 sm:grid-cols-2 ${items.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
           {items.map((it, i) => (
             <Reveal key={it.name} delay={i * 0.07}>
-              <div className="glass-card rounded-2xl overflow-hidden h-full transition-transform duration-500 hover:-translate-y-1">
+              <div className="lift-card overflow-hidden h-full">
                 <div className="aspect-square overflow-hidden">
                   <img src={it.img} alt={it.name} loading="lazy" className="h-full w-full object-cover" />
                 </div>
