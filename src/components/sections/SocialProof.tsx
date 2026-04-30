@@ -57,9 +57,9 @@ const stories: Story[] = [
   },
 ];
 
-const SLIDE_MS = 7000;
-const RESUME_MS = 10000;
-const INITIAL_DELAY_MS = 3000;
+const SLIDE_MS = 4000;
+const RESUME_MS = 8000;
+const INITIAL_DELAY_MS = 2000;
 
 export function SocialProof() {
   const [active, setActive] = useState(0);
@@ -218,20 +218,20 @@ export function SocialProof() {
           to { width: 100%; }
         }
         @keyframes sp-fade-in {
-          from { opacity: 0; transform: translateY(8px) scale(1.02); }
+          from { opacity: 0; transform: translateY(6px) scale(1.02); }
           to { opacity: 1; transform: translateY(0) scale(1); }
         }
         @keyframes sp-quote-in {
-          from { opacity: 0; transform: translateY(8px); }
+          from { opacity: 0; transform: translateY(6px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes sp-thumb-ring {
           from { --sp-ring: 0%; }
           to { --sp-ring: 100%; }
         }
-        .sp-fade { animation: sp-fade-in 500ms ease-out both; will-change: opacity, transform; }
+        .sp-fade { animation: sp-fade-in 350ms ease-out 100ms both; will-change: opacity, transform; }
         .sp-quote, .sp-name, .sp-verified, .sp-divider, .sp-quote-mark {
-          animation: sp-quote-in 400ms ease-out 200ms both;
+          animation: sp-quote-in 280ms ease-out 200ms both;
         }
         .sp-thumbs::-webkit-scrollbar { display: none; }
         .sp-thumbs { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
@@ -247,7 +247,7 @@ export function SocialProof() {
                   mask-composite: exclude;
           pointer-events: none;
         }
-        .sp-thumb-ring.run { animation: sp-thumb-ring 7s linear forwards; }
+        .sp-thumb-ring.run { animation: sp-thumb-ring 4s linear forwards; }
         .sp-thumb-ring.paused { animation-play-state: paused; opacity: 0.5; }
         @media (prefers-reduced-motion: reduce) {
           .sp-fade, .sp-quote, .sp-name, .sp-verified, .sp-divider, .sp-quote-mark { animation: none !important; }
