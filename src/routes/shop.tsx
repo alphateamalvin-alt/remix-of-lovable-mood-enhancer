@@ -271,10 +271,10 @@ function ProductDetail({
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full mx-auto overflow-hidden bg-[var(--color-warm-noir)] group"
+          className="relative w-full mx-auto overflow-hidden bg-[var(--color-noir)] group"
           style={{
             maxWidth: 560,
-            aspectRatio: "4 / 5",
+            aspectRatio: "1 / 1",
             borderRadius: 14,
             border: "0.5px solid rgba(184, 149, 90, 0.22)",
           }}
@@ -283,8 +283,8 @@ function ProductDetail({
             src={active}
             alt=""
             loading="lazy"
-            className={`absolute inset-0 h-full w-full ${active === mainImage ? "object-cover" : "object-contain"}`}
-            style={{ objectPosition: "center center" }}
+            className={`absolute inset-0 h-full w-full block ${active === mainImage ? "object-cover" : "object-contain"}`}
+            style={{ objectPosition: "center 30%", aspectRatio: "1 / 1" }}
           />
           <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
         </div>
@@ -414,14 +414,21 @@ function GalleryArrows({
     setActive(images[next]);
   };
   const btn =
-    "absolute top-1/2 -translate-y-1/2 z-10 h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/95 hover:bg-white text-[var(--color-noir)] flex items-center justify-center shadow-lg transition-all";
+    "absolute top-1/2 -translate-y-1/2 z-[5] h-10 w-10 rounded-full flex items-center justify-center transition-all duration-[250ms] text-[#B8955A] hover:text-[#DC2627] hover:scale-[1.08]";
+  const arrowStyle: React.CSSProperties = {
+    background: "rgba(13, 13, 13, 0.7)",
+    backdropFilter: "blur(8px)",
+    WebkitBackdropFilter: "blur(8px)",
+    border: "0.5px solid rgba(184, 149, 90, 0.4)",
+  };
   return (
     <>
       <button
         type="button"
         aria-label="Previous image"
         onClick={() => go(-1)}
-        className={`${btn} left-2 sm:left-3`}
+        className={`${btn} left-4`}
+        style={arrowStyle}
       >
         <ChevronLeft size={20} />
       </button>
@@ -429,7 +436,8 @@ function GalleryArrows({
         type="button"
         aria-label="Next image"
         onClick={() => go(1)}
-        className={`${btn} right-2 sm:right-3`}
+        className={`${btn} right-4`}
+        style={arrowStyle}
       >
         <ChevronRight size={20} />
       </button>
@@ -477,10 +485,10 @@ function CouplesBundle() {
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full mx-auto overflow-hidden bg-[var(--color-warm-noir)] group"
+          className="relative w-full mx-auto overflow-hidden bg-[var(--color-noir)] group"
           style={{
             maxWidth: 560,
-            aspectRatio: "4 / 5",
+            aspectRatio: "1 / 1",
             borderRadius: 14,
             border: "0.5px solid rgba(184, 149, 90, 0.22)",
           }}
@@ -489,8 +497,8 @@ function CouplesBundle() {
             src={active}
             alt="LOVABLE Couples Bundle"
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-contain"
-            style={{ objectPosition: "center top" }}
+            className="absolute inset-0 h-full w-full block object-cover"
+            style={{ objectPosition: "center 35%", aspectRatio: "1 / 1" }}
           />
           <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
         </div>
