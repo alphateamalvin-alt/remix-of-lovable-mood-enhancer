@@ -165,7 +165,7 @@ export function VSL() {
   const progress = duration > 0 ? (current / duration) * 100 : 0;
 
   return (
-    <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
+    <section id="story" className="bg-tier-2 section-divider relative py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-start">
         <Reveal>
           <div
