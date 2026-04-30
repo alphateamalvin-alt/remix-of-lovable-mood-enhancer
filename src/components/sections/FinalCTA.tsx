@@ -5,10 +5,10 @@ const hero = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/
 
 export function FinalCTA() {
   return (
-    <section id="forcouples" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+    <section id="forcouples" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden section-divider bg-tier-1">
       <img src={hero} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" style={{ filter: "blur(2px)" }} />
-      <div className="absolute inset-0 bg-[var(--color-noir)]/60" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-noir)] via-transparent to-[var(--color-noir)]/30" />
+      <div className="absolute inset-0" style={{ background: "rgba(10, 6, 6, 0.6)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0A0606 0%, transparent 50%, rgba(10,6,6,0.3) 100%)" }} />
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center py-24">
         <Reveal>
