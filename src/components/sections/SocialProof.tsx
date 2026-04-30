@@ -3,13 +3,13 @@ import { Reveal } from "../Reveal";
 const BASE = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS";
 
 const slides = [
-  { src: `${BASE}/Ching.png`, alt: "Ching shares her LOVABLE experience" },
-  { src: `${BASE}/Geraldine.png`, alt: "Geraldine shares her LOVABLE experience" },
-  { src: `${BASE}/Grace.png`, alt: "Grace shares her LOVABLE experience" },
-  { src: `${BASE}/Joan.png`, alt: "Joan shares her LOVABLE experience" },
-  { src: `${BASE}/Luis.png`, alt: "Luis shares his LOVABLE experience" },
-  { src: `${BASE}/Mark.png`, alt: "Mark shares his LOVABLE experience" },
-  { src: `${BASE}/Nicole.png`, alt: "Nicole shares her LOVABLE experience" },
+  { src: `${BASE}/Beth.png`, alt: "Beth shares her LOVABLE experience" },
+  { src: `${BASE}/Geraldine%202.png`, alt: "Geraldine shares her LOVABLE experience" },
+  { src: `${BASE}/Grace%202.png`, alt: "Grace shares her LOVABLE experience" },
+  { src: `${BASE}/Joan%202.png`, alt: "Joan shares her LOVABLE experience" },
+  { src: `${BASE}/Luis%202.png`, alt: "Luis shares his LOVABLE experience" },
+  { src: `${BASE}/Mark%202.png`, alt: "Mark shares his LOVABLE experience" },
+  { src: `${BASE}/Nicole%202.png`, alt: "Nicole shares her LOVABLE experience" },
 ];
 
 export function SocialProof() {
