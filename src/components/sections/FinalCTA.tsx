@@ -23,9 +23,9 @@ export function FinalCTA() {
         </Reveal>
         <Reveal delay={0.2}>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/shop" search={{ variant: "her" }} className="btn-primary">Shop For Her →</Link>
-            <Link to="/shop" search={{ variant: "him" }} className="btn-outline">Shop For Him →</Link>
-            <Link to="/shop" search={{ variant: "couples" }} className="btn-gold">Couples Bundle →</Link>
+            <Link to="/shop" search={{ variant: "her" }} className="btn-final-cta">Shop For Her →</Link>
+            <Link to="/shop" search={{ variant: "him" }} className="btn-secondary">Shop For Him →</Link>
+            <Link to="/shop" search={{ variant: "couples" }} className="btn-secondary">Couples Bundle →</Link>
           </div>
         </Reveal>
         <Reveal delay={0.3}>
