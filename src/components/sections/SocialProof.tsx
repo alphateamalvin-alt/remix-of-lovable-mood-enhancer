@@ -64,9 +64,16 @@ const INITIAL_DELAY_MS = 3000;
 export function SocialProof() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [showPausedBadge, setShowPausedBadge] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [progressKey, setProgressKey] = useState(0);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const featuredRef = useRef<HTMLDivElement | null>(null);
   const resumeTimer = useRef<number | null>(null);
+  const pausedBadgeTimer = useRef<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const handleCTA = () => {
     const el = document.getElementById("final-cta");
@@ -79,22 +86,70 @@ export function SocialProof() {
     setProgressKey((k) => k + 1);
   };
 
+  const triggerPausedBadge = () => {
+    setShowPausedBadge(true);
+    if (pausedBadgeTimer.current) window.clearTimeout(pausedBadgeTimer.current);
+    pausedBadgeTimer.current = window.setTimeout(() => setShowPausedBadge(false), 2000);
+  };
+
+  const pauseFor = (ms: number) => {
+    setPaused(true);
+    triggerPausedBadge();
+    if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+    resumeTimer.current = window.setTimeout(() => setPaused(false), ms);
+  };
+
   const userInteract = (i: number) => {
     goTo(i);
-    setPaused(true);
-    if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
-    resumeTimer.current = window.setTimeout(() => setPaused(false), RESUME_MS);
+    pauseFor(RESUME_MS);
   };
+
+  // Detect prefers-reduced-motion
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setReducedMotion(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Pause when section out of viewport
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Preload all testimonial images so transitions are instant
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    stories.forEach((s) => {
+      const img = new Image();
+      img.src = s.src;
+    });
+  }, []);
+
+  // Initial delay before auto-advance starts on load
+  useEffect(() => {
+    const t = window.setTimeout(() => setHasStarted(true), INITIAL_DELAY_MS);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // Auto-advance
   useEffect(() => {
-    if (paused) return;
+    if (paused || !inView || reducedMotion || !hasStarted) return;
     const t = window.setTimeout(() => {
       setActive((a) => (a + 1) % stories.length);
       setProgressKey((k) => k + 1);
     }, SLIDE_MS);
     return () => window.clearTimeout(t);
-  }, [active, paused]);
+  }, [active, paused, inView, reducedMotion, hasStarted]);
 
   // Keyboard nav when section is in viewport
   useEffect(() => {
@@ -109,17 +164,40 @@ export function SocialProof() {
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
         userInteract(active + 1);
+      } else if (e.code === "Space" && document.activeElement?.tagName !== "BUTTON") {
+        e.preventDefault();
+        if (paused) {
+          if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+          setPaused(false);
+        } else {
+          pauseFor(RESUME_MS);
+        }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active]);
+  }, [active, paused]);
 
   useEffect(() => {
     return () => {
       if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+      if (pausedBadgeTimer.current) window.clearTimeout(pausedBadgeTimer.current);
     };
   }, []);
+
+  // Swipe gestures (mobile)
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    pauseFor(RESUME_MS);
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) userInteract(active + 1);
+    else userInteract(active - 1);
+  };
 
   const story = stories[active];
 
