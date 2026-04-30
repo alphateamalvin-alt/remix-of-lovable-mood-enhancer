@@ -161,10 +161,7 @@ export function Hero() {
               }}
             >
               A natural blend for couples ready to want each other like the{" "}
-              <span style={{ color: "#B8955A", fontStyle: "normal", fontWeight: 400 }}>
-                first time
-              </span>
-              .
+              <span style={{ color: "#B8955A", fontStyle: "normal", fontWeight: 400 }}>first time</span>.
             </p>
           </Reveal>
           <Reveal delay={0.3}>

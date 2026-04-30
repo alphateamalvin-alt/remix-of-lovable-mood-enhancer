@@ -17,17 +17,17 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LOVABLE: Natural Mood Enhancer Drops for Filipino Couples" },
+      { title: "LOVABLE Mood Drops PH | Bumalik yung kilig, naturally." },
       {
         name: "description",
         content:
-          "Reignite intimacy naturally. LOVABLE Drops for Her & Him. 100% natural, no prescription, 30-day money-back guarantee. Free PH shipping ₱899+.",
+          "Natural mood enhancer drops formulated for Filipino couples. FDA-registered, 30-day money-back guarantee. Bumalik yung kilig.",
       },
-      { property: "og:title", content: "LOVABLE: Reignite What Time Tried to Take Away" },
+      { property: "og:title", content: "LOVABLE Mood Drops PH | Bumalik yung kilig, naturally." },
       {
         property: "og:description",
         content:
-          "The natural way thousands of Filipino couples are quietly reigniting their connection.",
+          "Natural mood enhancer drops formulated for Filipino couples. FDA-registered, 30-day money-back guarantee.",
       },
       { property: "og:type", content: "website" },
     ],

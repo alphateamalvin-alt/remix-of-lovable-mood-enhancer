@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus, Truck, ShieldCheck, Gift, Droplet } from "lucide-react";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SocialProofToast } from "@/components/SocialProofToast";
 import { StickyUrgencyBar } from "@/components/StickyUrgencyBar";
 import { Reveal } from "@/components/Reveal";
+import { setShopState, type ShopVariant } from "@/lib/shop-store";
 
 import hero from "@/assets/hero.jpg";
 const forher = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMiAoMSkucG5nIiwiaWF0IjoxNzc3MTMyNzg2LCJleHAiOjE4MDg2Njg3ODZ9.B-AMqN_dXsCpMyXZQlOCFNt-OQtx30ikTNBNvzfd9Kk";
@@ -23,9 +24,24 @@ const BOTTLE_HER_URL =
 const BOTTLE_HIM_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwODkyNTksImV4cCI6MTgwODYyNTI1OX0.K5QMIKYRD65B8p2BagU6a3SVO0gCmuwFYS78qwdHmPU";
 
-type Variant = "her" | "him" | "couples";
+type Variant = ShopVariant;
 
 type ShopSearch = { variant?: Variant };
+
+const META_BY_VARIANT: Record<Variant, { title: string; description: string }> = {
+  her: {
+    title: "LOVABLE For Her | Mood Enhancer Drops for Women",
+    description: "Support natural arousal and intimate wellness. Premium botanicals for women, formulated by hormonal wellness experts.",
+  },
+  him: {
+    title: "LOVABLE For Him | Mood Enhancer Drops for Men",
+    description: "Support stamina, focus, and confidence. Premium botanicals for men, formulated by hormonal wellness experts.",
+  },
+  couples: {
+    title: "LOVABLE Couples Bundle | Sync Your Intimacy",
+    description: "For couples na pareho ng goal. Synced formulas for Her and Him, designed to be taken together. Free shipping + 30-day guarantee.",
+  },
+};
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => {
@@ -33,21 +49,20 @@ export const Route = createFileRoute("/shop")({
     if (v === "her" || v === "him" || v === "couples") return { variant: v };
     return {};
   },
-  head: () => ({
-    meta: [
-      { title: "Shop LOVABLE: Lovable Drops for Filipino Couples" },
-      {
-        name: "description",
-        content:
-          "Order LOVABLE Drops for Her, Him, or the Couples Bundle. Free PH shipping ₱899+, COD available, 30-day money-back guarantee.",
-      },
-      { property: "og:title", content: "Shop LOVABLE: Reignite Naturally" },
-      {
-        property: "og:description",
-        content: "Choose your LOVABLE: For Her, For Him, or the Couples Bundle.",
-      },
-    ],
-  }),
+  loaderDeps: ({ search }: { search: ShopSearch }) => ({ variant: search.variant ?? "her" as Variant }),
+  loader: ({ deps }) => ({ variant: deps.variant }),
+  head: ({ loaderData }) => {
+    const v: Variant = (loaderData?.variant as Variant) ?? "her";
+    const meta = META_BY_VARIANT[v];
+    return {
+      meta: [
+        { title: meta.title },
+        { name: "description", content: meta.description },
+        { property: "og:title", content: meta.title },
+        { property: "og:description", content: meta.description },
+      ],
+    };
+  },
   component: ShopPage,
 });
 
@@ -89,6 +104,7 @@ function ShopPage() {
         <ProductTabs initial={variant} />
         <TrustAssurance />
         <HowToOrder />
+        <ComprehensiveFAQ />
         <FinalShopCTA />
       </main>
       <Footer />
@@ -130,6 +146,17 @@ function ProductTabs({ initial }: { initial: Variant }) {
     setTab(initial);
   }, [initial]);
 
+  // Broadcast active variant to global shop store (for the sticky bar)
+  useEffect(() => {
+    const defaults: Record<Variant, { price: number; label: string }> = {
+      her: { price: 899, label: "2 Bottles" },
+      him: { price: 899, label: "2 Bottles" },
+      couples: { price: 1899, label: "2 Sets" },
+    };
+    const d = defaults[tab];
+    setShopState({ variant: tab, price: d.price, bundleLabel: d.label });
+  }, [tab]);
+
   const tabs: { id: Variant; label: string }[] = [
     { id: "her", label: "For Her" },
     { id: "him", label: "For Him" },
@@ -161,6 +188,8 @@ function ProductTabs({ initial }: { initial: Variant }) {
         {tab === "her" && (
           <ProductDetail
             key="her"
+            variant="her"
+            setTab={setTab}
             eyebrow="LOVABLE Drops For Her"
             title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
             rating="4.9"
@@ -171,36 +200,28 @@ function ProductTabs({ initial }: { initial: Variant }) {
             bundles={herBundles}
             bottleImage={BOTTLE_HER_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforher"
-            faq={[
-              { q: "How do I use it?", a: "2-3 drops under tongue or in any drink, 1-2x daily." },
-              { q: "When will I feel results?", a: "Most feel a difference in 7-14 days." },
-              { q: "What's in it?", a: "L-Citrulline, Magnesium Glycinate, Taurine, Vitamin B6." },
-            ]}
           />
         )}
 
         {tab === "him" && (
           <ProductDetail
             key="him"
+            variant="him"
+            setTab={setTab}
             eyebrow="LOVABLE Drops For Him"
             title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
             rating="4.8"
             reviews="980+"
-            description={<>Supports stamina, natural testosterone, circulation, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>confidence to show up fully</span>, every time.</>}
+            description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
             mainImage={forhim}
             thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
             bundles={himBundles}
             bottleImage={BOTTLE_HIM_URL}
             checkoutUrl="https://lovablecouple.shop/lovableforhim"
-            faq={[
-              { q: "Is this like a blue pill?", a: "No. Works naturally with your body's own systems." },
-              { q: "How fast does it work?", a: "Energy in 7-14 days. Peak results at 30 days." },
-              { q: "Safe daily?", a: "Yes. 100% natural, no known side effects." },
-            ]}
           />
         )}
 
-        {tab === "couples" && <CouplesBundle />}
+        {tab === "couples" && <CouplesBundle setTab={setTab} />}
       </div>
     </section>
   );
@@ -230,6 +251,8 @@ function BottleStack({ src, count }: { src: string; count: number }) {
 }
 
 function ProductDetail({
+  variant,
+  setTab,
   eyebrow,
   title,
   rating,
@@ -240,8 +263,9 @@ function ProductDetail({
   bundles,
   bottleImage,
   checkoutUrl,
-  faq,
 }: {
+  variant: Variant;
+  setTab: (v: Variant) => void;
   eyebrow: string;
   title: React.ReactNode;
   rating: string;
@@ -252,7 +276,6 @@ function ProductDetail({
   bundles: Bundle[];
   bottleImage: string;
   checkoutUrl: string;
-  faq: { q: string; a: string }[];
 }) {
   const [active, setActive] = useState(mainImage);
   const defaultBundle = bundles.find((b) => b.badge === "BEST SELLER") ?? bundles[0];
@@ -265,6 +288,12 @@ function ProductDetail({
   }, [mainImage]);
 
   const selectedBundle = bundles.find((b) => b.id === selected) ?? defaultBundle;
+
+  // Broadcast selected price/label to global store for the sticky bar
+  useEffect(() => {
+    setShopState({ variant, price: selectedBundle.price, bundleLabel: selectedBundle.label });
+  }, [variant, selectedBundle.price, selectedBundle.label]);
+
 
   return (
     <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
@@ -304,6 +333,7 @@ function ProductDetail({
 
       {/* RIGHT: details */}
       <Reveal delay={0.1}>
+        <CrossTabNav active={variant} setTab={setTab} />
         <p className="eyebrow mb-3">{eyebrow}</p>
         <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
           {title}
@@ -395,12 +425,6 @@ function ProductDetail({
           <span>🔄 30-Day Guarantee</span>
         </div>
 
-        {/* Mini FAQ */}
-        <div className="mt-9 border-t border-white/[0.08]">
-          {faq.map((f) => (
-            <MiniFaq key={f.q} q={f.q} a={f.a} />
-          ))}
-        </div>
       </Reveal>
     </div>
   );
@@ -471,7 +495,7 @@ function MiniFaq({ q, a }: { q: string; a: string }) {
   );
 }
 
-function CouplesBundle() {
+function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
   const couplesMain =
     "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2011_46_31%20PM.png";
   const couples2 =
@@ -486,6 +510,11 @@ function CouplesBundle() {
   const defaultB = couplesBundles.find((b) => b.badge === "BEST SELLER") ?? couplesBundles[0];
   const [selected, setSelected] = useState(defaultB.id);
   const selectedBundle = couplesBundles.find((b) => b.id === selected) ?? defaultB;
+
+  useEffect(() => {
+    setShopState({ variant: "couples", price: selectedBundle.price, bundleLabel: selectedBundle.label });
+  }, [selectedBundle.price, selectedBundle.label]);
+
 
   return (
     <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
@@ -526,6 +555,7 @@ function CouplesBundle() {
 
       {/* RIGHT: details */}
       <Reveal delay={0.1}>
+        <CrossTabNav active="couples" setTab={setTab} />
         <p className="eyebrow mb-3">LOVABLE Couples Bundle</p>
         <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
           The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
@@ -535,7 +565,7 @@ function CouplesBundle() {
           <span>4.9 · 2,000+ reviews</span>
         </div>
         <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
-          One For Her. One For Him. <span style={{ color: "#F2EAE0", fontWeight: 600 }}>One goal: feel each other again.</span>
+          For couples na pareho ng goal: <span style={{ color: "#F2EAE0", fontWeight: 600 }}>bumalik sa kung sino kayo dati</span>. Synced formulas, designed to be taken together.
         </p>
 
         {/* Bundles */}
@@ -628,27 +658,146 @@ function CouplesBundle() {
           <span>🔄 30-Day Guarantee</span>
         </div>
 
-        {/* What's Included */}
-        <div className="glass-card rounded-2xl p-6 mt-7">
-          <h3 className="text-[11px] tracking-[0.22em] uppercase text-[var(--color-brand-red)] font-semibold mb-4">
-            What's Included
-          </h3>
-          <ul className="space-y-2.5">
-            {[
-              "1x LOVABLE For Her (30ml)",
-              "1x LOVABLE For Him (30ml)",
-              "FREE Couples Intimacy Guide (₱800 value)",
-              "FREE Nationwide Shipping",
-              "30-Day Money Back Guarantee",
-            ].map((line) => (
-              <li key={line} className="flex gap-3 items-start text-[var(--color-ivory)]/90 text-[14px]">
-                <span className="text-[var(--color-brand-red)] mt-0.5">✓</span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* What's Inside the Bundle */}
+        <WhatsInsideCard />
       </Reveal>
+    </div>
+  );
+}
+
+function WhatsInsideCard() {
+  const items: {
+    icon: React.ReactNode;
+    title: string;
+    sub: string;
+    free?: boolean;
+  }[] = [
+    {
+      icon: <Droplet size={22} className="text-[#B8955A]" strokeWidth={1.4} style={{ transform: "rotate(-8deg)" }} />,
+      title: "LOVABLE For Her",
+      sub: "30ml · Approx 60 doses · 1-month supply",
+    },
+    {
+      icon: <Droplet size={22} className="text-[#B8955A]" strokeWidth={1.4} style={{ transform: "rotate(8deg)" }} />,
+      title: "LOVABLE For Him",
+      sub: "30ml · Approx 60 doses · 1-month supply",
+    },
+    {
+      icon: <Gift size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
+      title: "Free Couples Intimacy Guide",
+      sub: "Digital PDF · ₱800 value",
+      free: true,
+    },
+    {
+      icon: <Truck size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
+      title: "Free Nationwide Shipping",
+      sub: "J&T, Ninja Van, or Flash · Discreet packaging",
+    },
+    {
+      icon: <ShieldCheck size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
+      title: "30-Day Money-Back Guarantee",
+      sub: "Full refund. No questions asked.",
+    },
+  ];
+
+  return (
+    <div
+      className="mt-7 rounded-2xl p-6 md:p-7"
+      style={{
+        background: "linear-gradient(180deg, #1A0A0A 0%, #110707 100%)",
+        border: "0.5px solid rgba(184, 149, 90, 0.3)",
+        boxShadow: "0 1px 0 rgba(242,234,224,0.05) inset, 0 16px 36px rgba(0,0,0,0.4)",
+      }}
+    >
+      <h3
+        style={{
+          fontFamily: "Montserrat, sans-serif",
+          fontSize: 11,
+          letterSpacing: "3px",
+          textTransform: "uppercase",
+          color: "#B8955A",
+          fontWeight: 600,
+          marginBottom: 20,
+        }}
+      >
+        What's Inside the Bundle
+      </h3>
+      <ul style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {items.map((it, i) => (
+          <li
+            key={it.title}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 14,
+              paddingBottom: i === items.length - 1 ? 0 : 16,
+              borderBottom: i === items.length - 1 ? "none" : "0.5px solid rgba(184, 149, 90, 0.15)",
+            }}
+          >
+            <span style={{ flexShrink: 0, marginTop: 2 }}>{it.icon}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    fontFamily: '"Playfair Display", Georgia, serif',
+                    fontSize: 14,
+                    color: "#F2EAE0",
+                    fontWeight: 500,
+                  }}
+                >
+                  {it.title}
+                </span>
+                {it.free && (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 5,
+                      background: "rgba(184, 149, 90, 0.15)",
+                      border: "0.5px solid rgba(184, 149, 90, 0.4)",
+                      color: "#B8955A",
+                      fontSize: 9,
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      fontWeight: 700,
+                      padding: "3px 8px",
+                      borderRadius: 999,
+                    }}
+                  >
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#DC2627" }} />
+                    Free
+                  </span>
+                )}
+              </div>
+              <div
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: 11,
+                  color: "rgba(154, 136, 128, 0.85)",
+                  marginTop: 3,
+                  lineHeight: 1.5,
+                }}
+              >
+                {it.sub}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div
+        style={{
+          marginTop: 16,
+          paddingTop: 16,
+          borderTop: "0.5px solid rgba(184, 149, 90, 0.3)",
+          fontFamily: "Montserrat, sans-serif",
+          fontStyle: "italic",
+          fontSize: 12,
+          color: "#B8955A",
+          textAlign: "center",
+        }}
+      >
+        You save ₱398 vs buying separately + bonus guide.
+      </div>
     </div>
   );
 }
@@ -1129,6 +1278,192 @@ function FinalShopCTA() {
         <Reveal delay={0.3}>
           <ChevronDown className="mt-12 mx-auto text-[var(--color-ivory)]/40" size={22} />
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function CrossTabNav({ active, setTab }: { active: Variant; setTab: (v: Variant) => void }) {
+  const tabs: { id: Variant; label: string }[] = [
+    { id: "her", label: "For Her" },
+    { id: "him", label: "For Him" },
+    { id: "couples", label: "Couples Bundle" },
+  ];
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 14,
+        fontFamily: "Montserrat, sans-serif",
+        fontSize: 10,
+        letterSpacing: "1.8px",
+        textTransform: "uppercase",
+      }}
+    >
+      {tabs.map((t, i) => {
+        const isActive = active === t.id;
+        return (
+          <span key={t.id} style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+            <button
+              onClick={() => setTab(t.id)}
+              className="cross-tab-link"
+              data-active={isActive}
+              style={{
+                background: "transparent",
+                border: "none",
+                padding: "4px 0",
+                cursor: "pointer",
+                fontWeight: isActive ? 700 : 500,
+                color: isActive ? "#DC2627" : "rgba(154,136,128,0.85)",
+                textDecoration: isActive ? "underline" : "none",
+                textUnderlineOffset: 4,
+                letterSpacing: "1.8px",
+                transition: "color 200ms ease",
+              }}
+            >
+              {t.label}
+            </button>
+            {i < tabs.length - 1 && (
+              <span style={{ color: "rgba(184,149,90,0.4)" }}>·</span>
+            )}
+          </span>
+        );
+      })}
+      <style>{`
+        .cross-tab-link[data-active="false"]:hover {
+          color: #B8955A !important;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function ComprehensiveFAQ() {
+  const faqs: { q: string; a: string }[] = [
+    {
+      q: "How do I use it?",
+      a: "Place half a dropper (about 0.5 ml) under your tongue. Hold for 30 seconds before swallowing. Take 1 to 2 times daily.",
+    },
+    {
+      q: "When will I feel the difference?",
+      a: "Most couples report a noticeable shift within 7 to 14 days. Effects build gradually and peak around week 3.",
+    },
+    {
+      q: "Is this safe for daily use?",
+      a: "Yes. LOVABLE is formulated with clinically-researched botanicals and contains no synthetic hormones. Safe for long-term consistent use.",
+    },
+    {
+      q: "Are For Him and For Her different formulas?",
+      a: "Yes. Each formula is precision-built for hormonal differences. For Her focuses on mood balance and arousal. For Him supports stamina and mental focus.",
+    },
+    {
+      q: "Will my partner know I'm taking it?",
+      a: "That's your choice. LOVABLE has no taste and no scent. The packaging arrives in plain unmarked boxes via J&T, Ninja Van, or Flash. Many couples take it together as a shared ritual, others use it privately.",
+    },
+    {
+      q: "What if it doesn't work for me?",
+      a: "Try LOVABLE for 30 days risk-free. If you don't feel the difference, we refund every peso. No questions, no awkwardness.",
+    },
+    {
+      q: "How do I pay? Pwede ba COD?",
+      a: "Pwede COD nationwide. Pwede din via GCash, Maya, Visa, or Mastercard. Choose what's easiest for you at checkout.",
+    },
+  ];
+
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
+
+  return (
+    <section className="bg-[#0A0606] section-divider py-[80px] md:py-[110px]">
+      <div className="mx-auto max-w-[820px] px-6">
+        <Reveal>
+          <p className="eyebrow text-center mb-4">Frequently Asked</p>
+          <h2 className="text-display text-center text-[var(--color-ivory)] text-[32px] md:text-[44px] leading-[1.1] mb-12">
+            Questions, <span style={{ color: "#B8955A", fontStyle: "italic" }}>Answered.</span>
+          </h2>
+        </Reveal>
+        <div
+          style={{
+            border: "0.5px solid rgba(184, 149, 90, 0.2)",
+            borderRadius: 14,
+            background: "linear-gradient(180deg, rgba(26,10,10,0.6) 0%, rgba(13,6,6,0.6) 100%)",
+            overflow: "hidden",
+          }}
+        >
+          {faqs.map((f, i) => {
+            const isOpen = openIdx === i;
+            return (
+              <div
+                key={f.q}
+                style={{
+                  borderBottom: i === faqs.length - 1 ? "none" : "0.5px solid rgba(184, 149, 90, 0.2)",
+                  background: isOpen ? "rgba(220, 38, 39, 0.04)" : "transparent",
+                  transition: "background 250ms ease",
+                }}
+              >
+                <button
+                  onClick={() => setOpenIdx(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 16,
+                    padding: "20px 24px",
+                    textAlign: "left",
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "#F2EAE0",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: '"Playfair Display", Georgia, serif',
+                      fontSize: 16,
+                      fontWeight: 500,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {f.q}
+                  </span>
+                  <Plus
+                    size={16}
+                    color="#B8955A"
+                    style={{
+                      flexShrink: 0,
+                      transition: "transform 300ms ease",
+                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    }}
+                  />
+                </button>
+                <div
+                  style={{
+                    maxHeight: isOpen ? 400 : 0,
+                    overflow: "hidden",
+                    transition: "max-height 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  <p
+                    style={{
+                      padding: "0 24px 20px",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: 13,
+                      lineHeight: 1.6,
+                      color: "rgba(154, 136, 128, 0.95)",
+                      margin: 0,
+                    }}
+                  >
+                    {f.a}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

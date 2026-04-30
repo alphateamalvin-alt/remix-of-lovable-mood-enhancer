@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
+import { useShopState, type ShopVariant } from "@/lib/shop-store";
 
 const SESSION_KEY = "lovable-urgency-dismissed";
 
 function format(n: number) {
   return n.toString().padStart(2, "0");
+}
+
+function ctaLabelFor(variant: ShopVariant): { cta: string; unit: string } {
+  if (variant === "couples") return { cta: "Couples Bundle", unit: "bundles" };
+  if (variant === "him") return { cta: "Order For Him", unit: "bottles" };
+  return { cta: "Order For Her", unit: "bottles" };
 }
 
 export function StickyUrgencyBar() {
@@ -12,8 +19,12 @@ export function StickyUrgencyBar() {
   const [count, setCount] = useState(247);
   const [seconds, setSeconds] = useState(23 * 3600 + 47 * 60 + 12);
   const [isMobile, setIsMobile] = useState(false);
+  const [onShop, setOnShop] = useState(false);
 
-  // Init from session + viewport
+  const shop = useShopState();
+  const { cta, unit } = ctaLabelFor(shop.variant);
+  const ctaHref = onShop ? "#top" : "/shop";
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem(SESSION_KEY) === "1") {
@@ -23,10 +34,10 @@ export function StickyUrgencyBar() {
     const onChange = () => setIsMobile(mq.matches);
     onChange();
     mq.addEventListener("change", onChange);
+    setOnShop(window.location.pathname.startsWith("/shop"));
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  // Scroll trigger (mobile = always visible)
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (isMobile) {
@@ -39,7 +50,6 @@ export function StickyUrgencyBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isMobile]);
 
-  // Countdown
   useEffect(() => {
     const id = setInterval(() => {
       setSeconds((s) => (s <= 1 ? 23 * 3600 + 59 * 60 + 59 : s - 1));
@@ -47,7 +57,6 @@ export function StickyUrgencyBar() {
     return () => clearInterval(id);
   }, []);
 
-  // Counter increment
   useEffect(() => {
     let id: ReturnType<typeof setTimeout>;
     const tick = () => {
@@ -68,6 +77,7 @@ export function StickyUrgencyBar() {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
+  const priceLabel = `₱${shop.price.toLocaleString()}`;
 
   return (
     <>
@@ -112,8 +122,8 @@ export function StickyUrgencyBar() {
                     animation: "lovable-pulse-dot 1.5s infinite",
                   }}
                 />
-                <span style={{ fontSize: 11, color: "#F2EAE0", fontWeight: 500 }}>
-                  <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} bottles</strong> ordered this week
+                <span style={{ fontSize: 11, color: "#F2EAE0", fontWeight: 500, letterSpacing: 0.5 }}>
+                  <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> today
                 </span>
               </div>
               <div style={{ textAlign: "right" }}>
@@ -126,8 +136,8 @@ export function StickyUrgencyBar() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-              <a href="/shop" className="btn-pulse-shine btn-pulse-compact" style={{ flex: 1 }}>
-                <span>Order Now</span> <span className="arrow">→</span>
+              <a href={ctaHref} className="btn-pulse-shine btn-pulse-compact" style={{ flex: 1 }}>
+                <span>{cta} · {priceLabel}</span> <span className="arrow">→</span>
               </a>
               <button
                 onClick={dismiss}
@@ -150,7 +160,7 @@ export function StickyUrgencyBar() {
                 }}
               />
               <span style={{ fontSize: 12, color: "#F2EAE0", fontWeight: 500 }}>
-                <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} bottles</strong> ordered this week
+                <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> ordered this week
               </span>
               <span style={{ width: 1, height: 16, background: "rgba(255,255,255,0.15)" }} />
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -163,8 +173,8 @@ export function StickyUrgencyBar() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <a href="/shop" className="btn-pulse-shine btn-pulse-compact">
-                <span>Order Now</span> <span className="arrow">→</span>
+              <a href={ctaHref} className="btn-pulse-shine btn-pulse-compact">
+                <span>{cta} · {priceLabel}</span> <span className="arrow">→</span>
               </a>
               <button
                 onClick={dismiss}
