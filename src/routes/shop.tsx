@@ -296,7 +296,7 @@ function ProductDetail({
 
 
   return (
-    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
+    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
       {/* LEFT: image gallery */}
       <Reveal>
         <div
@@ -517,7 +517,7 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
 
 
   return (
-    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
+    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
       {/* LEFT: image gallery */}
       <Reveal>
         <div
