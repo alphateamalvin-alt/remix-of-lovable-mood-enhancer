@@ -121,9 +121,9 @@ export function PainPoints() {
       id="pain-points"
       style={{
         background:
-          "radial-gradient(ellipse at 50% 50%, rgba(26,10,10,0.7) 0%, transparent 70%), #0D0D0D",
+          "radial-gradient(ellipse at 50% 50%, rgba(38,12,12,0.7) 0%, transparent 70%), #160808",
       }}
-      className="w-full py-[60px] md:py-20"
+      className="section-divider relative w-full py-[60px] md:py-20"
     >
       <div className="mx-auto px-4 md:px-6" style={{ maxWidth: "1400px" }}>
         <Reveal>
@@ -208,8 +208,8 @@ export function PainPoints() {
                 : "1px solid rgba(242, 234, 224, 0.08)";
 
               const boxShadow = isActive
-                ? "0 8px 32px rgba(0,0,0,0.4), 0 12px 48px rgba(220,38,39,0.12)"
-                : "0 8px 32px rgba(0,0,0,0.4)";
+                ? "0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 20px 48px rgba(0,0,0,0.6), 0 32px 64px rgba(220,38,39,0.10)"
+                : "0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 12px 32px rgba(0,0,0,0.5)";
 
               return (
                 <div

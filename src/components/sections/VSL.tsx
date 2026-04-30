@@ -165,15 +165,14 @@ export function VSL() {
   const progress = duration > 0 ? (current / duration) * 100 : 0;
 
   return (
-    <section id="story" style={{ backgroundColor: "#1A0A0A" }} className="py-20 md:py-28">
+    <section id="story" className="bg-tier-2 section-divider relative py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 grid gap-x-10 lg:gap-x-12 gap-y-8 lg:grid-cols-[55%_45%] items-start">
         <Reveal>
           <div
-            className="group/vsl relative mx-auto w-full max-w-[720px] overflow-hidden rounded-[14px]"
+            className="group/vsl relative mx-auto w-full max-w-[720px] overflow-hidden rounded-[14px] lift-image lift-halo"
             style={{
               backgroundColor: "var(--color-noir)",
               border: "0.5px solid color-mix(in oklab, var(--color-gold) 22%, transparent)",
-              boxShadow: "0 16px 48px rgba(0, 0, 0, 0.4)",
             }}
           >
             <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-noir)]">

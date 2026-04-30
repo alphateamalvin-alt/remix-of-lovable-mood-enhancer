@@ -22,7 +22,7 @@ export function SocialProof() {
   const loop = [...slides, ...slides];
 
   return (
-    <section className="bg-[#0D0D0D] py-[60px] md:py-[100px] overflow-hidden">
+    <section className="bg-tier-3 section-divider relative py-[60px] md:py-[100px] overflow-hidden">
       <style>{`
         @keyframes sp-marquee {
           from { transform: translateX(0); }
@@ -46,7 +46,10 @@ export function SocialProof() {
         .sp-card:hover {
           transform: scale(1.03);
           border: 0.5px solid rgba(220, 38, 39, 0.4) !important;
-          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5) !important;
+          box-shadow:
+            0 1px 0 rgba(242, 234, 224, 0.1) inset,
+            0 20px 48px rgba(0, 0, 0, 0.6),
+            0 36px 72px rgba(220, 38, 39, 0.12) !important;
           z-index: 10;
         }
       `}</style>
@@ -111,7 +114,8 @@ export function SocialProof() {
                   marginRight: "24px",
                   borderRadius: "14px",
                   border: "0.5px solid rgba(184, 149, 90, 0.22)",
-                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                  boxShadow:
+                    "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 12px 32px rgba(0, 0, 0, 0.5), 0 24px 56px rgba(0, 0, 0, 0.3)",
                   background: "#1A0A0A",
                 }}
               >

@@ -10,7 +10,7 @@ export function AnnouncementBar() {
   // Duplicate enough items for seamless loop
   const loop = [...ITEMS, ...ITEMS, ...ITEMS, ...ITEMS];
   return (
-    <div className="relative z-50 bg-[var(--color-brand-red)] text-white overflow-hidden">
+    <div className="relative z-50 bg-[var(--color-brand-red)] text-white overflow-hidden lift-bar-top">
       <div className="flex w-max animate-[marquee-left_40s_linear_infinite] py-2">
         {loop.map((item, i) => (
           <div

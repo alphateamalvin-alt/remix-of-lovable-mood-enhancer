@@ -27,7 +27,7 @@ export function Ingredients() {
   const items = tab === "him" ? him : her;
 
   return (
-    <section className="bg-[var(--color-noir)] py-24 md:py-36">
+    <section className="bg-tier-2 section-divider relative py-24 md:py-36">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
           <div className="text-center max-w-3xl mx-auto">
@@ -62,7 +62,7 @@ export function Ingredients() {
         <div className={`mt-14 grid gap-6 sm:grid-cols-2 ${items.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
           {items.map((it, i) => (
             <Reveal key={it.name} delay={i * 0.07}>
-              <div className="glass-card rounded-2xl overflow-hidden h-full transition-transform duration-500 hover:-translate-y-1">
+              <div className="lift-card overflow-hidden h-full">
                 <div className="aspect-square overflow-hidden">
                   <img src={it.img} alt={it.name} loading="lazy" className="h-full w-full object-cover" />
                 </div>

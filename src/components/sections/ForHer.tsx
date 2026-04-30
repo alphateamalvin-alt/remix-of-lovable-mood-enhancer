@@ -26,10 +26,10 @@ const benefits = [
 
 export function ForHer() {
   return (
-    <section id="forher" className="bg-[var(--color-noir)]">
+    <section id="forher" className="bg-tier-2 section-divider relative">
       <div className="grid lg:grid-cols-2 min-h-[90vh]">
         {/* SEAMLESS IMAGE: bleeds to edges, fades on right into bg */}
-        <div className="relative overflow-hidden min-h-[70vh] lg:min-h-0">
+        <div className="relative overflow-hidden min-h-[70vh] lg:min-h-0 lift-halo">
           <img
             src={FOR_HER_IMAGE}
             alt="LOVABLE for Her"

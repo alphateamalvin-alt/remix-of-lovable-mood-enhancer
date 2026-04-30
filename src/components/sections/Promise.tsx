@@ -61,9 +61,9 @@ export function Promise() {
     <section
       style={{
         background:
-          "radial-gradient(ellipse at 50% 30%, rgba(220,38,39,0.06), transparent 60%), #1A0A0A",
+          "radial-gradient(ellipse at 50% 30%, rgba(220,38,39,0.06), transparent 60%), #0D0D0D",
       }}
-      className="w-full py-[60px] md:py-[100px]"
+      className="section-divider relative w-full py-[60px] md:py-[100px]"
     >
       <div
         className="mx-auto"
@@ -123,26 +123,27 @@ export function Promise() {
               <article
                 className="group h-full flex flex-col"
                 style={{
-                  background: "#0D0D0D",
-                  border: "0.5px solid rgba(184, 149, 90, 0.22)",
+                  background: "#1A0A0A",
+                  border: "0.5px solid rgba(184, 149, 90, 0.18)",
                   borderRadius: "14px",
                   padding: "16px",
-                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                  boxShadow:
+                    "0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.4), 0 16px 48px rgba(0, 0, 0, 0.3)",
                   transition: `all 400ms ${EASE}`,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.border =
                     "0.5px solid rgba(220, 38, 39, 0.3)";
-                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.transform = "translateY(-6px)";
                   e.currentTarget.style.boxShadow =
-                    "0 16px 48px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(220, 38, 39, 0.05)";
+                    "0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 16px 36px rgba(0, 0, 0, 0.5), 0 32px 64px rgba(220, 38, 39, 0.08)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.border =
-                    "0.5px solid rgba(184, 149, 90, 0.22)";
+                    "0.5px solid rgba(184, 149, 90, 0.18)";
                   e.currentTarget.style.transform = "translateY(0)";
                   e.currentTarget.style.boxShadow =
-                    "0 8px 32px rgba(0, 0, 0, 0.3)";
+                    "0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.4), 0 16px 48px rgba(0, 0, 0, 0.3)";
                 }}
               >
                 <div

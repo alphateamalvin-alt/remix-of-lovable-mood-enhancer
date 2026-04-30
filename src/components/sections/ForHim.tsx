@@ -24,7 +24,7 @@ const benefits = [
 
 export function ForHim() {
   return (
-    <section id="forhim" className="bg-[var(--color-warm-noir)]">
+    <section id="forhim" className="bg-tier-3 section-divider relative">
       <div className="grid lg:grid-cols-2 min-h-[90vh]">
         {/* CONTENT */}
         <div className="order-2 lg:order-1 flex items-center px-6 sm:px-10 lg:px-20 py-20">
@@ -69,19 +69,19 @@ export function ForHim() {
         </div>
 
         {/* SEAMLESS IMAGE: bleeds to edges, fades on left into bg */}
-        <div className="order-1 lg:order-2 relative overflow-hidden min-h-[70vh] lg:min-h-0">
+        <div className="order-1 lg:order-2 relative overflow-hidden min-h-[70vh] lg:min-h-0 lift-halo">
           <img
             src={FOR_HIM_IMAGE}
             alt="LOVABLE for Him"
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          {/* Left-edge fade into the warm-noir background */}
+          {/* Left-edge fade into the warm tier-3 background */}
           <div
             className="absolute inset-y-0 left-0 w-40 pointer-events-none hidden lg:block"
             style={{
               background:
-                "linear-gradient(to right, var(--color-warm-noir) 0%, rgba(26,10,10,0.6) 40%, rgba(26,10,10,0) 100%)",
+                "linear-gradient(to right, #160808 0%, rgba(22,8,8,0.6) 40%, rgba(22,8,8,0) 100%)",
             }}
           />
           {/* Mobile: bottom fade */}
@@ -89,7 +89,7 @@ export function ForHim() {
             className="lg:hidden absolute inset-x-0 bottom-0 h-24 pointer-events-none"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(26,10,10,0) 0%, var(--color-warm-noir) 100%)",
+                "linear-gradient(to bottom, rgba(22,8,8,0) 0%, #160808 100%)",
             }}
           />
         </div>
