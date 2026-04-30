@@ -87,9 +87,10 @@ export function StickyUrgencyBar() {
           bottom: 0,
           zIndex: 50,
           background: "linear-gradient(90deg, #1A0A0A 0%, #2a0d0d 100%)",
-          borderTop: "1px solid #DC2627",
+          borderTop: "0.5px solid rgba(184, 149, 90, 0.2)",
           padding: isMobile ? "12px 16px" : "14px 32px",
-          boxShadow: "0 -4px 24px rgba(0,0,0,0.5)",
+          boxShadow:
+            "0 -4px 16px rgba(0, 0, 0, 0.4), 0 -1px 0 rgba(184, 149, 90, 0.2)",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(100%)",
           transition: "opacity 0.4s ease, transform 0.4s ease",
