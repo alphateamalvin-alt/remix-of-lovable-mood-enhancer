@@ -49,8 +49,10 @@ export const Route = createFileRoute("/shop")({
     if (v === "her" || v === "him" || v === "couples") return { variant: v };
     return {};
   },
-  head: ({ match }) => {
-    const v = (match.search as ShopSearch).variant ?? "her";
+  loaderDeps: ({ search }: { search: ShopSearch }) => ({ variant: search.variant ?? "her" as Variant }),
+  loader: ({ deps }) => ({ variant: deps.variant }),
+  head: ({ loaderData }) => {
+    const v: Variant = (loaderData?.variant as Variant) ?? "her";
     const meta = META_BY_VARIANT[v];
     return {
       meta: [
