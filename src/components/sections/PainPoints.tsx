@@ -121,9 +121,9 @@ export function PainPoints() {
       id="pain-points"
       style={{
         background:
-          "radial-gradient(ellipse at 50% 50%, rgba(26,10,10,0.7) 0%, transparent 70%), #0D0D0D",
+          "radial-gradient(ellipse at 50% 50%, rgba(38,12,12,0.7) 0%, transparent 70%), #160808",
       }}
-      className="w-full py-[60px] md:py-20"
+      className="section-divider relative w-full py-[60px] md:py-20"
     >
       <div className="mx-auto px-4 md:px-6" style={{ maxWidth: "1400px" }}>
         <Reveal>
