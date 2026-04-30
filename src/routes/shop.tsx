@@ -1412,7 +1412,7 @@ function FinalShopCTA() {
   );
 }
 
-function CrossTabNav({ active, setTab }: { active: Variant; setTab: (v: Variant) => void }) {
+function _CrossTabNav({ active, setTab }: { active: Variant; setTab: (v: Variant) => void }) {
   const tabs: { id: Variant; label: string }[] = [
     { id: "her", label: "For Her" },
     { id: "him", label: "For Him" },
