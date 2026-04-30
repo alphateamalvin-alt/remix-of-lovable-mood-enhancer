@@ -121,7 +121,7 @@ export function PainPoints() {
       id="pain-points"
       style={{
         background:
-          "radial-gradient(ellipse at 50% 50%, rgba(38,12,12,0.7) 0%, transparent 70%), #160808",
+          "radial-gradient(ellipse at 50% 40%, #1A0A0A 0%, #0E0606 50%, #060303 100%)",
       }}
       className="section-divider relative w-full py-[60px] md:py-20"
     >
@@ -182,7 +182,7 @@ export function PainPoints() {
           <div
             className={isMobile ? "flex flex-col" : "flex flex-row"}
             style={{
-              gap: "8px",
+              gap: "12px",
               maxWidth: "1400px",
               margin: "0 auto",
               height: isMobile ? "auto" : isTablet ? "380px" : "420px",
@@ -195,21 +195,26 @@ export function PainPoints() {
               const mobileHeight = isActive ? "400px" : "200px";
 
               const imageFilter = isActive
-                ? "brightness(1.22) contrast(1.15) saturate(1.05)"
+                ? "brightness(1.3) contrast(1.2) saturate(1.1)"
                 : isHover
-                  ? "brightness(1.1) contrast(1.12) saturate(1.05)"
-                  : "brightness(0.9) contrast(1.1) saturate(1.05)";
+                  ? "brightness(1.18) contrast(1.18) saturate(1.08)"
+                  : "brightness(1.1) contrast(1.15) saturate(1.05)";
 
               const imageTransform =
                 isHover && !isActive ? "scale(1.02)" : "scale(1)";
 
               const border = isActive
-                ? "1px solid rgba(220, 38, 39, 0.3)"
-                : "1px solid rgba(242, 234, 224, 0.08)";
+                ? "1px solid rgba(220, 38, 39, 0.4)"
+                : "1px solid rgba(184, 149, 90, 0.18)";
 
               const boxShadow = isActive
-                ? "0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 20px 48px rgba(0,0,0,0.6), 0 32px 64px rgba(220,38,39,0.10)"
-                : "0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 12px 32px rgba(0,0,0,0.5)";
+                ? "0 1px 0 rgba(242, 234, 224, 0.15) inset, 0 0 0 1px rgba(220, 38, 39, 0.4), 0 16px 32px rgba(0,0,0,0.7), 0 32px 64px rgba(0,0,0,0.6), 0 48px 96px rgba(220,38,39,0.18)"
+                : isHover
+                  ? "0 1px 0 rgba(242, 234, 224, 0.12) inset, 0 0 0 0.5px rgba(220, 38, 39, 0.4), 0 8px 16px rgba(0,0,0,0.7), 0 24px 48px rgba(0,0,0,0.6), 0 40px 80px rgba(220,38,39,0.15)"
+                  : "0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 0 0 0.5px rgba(184, 149, 90, 0.15), 0 4px 12px rgba(0,0,0,0.6), 0 16px 32px rgba(0,0,0,0.5), 0 32px 64px rgba(0,0,0,0.4)";
+
+              const liftTransform =
+                isHover && !isActive ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)";
 
               return (
                 <div
@@ -227,11 +232,13 @@ export function PainPoints() {
                     flex: isMobile ? "0 0 auto" : flex,
                     height: isMobile ? mobileHeight : "100%",
                     width: isMobile ? "100%" : "auto",
-                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}, box-shadow 500ms ${EASE}`,
+                    transform: liftTransform,
+                    zIndex: isActive ? 10 : isHover ? 5 : 1,
+                    transition: `flex 500ms ${EASE}, height 500ms ${EASE}, border 500ms ${EASE}, box-shadow 500ms ${EASE}, transform 400ms ${EASE}`,
                     minWidth: 0,
-                    background: "#1A0A0A",
+                    background: "#1F0F0C",
                     border,
-                    borderRadius: "16px",
+                    borderRadius: "14px",
                     boxShadow,
                   }}
                 >
@@ -247,6 +254,20 @@ export function PainPoints() {
                     }}
                   />
 
+                  {/* Candlelight glow band — bottom warm light, only when collapsed */}
+                  {!isActive && (
+                    <div
+                      aria-hidden
+                      className="absolute left-0 right-0 bottom-0 pointer-events-none"
+                      style={{
+                        height: "30%",
+                        background:
+                          "linear-gradient(to top, rgba(220, 38, 39, 0.12) 0%, rgba(220, 38, 39, 0.04) 40%, transparent 100%)",
+                        borderRadius: "0 0 14px 14px",
+                        zIndex: 2,
+                      }}
+                    />
+                  )}
                   {/* Warm top light */}
                   <div
                     className="absolute inset-0 pointer-events-none"
