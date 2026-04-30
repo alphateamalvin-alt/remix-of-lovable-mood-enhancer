@@ -163,16 +163,94 @@ function ProductTabs({ initial }: { initial: Variant }) {
     { id: "couples", label: "Couples Bundle" },
   ];
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [stuck, setStuck] = useState(false);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setStuck(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px 0px 0px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const handleTabClick = (id: Variant) => {
+    setTab(id);
+    if (typeof window !== "undefined") {
+      requestAnimationFrame(() => {
+        const target = document.querySelector(".product-display") as HTMLElement | null;
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  };
+
   return (
     <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 md:mb-10">
+      <style>{`
+        .variant-tabs {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          background: rgba(13, 13, 13, 0.92);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 0.5px solid rgba(184, 149, 90, 0.18);
+          transition: background 300ms ease, box-shadow 300ms ease, padding 300ms ease;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0);
+          padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
+          margin-bottom: 24px;
+        }
+        @media (min-width: 768px) {
+          .variant-tabs { padding: calc(16px + env(safe-area-inset-top, 0px)) 24px 16px; margin-bottom: 40px; }
+        }
+        .variant-tabs.is-stuck {
+          background: rgba(10, 6, 6, 0.95);
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+          animation: stick-down 300ms cubic-bezier(0.4, 0, 0.2, 1);
+          padding-top: calc(10px + env(safe-area-inset-top, 0px));
+          padding-bottom: 10px;
+        }
+        .variant-tabs.is-stuck .tab-pill {
+          padding: 9px 18px !important;
+          font-size: 10.5px !important;
+        }
+        .variant-tabs.is-stuck .tab-pill.active {
+          box-shadow: 0 0 0 3px rgba(220, 38, 39, 0.15), 0 4px 12px rgba(220, 38, 39, 0.3);
+        }
+        .variant-tabs-inner {
+          display: flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+        }
+        .variant-tabs-inner::-webkit-scrollbar { display: none; }
+        .variant-tabs-inner > button { scroll-snap-align: center; flex-shrink: 0; }
+        @media (min-width: 640px) {
+          .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
+        }
+        @keyframes stick-down {
+          from { transform: translateY(-4px); opacity: 0.85; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+      `}</style>
+      <div ref={sentinelRef} aria-hidden style={{ height: 1 }} />
+      <div className={`variant-tabs ${stuck ? "is-stuck" : ""}`}>
+        <div className="variant-tabs-inner mx-auto max-w-7xl" role="tablist" aria-label="Product variant">
           {tabs.map((t) => {
             const active = tab === t.id;
             return (
               <button
                 key={t.id}
-                onClick={() => setTab(t.id)}
+                role="tab"
+                aria-selected={active}
+                onClick={() => handleTabClick(t.id)}
                 className={`tab-pill ${active ? "active" : ""} px-6 sm:px-8 py-3 rounded-full text-[11px] sm:text-[12px] tracking-[0.2em] uppercase font-semibold transition-all ${
                   active
                     ? "bg-[var(--color-brand-red)] text-white border border-[var(--color-brand-red)]"
@@ -184,6 +262,8 @@ function ProductTabs({ initial }: { initial: Variant }) {
             );
           })}
         </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
 
         {tab === "her" && (
           <ProductDetail
