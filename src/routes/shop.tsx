@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ChevronDown, ChevronLeft, ChevronRight, Plus, Truck, ShieldCheck, Gift, Droplet } from "lucide-react";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
