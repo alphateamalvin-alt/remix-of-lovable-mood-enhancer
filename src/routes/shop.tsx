@@ -494,7 +494,7 @@ function MiniFaq({ q, a }: { q: string; a: string }) {
   );
 }
 
-function CouplesBundle() {
+function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
   const couplesMain =
     "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2011_46_31%20PM.png";
   const couples2 =
@@ -509,6 +509,11 @@ function CouplesBundle() {
   const defaultB = couplesBundles.find((b) => b.badge === "BEST SELLER") ?? couplesBundles[0];
   const [selected, setSelected] = useState(defaultB.id);
   const selectedBundle = couplesBundles.find((b) => b.id === selected) ?? defaultB;
+
+  useEffect(() => {
+    setShopState({ variant: "couples", price: selectedBundle.price, bundleLabel: selectedBundle.label });
+  }, [selectedBundle.price, selectedBundle.label]);
+
 
   return (
     <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-center">
