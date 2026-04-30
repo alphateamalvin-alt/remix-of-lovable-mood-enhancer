@@ -27,7 +27,7 @@ export function Ingredients() {
   const items = tab === "him" ? him : her;
 
   return (
-    <section className="bg-[var(--color-noir)] py-24 md:py-36">
+    <section className="bg-tier-2 section-divider relative py-24 md:py-36">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
           <div className="text-center max-w-3xl mx-auto">
