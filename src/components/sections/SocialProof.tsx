@@ -356,7 +356,12 @@ export function SocialProof() {
         {/* Featured story */}
         <Reveal delay={0.15}>
           <div className="text-left">
-            <div className="sp-featured">
+            <div
+              className="sp-featured"
+              ref={featuredRef}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+            >
               {/* Image */}
               <div
                 key={`img-${active}`}
@@ -387,6 +392,32 @@ export function SocialProof() {
                   }}
                 >
                   Featured Story
+                </span>
+                {/* Paused indicator */}
+                <span
+                  aria-hidden
+                  className="absolute uppercase inline-flex items-center gap-1.5"
+                  style={{
+                    top: 12,
+                    right: 12,
+                    padding: "4px 10px",
+                    borderRadius: 999,
+                    background: "rgba(0,0,0,0.7)",
+                    color: "#F2EAE0",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: 9,
+                    letterSpacing: "1.5px",
+                    fontWeight: 600,
+                    opacity: showPausedBadge && paused ? 0.85 : 0,
+                    transition: "opacity 250ms ease",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden>
+                    <rect x="1" y="1" width="2" height="6" fill="#F2EAE0" />
+                    <rect x="5" y="1" width="2" height="6" fill="#F2EAE0" />
+                  </svg>
+                  Paused
                 </span>
               </div>
 
