@@ -10,7 +10,15 @@ type Story = {
   quote: string;
 };
 
+// Ordered for emotional arc:
+// connection → confession → permission → assurance → male validation → confidence → close
 const stories: Story[] = [
+  {
+    src: `${BASE}/Joan%202.png`,
+    alt: "Joan shares her LOVABLE experience",
+    name: "Joan",
+    quote: "Bumalik yung connection na akala ko wala na.",
+  },
   {
     src: `${BASE}/Beth.png`,
     alt: "Beth shares her LOVABLE experience",
@@ -30,22 +38,16 @@ const stories: Story[] = [
     quote: "Hindi siya magic, support lang para bumalik.",
   },
   {
-    src: `${BASE}/Joan%202.png`,
-    alt: "Joan shares her LOVABLE experience",
-    name: "Joan",
-    quote: "Bumalik yung connection na akala ko wala na.",
+    src: `${BASE}/Mark%202.png`,
+    alt: "Mark shares his LOVABLE experience",
+    name: "Mark",
+    quote: "Saan galing yung bagsik na 'to?",
   },
   {
     src: `${BASE}/Luis%202.png`,
     alt: "Luis shares his LOVABLE experience",
     name: "Luis",
     quote: "Feel it before they do.",
-  },
-  {
-    src: `${BASE}/Mark%202.png`,
-    alt: "Mark shares his LOVABLE experience",
-    name: "Mark",
-    quote: "Saan galing yung bagsik na 'to?",
   },
   {
     src: `${BASE}/Nicole%202.png`,
@@ -56,7 +58,8 @@ const stories: Story[] = [
 ];
 
 const SLIDE_MS = 7000;
-const RESUME_MS = 8000;
+const RESUME_MS = 10000;
+const INITIAL_DELAY_MS = 3000;
 
 export function SocialProof() {
   const [active, setActive] = useState(0);
