@@ -147,26 +147,7 @@ export function SocialProof() {
         >
           Join thousands of couples who already feel the difference.
         </p>
-        <button
-          onClick={handleCTA}
-          className="rounded-full uppercase transition-all duration-300 ease-out hover:scale-[1.04]"
-          style={{
-            backgroundColor: "#DC2627",
-            color: "#F2EAE0",
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: "13px",
-            letterSpacing: "2px",
-            fontWeight: 600,
-            padding: "16px 40px",
-            boxShadow: "0 8px 24px rgba(220, 38, 39, 0.25)",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = "0 16px 40px rgba(220, 38, 39, 0.45)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = "0 8px 24px rgba(220, 38, 39, 0.25)";
-          }}
-        >
+        <button onClick={handleCTA} className="btn-primary">
           I've Seen Enough, Order Mine
         </button>
       </div>

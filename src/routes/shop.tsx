@@ -146,10 +146,10 @@ function ProductTabs({ initial }: { initial: Variant }) {
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`px-6 sm:px-8 py-3 rounded-full text-[11px] sm:text-[12px] tracking-[0.2em] uppercase font-semibold transition-all ${
+                className={`tab-pill ${active ? "active" : ""} px-6 sm:px-8 py-3 rounded-full text-[11px] sm:text-[12px] tracking-[0.2em] uppercase font-semibold transition-all ${
                   active
                     ? "bg-[var(--color-brand-red)] text-white border border-[var(--color-brand-red)]"
-                    : "bg-transparent text-[var(--color-ivory)] border border-[var(--color-ivory)]/40 hover:border-[var(--color-ivory)]"
+                    : "bg-transparent text-[var(--color-ivory)] border border-[var(--color-ivory)]/40"
                 }`}
               >
                 {t.label}
@@ -814,8 +814,8 @@ function FinalShopCTA() {
         <Reveal delay={0.2}>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/shop" search={{ variant: "her" }} className="btn-primary">Shop For Her →</Link>
-            <Link to="/shop" search={{ variant: "him" }} className="btn-outline">Shop For Him →</Link>
-            <Link to="/shop" search={{ variant: "couples" }} className="btn-outline">Couples Bundle →</Link>
+            <Link to="/shop" search={{ variant: "him" }} className="btn-secondary">Shop For Him →</Link>
+            <Link to="/shop" search={{ variant: "couples" }} className="btn-secondary">Couples Bundle →</Link>
           </div>
         </Reveal>
         <Reveal delay={0.3}>

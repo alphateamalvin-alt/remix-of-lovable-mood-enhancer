@@ -123,14 +123,7 @@ export function StickyUrgencyBar() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-              <a
-                href="/shop"
-                style={{
-                  flex: 1, textAlign: "center", background: "#DC2627", color: "white",
-                  padding: "10px 20px", borderRadius: 6, fontSize: 11, fontWeight: 700,
-                  letterSpacing: "1.5px", textTransform: "uppercase", textDecoration: "none",
-                }}
-              >
+              <a href="/shop" className="btn-primary" style={{ flex: 1, padding: "10px 20px", fontSize: 11, letterSpacing: "1.5px" }}>
                 Order Now →
               </a>
               <button
@@ -167,16 +160,7 @@ export function StickyUrgencyBar() {
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <a
-                href="/shop"
-                className="hover:!bg-[#B8221F] hover:scale-[1.03]"
-                style={{
-                  background: "#DC2627", color: "white",
-                  padding: "10px 24px", borderRadius: 6, fontSize: 11, fontWeight: 700,
-                  letterSpacing: "1.5px", textTransform: "uppercase", textDecoration: "none",
-                  transition: "background 0.2s ease, transform 0.2s ease", display: "inline-block",
-                }}
-              >
+              <a href="/shop" className="btn-primary" style={{ padding: "10px 24px", fontSize: 11, letterSpacing: "1.5px" }}>
                 Order Now →
               </a>
               <button
