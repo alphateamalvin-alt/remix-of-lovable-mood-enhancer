@@ -22,7 +22,7 @@ export function SocialProof() {
   const loop = [...slides, ...slides];
 
   return (
-    <section className="bg-[#0D0D0D] py-[60px] md:py-[100px] overflow-hidden">
+    <section className="bg-tier-3 section-divider relative py-[60px] md:py-[100px] overflow-hidden">
       <style>{`
         @keyframes sp-marquee {
           from { transform: translateX(0); }
