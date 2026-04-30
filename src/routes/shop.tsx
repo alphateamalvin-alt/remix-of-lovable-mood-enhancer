@@ -164,22 +164,12 @@ function ProductTabs({ initial }: { initial: Variant }) {
   ];
 
   const [scrolled, setScrolled] = useState(false);
-  const [navHidden, setNavHidden] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    let lastY = window.scrollY;
     let ticking = false;
     const update = () => {
-      const y = window.scrollY;
-      setScrolled(y > 80);
-      if (y > lastY && y > 200) {
-        setNavHidden(true);
-      } else if (y < lastY - 4) {
-        setNavHidden(false);
-      }
-      if (y < 80) setNavHidden(false);
-      lastY = y;
+      setScrolled(window.scrollY > 120);
       ticking = false;
     };
     const onScroll = () => {
@@ -192,26 +182,6 @@ function ProductTabs({ initial }: { initial: Variant }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Tag the document so scoped CSS can target the global Navbar from this route only
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    root.setAttribute("data-shop", "true");
-    return () => {
-      root.removeAttribute("data-shop");
-      root.removeAttribute("data-shop-nav-hidden");
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (navHidden) {
-      document.documentElement.setAttribute("data-shop-nav-hidden", "true");
-    } else {
-      document.documentElement.removeAttribute("data-shop-nav-hidden");
-    }
-  }, [navHidden]);
 
   const handleTabClick = (id: Variant) => {
     setTab(id);
@@ -229,48 +199,34 @@ function ProductTabs({ initial }: { initial: Variant }) {
   };
 
   return (
-    <section className="bg-[var(--color-noir)] pt-5 md:pt-8 pb-16 md:pb-20">
+    <>
       <style>{`
-        /* Hide the global Navbar on /shop when scrolling down */
-        html[data-shop="true"] header {
-          transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        html[data-shop-nav-hidden="true"] header {
-          transform: translateY(-100%);
-        }
         .variant-tabs {
-          position: fixed;
+          position: sticky;
           top: 64px;
-          left: 0;
-          right: 0;
-          z-index: 45;
-          background: rgba(13, 13, 13, 0.35);
+          z-index: 30;
+          background: rgba(13, 13, 13, 0.4);
           backdrop-filter: blur(32px) saturate(1.4);
           -webkit-backdrop-filter: blur(32px) saturate(1.4);
           border-bottom: none;
-          transition: top 300ms cubic-bezier(0.4, 0, 0.2, 1),
-                      background 300ms ease,
+          transition: background 300ms ease,
                       box-shadow 300ms ease,
                       padding 300ms ease,
                       backdrop-filter 300ms ease;
           box-shadow: none;
           padding: 18px 24px;
+          margin-top: 24px;
+          margin-bottom: 24px;
         }
-        html[data-shop-nav-hidden="true"] .variant-tabs {
-          top: 0;
-        }
-        .variant-tabs::after {
-          display: none;
-        }
+        .variant-tabs::after { display: none; }
         @media (max-width: 767px) {
           .variant-tabs {
             top: 56px;
             padding: 12px 16px;
+            margin-top: 16px;
+            margin-bottom: 16px;
             backdrop-filter: blur(20px) saturate(1.3);
             -webkit-backdrop-filter: blur(20px) saturate(1.3);
-          }
-          html[data-shop-nav-hidden="true"] .variant-tabs {
-            top: 0;
           }
         }
         .variant-tabs.is-stuck {
@@ -339,11 +295,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
         @media (min-width: 640px) {
           .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
         }
-        .variant-tabs-spacer { height: 80px; }
-        @media (max-width: 767px) {
-          .variant-tabs-spacer { height: 64px; }
-        }
-        .product-display { padding-top: 24px; }
+        .product-display { padding-top: 8px; }
       `}</style>
       <div className={`variant-tabs ${scrolled ? "is-stuck" : ""}`}>
         <div className="variant-tabs-inner mx-auto max-w-7xl" role="tablist" aria-label="Product variant">
@@ -367,48 +319,49 @@ function ProductTabs({ initial }: { initial: Variant }) {
           })}
         </div>
       </div>
-      <div aria-hidden className="variant-tabs-spacer" />
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
+      <section className="bg-[var(--color-noir)] pb-16 md:pb-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
 
-        {tab === "her" && (
-          <ProductDetail
-            key="her"
-            variant="her"
-            setTab={setTab}
-            eyebrow="LOVABLE Drops For Her"
-            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
-            rating="4.9"
-            reviews="1,200+"
-            description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
-            mainImage={forher}
-            thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
-            bundles={herBundles}
-            bottleImage={BOTTLE_HER_URL}
-            checkoutUrl="https://lovablecouple.shop/lovableforher"
-          />
-        )}
+          {tab === "her" && (
+            <ProductDetail
+              key="her"
+              variant="her"
+              setTab={setTab}
+              eyebrow="LOVABLE Drops For Her"
+              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
+              rating="4.9"
+              reviews="1,200+"
+              description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
+              mainImage={forher}
+              thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
+              bundles={herBundles}
+              bottleImage={BOTTLE_HER_URL}
+              checkoutUrl="https://lovablecouple.shop/lovableforher"
+            />
+          )}
 
-        {tab === "him" && (
-          <ProductDetail
-            key="him"
-            variant="him"
-            setTab={setTab}
-            eyebrow="LOVABLE Drops For Him"
-            title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
-            rating="4.8"
-            reviews="980+"
-            description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
-            mainImage={forhim}
-            thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
-            bundles={himBundles}
-            bottleImage={BOTTLE_HIM_URL}
-            checkoutUrl="https://lovablecouple.shop/lovableforhim"
-          />
-        )}
+          {tab === "him" && (
+            <ProductDetail
+              key="him"
+              variant="him"
+              setTab={setTab}
+              eyebrow="LOVABLE Drops For Him"
+              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
+              rating="4.8"
+              reviews="980+"
+              description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
+              mainImage={forhim}
+              thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
+              bundles={himBundles}
+              bottleImage={BOTTLE_HIM_URL}
+              checkoutUrl="https://lovablecouple.shop/lovableforhim"
+            />
+          )}
 
-        {tab === "couples" && <CouplesBundle setTab={setTab} />}
-      </div>
-    </section>
+          {tab === "couples" && <CouplesBundle setTab={setTab} />}
+        </div>
+      </section>
+    </>
   );
 }
 
