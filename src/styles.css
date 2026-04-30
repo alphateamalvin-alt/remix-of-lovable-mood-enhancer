@@ -569,3 +569,68 @@ h1, h2 {
     0 16px 36px rgba(0, 0, 0, 0.55),
     0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+/* ============================================
+   GLOBAL MOBILE REFINEMENTS
+   ============================================ */
+
+/* Safe-area insets for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-top    { padding-top: env(safe-area-inset-top); }
+}
+
+/* Minimum tap target — apply to small icon buttons */
+.tap-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Visible :active feedback for touch */
+@media (hover: none) {
+  .btn-primary:active,
+  .btn-final-cta:active,
+  .btn-secondary:active,
+  .btn-outline:active,
+  .btn-gold:active {
+    transform: scale(0.98);
+    opacity: 0.92;
+  }
+}
+
+/* Mobile-first headline scale (applied to .text-display + h1/h2) */
+@media (max-width: 767px) {
+  h1 { line-height: 1.1; }
+  h2 { line-height: 1.2; }
+}
+@media (max-width: 379px) {
+  /* Tighten further on iPhone SE-class screens */
+  .hero-headline-mobile { font-size: 34px !important; }
+  .section-headline-mobile { font-size: 22px !important; }
+}
+
+/* Mobile CTA — taller, full-width helper */
+@media (max-width: 767px) {
+  .btn-primary.btn-mobile-block,
+  .btn-final-cta.btn-mobile-block {
+    width: 100%;
+    min-height: 52px;
+    font-size: 13px;
+  }
+}
+
+/* Marquee edge fade for announcement bar */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+/* Reduced motion — also disable marquees for users who request it */
+@media (prefers-reduced-motion: reduce) {
+  [class*="animate-marquee"] {
+    animation: none !important;
+  }
+}
