@@ -271,10 +271,9 @@ function ProductDetail({
       {/* LEFT: image gallery */}
       <Reveal>
         <div
-          className="relative w-full overflow-hidden group"
+          className="relative w-full overflow-hidden group lift-image lift-halo"
           style={{
             aspectRatio: "1 / 1",
-            borderRadius: 14,
             border: "0.5px solid rgba(184, 149, 90, 0.22)",
             background: "transparent",
           }}
