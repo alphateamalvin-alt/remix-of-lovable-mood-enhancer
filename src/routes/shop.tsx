@@ -244,54 +244,48 @@ function ProductTabs({ initial }: { initial: Variant }) {
           left: 0;
           right: 0;
           z-index: 45;
-          background: rgba(13, 13, 13, 0.85);
-          backdrop-filter: blur(20px) saturate(1.2);
-          -webkit-backdrop-filter: blur(20px) saturate(1.2);
+          background: rgba(13, 13, 13, 0.35);
+          backdrop-filter: blur(32px) saturate(1.4);
+          -webkit-backdrop-filter: blur(32px) saturate(1.4);
           border-bottom: none;
           transition: top 300ms cubic-bezier(0.4, 0, 0.2, 1),
                       background 300ms ease,
                       box-shadow 300ms ease,
-                      padding 300ms ease;
-          box-shadow: 0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.18);
+                      padding 300ms ease,
+                      backdrop-filter 300ms ease;
+          box-shadow: none;
           padding: 18px 24px;
         }
         html[data-shop-nav-hidden="true"] .variant-tabs {
           top: 0;
         }
         .variant-tabs::after {
-          content: '';
-          position: absolute;
-          bottom: -32px;
-          left: 0;
-          right: 0;
-          height: 32px;
-          background: linear-gradient(
-            to bottom,
-            rgba(13, 13, 13, 0.4) 0%,
-            transparent 100%
-          );
-          pointer-events: none;
-          z-index: -1;
+          display: none;
         }
         @media (max-width: 767px) {
           .variant-tabs {
             top: 56px;
             padding: 12px 16px;
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
           }
           html[data-shop-nav-hidden="true"] .variant-tabs {
             top: 0;
           }
         }
         .variant-tabs.is-stuck {
-          background: rgba(10, 6, 6, 0.92);
+          background: rgba(13, 13, 13, 0.45);
+          backdrop-filter: blur(40px) saturate(1.5);
+          -webkit-backdrop-filter: blur(40px) saturate(1.5);
           padding: 14px 24px;
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.04) inset,
-            0 24px 48px rgba(0, 0, 0, 0.25),
-            0 8px 16px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
         }
         @media (max-width: 767px) {
-          .variant-tabs.is-stuck { padding: 10px 16px; }
+          .variant-tabs.is-stuck {
+            padding: 10px 16px;
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+          }
         }
         .variant-tabs.is-stuck .tab-pill {
           padding: 9px 18px !important;
@@ -303,6 +297,11 @@ function ProductTabs({ initial }: { initial: Variant }) {
             0 4px 12px rgba(0, 0, 0, 0.3),
             0 8px 24px rgba(0, 0, 0, 0.2);
           transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tab-pill:not(.active) {
+          background: rgba(13, 13, 13, 0.7) !important;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
         .tab-pill.active {
           box-shadow:
