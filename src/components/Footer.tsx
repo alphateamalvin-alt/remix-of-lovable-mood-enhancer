@@ -24,59 +24,6 @@ function TrustItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-function NewsletterForm() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (email) setDone(true);
-      }}
-      className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-    >
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        aria-label="Email address"
-        style={{
-          flex: 1,
-          padding: "12px 18px",
-          borderRadius: 999,
-          background: "rgba(255,255,255,0.04)",
-          border: "0.5px solid rgba(184,149,90,0.3)",
-          color: "#F2EAE0",
-          fontFamily: "Montserrat, sans-serif",
-          fontSize: 13,
-          outline: "none",
-          minHeight: 44,
-        }}
-      />
-      <button
-        type="submit"
-        style={{
-          background: "#DC2627",
-          color: "#F2EAE0",
-          fontFamily: "Montserrat, sans-serif",
-          fontSize: 11,
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-          fontWeight: 700,
-          padding: "12px 28px",
-          borderRadius: 999,
-          border: "none",
-          cursor: "pointer",
-          minHeight: 44,
-        }}
-      >
-        {done ? "Thanks!" : "Join"}
-      </button>
-    </form>
-  );
-}
 
 export function Footer() {
   return (
