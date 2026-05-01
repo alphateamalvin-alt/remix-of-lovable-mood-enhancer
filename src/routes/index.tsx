@@ -53,7 +53,7 @@ function Index() {
       </main>
       <Footer />
       <SocialProofToast />
-      <StickyUrgencyBar />
+      
     </div>
   );
 }
