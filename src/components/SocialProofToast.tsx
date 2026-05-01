@@ -31,6 +31,12 @@ export function SocialProofToast() {
   const [closed, setClosed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [urgencyDismissed, setUrgencyDismissed] = useState(false);
+  const [onCheckout, setOnCheckout] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setOnCheckout(window.location.pathname.startsWith("/checkout"));
+  }, []);
 
   // Mobile detection
   useEffect(() => {
