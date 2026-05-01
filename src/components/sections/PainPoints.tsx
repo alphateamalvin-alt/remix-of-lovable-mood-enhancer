@@ -484,7 +484,7 @@ export function PainPoints() {
                       {p.description}
                     </p>
                   </div>
-                </div>
+                </MobileScrollPanel>
               );
             })}
           </div>
