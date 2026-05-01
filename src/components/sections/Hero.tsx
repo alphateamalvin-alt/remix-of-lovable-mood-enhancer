@@ -146,7 +146,7 @@ export function Hero() {
       </div>
 
       {/* Left side: text content */}
-      <div className="order-1 md:order-1 relative z-[10] w-full md:w-1/2 flex items-end md:items-center justify-center px-6 pt-32 pb-24 md:py-28 md:min-h-[100svh] min-h-[100svh] md:min-h-0">
+      <div className="order-1 md:order-1 relative z-[10] w-full md:w-1/2 flex items-end md:items-center justify-center px-6 pt-24 pb-14 md:py-28 md:min-h-[100svh] min-h-[100svh] md:min-h-0">
         <div className="max-w-xl w-full text-left">
           <Reveal>
             <p
