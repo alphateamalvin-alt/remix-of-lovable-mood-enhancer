@@ -59,7 +59,7 @@ function CheckoutPage() {
   const navigate = useNavigate();
   const item = PRICING[variant][bundle];
 
-  const [payment, setPayment] = useState<"cod" | "qr" | "card">("qr");
+  const payment = "cod" as const;
   const [discountCode, setDiscountCode] = useState("");
   const [discountApplied, setDiscountApplied] = useState<{ code: string; amount: number } | null>(null);
   const [submitting, setSubmitting] = useState(false);
