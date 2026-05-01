@@ -411,10 +411,35 @@ function CheckoutPage() {
           z-index: 50;
           gap: 12px; align-items: center;
         }
+        .ck-mobile-summary-wrap { display: none; }
+        .ck-mobile-summary-toggle {
+          width: 100%;
+          background: #160808;
+          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          border-radius: 12px;
+          padding: 14px 18px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #F2EAE0;
+          cursor: pointer;
+          font-family: Montserrat, sans-serif;
+        }
+        .ck-mobile-summary-panel {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ck-mobile-summary-panel.is-open {
+          max-height: 1400px;
+          padding-top: 12px;
+        }
         @media (max-width: 900px) {
           .ck-mobile-bottom { display: flex; }
           .ck-place-order { display: none; }
           .ck-hide-mobile { display: none !important; }
+          .ck-mobile-summary-wrap { display: block; margin-bottom: 24px; }
+          .checkout-summary { display: none !important; }
         }
       `}</style>
     </div>
