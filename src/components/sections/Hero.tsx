@@ -74,7 +74,7 @@ export function Hero() {
             height: 100%;
             margin-left: 0;
             object-fit: cover;
-            object-position: 65% 20%;
+            object-position: 65% 5%;
             mask-image: none;
             -webkit-mask-image: none;
             background: #0A0606;
@@ -84,10 +84,10 @@ export function Hero() {
             inset: 0;
             background: linear-gradient(
               to bottom,
-              rgba(10, 6, 6, 0.85) 0%,
-              rgba(10, 6, 6, 0.65) 35%,
-              rgba(10, 6, 6, 0.75) 70%,
-              rgba(10, 6, 6, 0.95) 100%
+              rgba(10, 6, 6, 0.65) 0%,
+              rgba(10, 6, 6, 0.45) 35%,
+              rgba(10, 6, 6, 0.6) 70%,
+              rgba(10, 6, 6, 0.92) 100%
             );
             z-index: 1;
             pointer-events: none;
