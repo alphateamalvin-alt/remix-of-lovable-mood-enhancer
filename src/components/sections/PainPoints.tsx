@@ -1,62 +1,63 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "../Reveal";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-function MobileScrollPanel({
-  enabled,
-  children,
-  ...divProps
-}: React.HTMLAttributes<HTMLDivElement> & {
+type MobileScrollPanelProps = React.HTMLAttributes<HTMLDivElement> & {
   enabled: boolean;
   tabIndex?: number;
   role?: string;
   "aria-label"?: string;
   "aria-expanded"?: boolean;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(!enabled);
+};
 
-  useEffect(() => {
-    if (!enabled) {
-      setInView(true);
-      return;
-    }
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.4, rootMargin: "0px 0px -8% 0px" }
+const MobileScrollPanel = forwardRef<HTMLDivElement, MobileScrollPanelProps>(
+  function MobileScrollPanel({ enabled, children, ...divProps }, forwardedRef) {
+    const innerRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(forwardedRef, () => innerRef.current as HTMLDivElement);
+    const [inView, setInView] = useState(!enabled);
+
+    useEffect(() => {
+      if (!enabled) {
+        setInView(true);
+        return;
+      }
+      const el = innerRef.current;
+      if (!el) return;
+      const io = new IntersectionObserver(
+        ([entry]) => setInView(entry.isIntersecting),
+        { threshold: 0.4, rootMargin: "0px 0px -8% 0px" }
+      );
+      io.observe(el);
+      return () => io.disconnect();
+    }, [enabled]);
+
+    const baseStyle = divProps.style ?? {};
+    const baseTransform = (baseStyle.transform as string) ?? "";
+    const scrollTransform = enabled
+      ? `${baseTransform} scale(${inView ? 1 : 0.86})`.trim()
+      : baseTransform;
+    const baseTransition = (baseStyle.transition as string) ?? "";
+    const mergedTransition = enabled
+      ? `transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease-out${baseTransition ? ", " + baseTransition : ""}`
+      : baseTransition;
+
+    const mergedStyle: React.CSSProperties = {
+      ...baseStyle,
+      transform: scrollTransform,
+      opacity: enabled ? (inView ? 1 : 0.5) : (baseStyle.opacity ?? 1),
+      transition: mergedTransition,
+      transformOrigin: "center center",
+      willChange: enabled ? "transform, opacity" : baseStyle.willChange,
+    };
+
+    return (
+      <div ref={innerRef} {...divProps} style={mergedStyle}>
+        {children}
+      </div>
     );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [enabled]);
-
-  const baseStyle = divProps.style ?? {};
-  const baseTransform = (baseStyle.transform as string) ?? "";
-  const scrollTransform = enabled
-    ? `${baseTransform} scale(${inView ? 1 : 0.86})`.trim()
-    : baseTransform;
-  const baseTransition = (baseStyle.transition as string) ?? "";
-  const mergedTransition = enabled
-    ? `transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease-out${baseTransition ? ", " + baseTransition : ""}`
-    : baseTransition;
-
-  const mergedStyle: React.CSSProperties = {
-    ...baseStyle,
-    transform: scrollTransform,
-    opacity: enabled ? (inView ? 1 : 0.5) : (baseStyle.opacity ?? 1),
-    transition: mergedTransition,
-    transformOrigin: "center center",
-    willChange: enabled ? "transform, opacity" : baseStyle.willChange,
-  };
-
-  return (
-    <div ref={ref} {...divProps} style={mergedStyle}>
-      {children}
-    </div>
-  );
-}
+  }
+);
 
 type Panel = {
   image: string;
