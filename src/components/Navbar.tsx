@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 
 function Wordmark({ className = "" }: { className?: string }) {
@@ -33,7 +33,7 @@ const links = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  
   const [hidden, setHidden] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -63,7 +63,6 @@ export function Navbar() {
   }, [isHome]);
 
   const handleNav = (hash: string) => (e: React.MouseEvent) => {
-    setMobileOpen(false);
     if (!hash) {
       if (isHome) {
         e.preventDefault();
@@ -116,84 +115,8 @@ export function Navbar() {
           </Link>
         </div>
 
-        <button
-          onClick={() => setMobileOpen(true)}
-          className="md:hidden text-ivory tap-target -mr-2"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
       </nav>
 
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 z-50 flex flex-col safe-top animate-in fade-in duration-300"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(20,10,10,0.98) 0%, rgba(13,13,13,0.99) 70%, rgba(8,8,8,1) 100%)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
-          }}
-        >
-          {/* Top bar with logo + close */}
-          <div className="flex items-center justify-between px-6 py-4">
-            <Wordmark className="text-[18px]" />
-            <button
-              onClick={() => setMobileOpen(false)}
-              aria-label="Close menu"
-              className="tap-target -mr-2 text-[var(--color-ivory)]/80 hover:text-[var(--color-brand-red)] transition-colors"
-            >
-              <X size={26} />
-            </button>
-          </div>
-
-          {/* Centered content */}
-          <div className="flex-1 flex flex-col items-center justify-center px-8 -mt-8">
-            <ul className="flex flex-col items-center gap-7 w-full">
-              {links.map((l, i) => (
-                <li
-                  key={l.label}
-                  className="animate-in fade-in slide-in-from-bottom-2"
-                  style={{ animationDelay: `${i * 60}ms`, animationFillMode: "both", animationDuration: "400ms" }}
-                >
-                  <a
-                    href={l.hash ? `#${l.hash}` : "/"}
-                    onClick={handleNav(l.hash)}
-                    className="block text-center text-[22px] font-medium tracking-[0.22em] uppercase text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] active:text-[var(--color-brand-red)] transition-colors"
-                    style={{ fontFamily: '"Playfair Display", serif', letterSpacing: "0.18em" }}
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            {/* Subtle divider */}
-            <div
-              className="my-10 h-px w-16"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(184,149,90,0.4), transparent)" }}
-              aria-hidden="true"
-            />
-
-            <Link
-              to="/shop"
-              search={{}}
-              onClick={() => setMobileOpen(false)}
-              className="btn-primary !px-10 !py-4 text-[12px] tracking-[0.22em]"
-            >
-              Shop Now →
-            </Link>
-          </div>
-
-          {/* Footer tagline */}
-          <div
-            className="text-center pb-8 safe-bottom text-[10px] tracking-[0.32em] uppercase"
-            style={{ color: "rgba(184,149,90,0.55)" }}
-          >
-            Mood Drops · Made with Love
-          </div>
-        </div>
-      )}
     </header>
   );
 }
