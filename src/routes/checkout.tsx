@@ -397,8 +397,23 @@ function CheckoutHeader() {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <Link to="/" style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, letterSpacing: 4, color: "#F2EAE0", textDecoration: "none" }}>
-          LOVABLE
+        <Link
+          to="/"
+          aria-label="LOVABLE"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 0,
+            fontFamily: '"Playfair Display", serif',
+            fontWeight: 800,
+            fontSize: 22,
+            letterSpacing: "-0.02em",
+            color: "#DC2627",
+            textDecoration: "none",
+            lineHeight: 1,
+          }}
+        >
+          <span>LO</span>
+          <Heart size={18} fill="#DC2627" stroke="#DC2627" strokeWidth={1.5} style={{ margin: "0 1px" }} aria-hidden="true" />
+          <span>ABLE</span>
         </Link>
         <div
           style={{
