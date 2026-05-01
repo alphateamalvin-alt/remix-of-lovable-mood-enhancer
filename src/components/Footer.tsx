@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Youtube, ShieldCheck, BadgeCheck, PackageCheck, Headphones } from "lucide-react";
-import { useState } from "react";
+
 
 const logo = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Final%20Lovable%20Logo%20copy.png";
 
@@ -24,59 +24,6 @@ function TrustItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-function NewsletterForm() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (email) setDone(true);
-      }}
-      className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-    >
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        aria-label="Email address"
-        style={{
-          flex: 1,
-          padding: "12px 18px",
-          borderRadius: 999,
-          background: "rgba(255,255,255,0.04)",
-          border: "0.5px solid rgba(184,149,90,0.3)",
-          color: "#F2EAE0",
-          fontFamily: "Montserrat, sans-serif",
-          fontSize: 13,
-          outline: "none",
-          minHeight: 44,
-        }}
-      />
-      <button
-        type="submit"
-        style={{
-          background: "#DC2627",
-          color: "#F2EAE0",
-          fontFamily: "Montserrat, sans-serif",
-          fontSize: 11,
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-          fontWeight: 700,
-          padding: "12px 28px",
-          borderRadius: 999,
-          border: "none",
-          cursor: "pointer",
-          minHeight: 44,
-        }}
-      >
-        {done ? "Thanks!" : "Join"}
-      </button>
-    </form>
-  );
-}
 
 export function Footer() {
   return (
@@ -88,34 +35,6 @@ export function Footer() {
           <TrustItem icon={<BadgeCheck size={16} strokeWidth={1.5} />} label="FDA-Registered" />
           <TrustItem icon={<PackageCheck size={16} strokeWidth={1.5} />} label="Discreet Shipping" />
           <TrustItem icon={<Headphones size={16} strokeWidth={1.5} />} label="24/7 Support" />
-        </div>
-      </div>
-
-      {/* Newsletter */}
-      <div className="hidden md:block border-b border-white/[0.06]">
-        <div className="mx-auto max-w-3xl px-6 sm:px-10 py-12 text-center">
-          <h4
-            style={{
-              fontFamily: '"Playfair Display", Georgia, serif',
-              fontSize: 24,
-              color: "#F2EAE0",
-              fontWeight: 500,
-              marginBottom: 8,
-            }}
-          >
-            Subscribe for <span style={{ color: "#DC2627", fontStyle: "italic" }}>couple-tested</span> wisdom.
-          </h4>
-          <p
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 13,
-              color: "rgba(154,136,128,0.9)",
-              marginBottom: 22,
-            }}
-          >
-            Real stories, member-only discounts, no spam.
-          </p>
-          <NewsletterForm />
         </div>
       </div>
 
