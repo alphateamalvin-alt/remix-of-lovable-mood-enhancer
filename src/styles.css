@@ -734,6 +734,7 @@ h1, h2 {
   );
   transform: skewX(-20deg);
   animation: shine-sweep 3.5s ease-in-out infinite;
+  will-change: transform, left;
   pointer-events: none;
   z-index: 1;
 }
