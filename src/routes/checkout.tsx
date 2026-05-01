@@ -139,19 +139,24 @@ function CheckoutPage() {
               <SectionHeader number={1} title="Delivery" italic="Information" right={<RequiredLabel />} />
 
               <FieldRow>
-                <Field label="Country" required>
-                  <select value={form.country} onChange={(e) => update("country", e.target.value)} className="ck-input">
-                    <option>Philippines</option>
-                  </select>
-                </Field>
-              </FieldRow>
-
-              <FieldRow cols={2}>
-                <Field label="First Name" required>
-                  <input className="ck-input" required value={form.firstName} onChange={(e) => update("firstName", e.target.value)} />
-                </Field>
-                <Field label="Last Name" required>
-                  <input className="ck-input" required value={form.lastName} onChange={(e) => update("lastName", e.target.value)} />
+                <Field label="Full Name" required>
+                  <input
+                    className="ck-input"
+                    required
+                    placeholder="Juan Dela Cruz"
+                    value={form.fullName}
+                    onChange={(e) => {
+                      update("fullName", e.target.value);
+                      if (fullNameError) setFullNameError(null);
+                    }}
+                    onBlur={(e) => {
+                      const v = e.target.value.trim();
+                      if (v && !/\s/.test(v)) setFullNameError("Please enter your full name (first and last)");
+                    }}
+                  />
+                  {fullNameError && (
+                    <div style={{ marginTop: 6, fontSize: 11, color: "#DC2627" }}>{fullNameError}</div>
+                  )}
                 </Field>
               </FieldRow>
 
