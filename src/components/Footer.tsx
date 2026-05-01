@@ -91,34 +91,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Newsletter */}
-      <div className="hidden md:block border-b border-white/[0.06]">
-        <div className="mx-auto max-w-3xl px-6 sm:px-10 py-12 text-center">
-          <h4
-            style={{
-              fontFamily: '"Playfair Display", Georgia, serif',
-              fontSize: 24,
-              color: "#F2EAE0",
-              fontWeight: 500,
-              marginBottom: 8,
-            }}
-          >
-            Subscribe for <span style={{ color: "#DC2627", fontStyle: "italic" }}>couple-tested</span> wisdom.
-          </h4>
-          <p
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 13,
-              color: "rgba(154,136,128,0.9)",
-              marginBottom: 22,
-            }}
-          >
-            Real stories, member-only discounts, no spam.
-          </p>
-          <NewsletterForm />
-        </div>
-      </div>
-
       {/* Main nav columns */}
       <div className="mx-auto max-w-7xl px-6 sm:px-10 py-14 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
