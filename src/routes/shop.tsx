@@ -547,14 +547,13 @@ function ProductDetail({
         </div>
 
         {/* CTA */}
-        <a
-          href={checkoutUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to="/checkout"
+          search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
         >
           <span>Order Now, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-        </a>
+        </Link>
 
         {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
@@ -780,14 +779,13 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
         </div>
 
         {/* CTA */}
-        <a
-          href="https://lovablecouple.shop/"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to="/checkout"
+          search={{ variant: "couples" as const, bundle: (selectedBundle.id as "1" | "2" | "3") }}
           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
         >
           <span>Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-        </a>
+        </Link>
 
         {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
