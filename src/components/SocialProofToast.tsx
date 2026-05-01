@@ -110,6 +110,7 @@ export function SocialProofToast() {
 
   if (closed) return null;
   if (onCheckout) return null;
+  if (isMobile && heroInView) return null;
 
   const t = toasts[idx];
   const bottom = isMobile
