@@ -34,8 +34,10 @@ export function Hero() {
         }
         @media (min-width: 768px) {
           .hero-image {
-            width: 110%;
+            width: 115%;
             margin-left: -5%;
+            object-position: right center;
+            transform: translateX(4%);
             mask-image: linear-gradient(
               to right,
               transparent 0%,
