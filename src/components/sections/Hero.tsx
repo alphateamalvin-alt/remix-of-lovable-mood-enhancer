@@ -16,7 +16,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-[100svh] flex flex-col md:flex-row overflow-hidden"
+      className="hero-section-root relative md:min-h-[100svh] flex flex-col md:flex-row overflow-hidden"
       style={{
         background: "#0A0606",
         boxShadow: "inset 0 0 240px rgba(0, 0, 0, 0.6)",
