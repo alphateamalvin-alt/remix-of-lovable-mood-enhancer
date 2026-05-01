@@ -31,6 +31,12 @@ export function SocialProofToast() {
   const [closed, setClosed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [urgencyDismissed, setUrgencyDismissed] = useState(false);
+  const [onCheckout, setOnCheckout] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setOnCheckout(window.location.pathname.startsWith("/checkout"));
+  }, []);
 
   // Mobile detection
   useEffect(() => {
@@ -86,10 +92,11 @@ export function SocialProofToast() {
   }, [closed, isMobile]);
 
   if (closed) return null;
+  if (onCheckout) return null;
 
   const t = toasts[idx];
   const bottom = isMobile
-    ? urgencyDismissed ? 16 : 80
+    ? urgencyDismissed ? 16 : 70
     : urgencyDismissed ? 20 : 90;
 
   return (
@@ -98,53 +105,64 @@ export function SocialProofToast() {
       aria-live="polite"
       style={{
         position: "fixed",
-        bottom,
-        left: isMobile ? 16 : 20,
-        right: isMobile ? "auto" : "auto",
-        maxWidth: isMobile ? 260 : 320,
+        bottom: `calc(${bottom}px + env(safe-area-inset-bottom, 0px))`,
+        right: isMobile ? 16 : 20,
+        left: "auto",
+        maxWidth: isMobile ? 240 : 300,
         zIndex: 40,
-        background: "rgba(26,10,10,0.95)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        border: "0.5px solid rgba(184, 149, 90, 0.25)",
+        background: "rgba(13, 13, 13, 0.95)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        border: "0.5px solid rgba(184, 149, 90, 0.3)",
         borderRadius: 12,
         padding: "14px 16px",
         boxShadow:
           "0 1px 0 rgba(242, 234, 224, 0.06) inset, 0 16px 36px rgba(0, 0, 0, 0.55), 0 4px 8px rgba(0, 0, 0, 0.3)",
         fontFamily: "Montserrat, sans-serif",
-        display: "flex",
-        alignItems: "center",
+        display: "grid",
+        gridTemplateColumns: "48px 1fr 24px",
         gap: 12,
+        alignItems: "center",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateX(0)" : "translateX(-100%)",
+        transform: visible ? "translateX(0)" : "translateX(110%)",
         transition: visible
-          ? "opacity 0.5s ease, transform 0.5s ease, bottom 0.3s ease"
-          : "opacity 0.4s ease, transform 0.4s ease, bottom 0.3s ease",
+          ? "opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1), bottom 0.3s ease"
+          : "opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1), bottom 0.3s ease",
         pointerEvents: visible ? "auto" : "none",
       }}
     >
       <img
         src={imageFor(t.product)}
         alt=""
-        width={40}
-        height={40}
+        width={48}
+        height={48}
         style={{
-          width: 40,
-          height: 40,
-          borderRadius: 8,
+          width: 48,
+          height: 48,
+          borderRadius: 6,
           objectFit: "cover",
           flexShrink: 0,
           background: "#2a0d0d",
         }}
       />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ color: "#F2EAE0", fontWeight: 600, fontSize: 12, lineHeight: 1.3 }}>
+      <div style={{ minWidth: 0, display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            color: "#F2EAE0",
+            fontWeight: 500,
+            fontSize: 13,
+            lineHeight: 1.3,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
           {t.name} from {t.city}
         </div>
-        <div style={{ color: "#9A8880", fontSize: 11, lineHeight: 1.4, marginTop: 2 }}>
+        <div style={{ color: "rgba(154,136,128,0.85)", fontSize: 11, lineHeight: 1.4, marginTop: 2 }}>
           ordered {t.product}
         </div>
-        <div style={{ color: "#B8955A", fontSize: 10, lineHeight: 1.4, marginTop: 3, display: "flex", alignItems: "center", gap: 4 }}>
+        <div style={{ color: "rgba(154,136,128,0.7)", fontSize: 10, lineHeight: 1.4, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
           <span style={{ color: "#DC2627", fontSize: 10 }}>✓</span>
           {t.time} · Verified
         </div>
@@ -153,21 +171,21 @@ export function SocialProofToast() {
         onClick={() => setClosed(true)}
         aria-label="Close notification"
         style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: 32,
-          height: 32,
+          width: 24,
+          height: 24,
+          borderRadius: "50%",
           background: "transparent",
-          border: "none",
-          color: "#9A8880",
-          fontSize: 16,
+          border: "0.5px solid rgba(154,136,128,0.3)",
+          color: "rgba(154,136,128,0.8)",
+          fontSize: 12,
           lineHeight: 1,
           cursor: "pointer",
           padding: 0,
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
+          flexShrink: 0,
+          transition: "all 200ms ease",
         }}
       >
         ×
@@ -175,3 +193,4 @@ export function SocialProofToast() {
     </div>
   );
 }
+
