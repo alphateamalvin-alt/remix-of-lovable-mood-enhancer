@@ -710,6 +710,7 @@ h1, h2 {
   gap: 10px;
   text-decoration: none;
   z-index: 1;
+  will-change: transform;
   animation: heartbeat-pulse 2.4s ease-in-out infinite;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -733,6 +734,7 @@ h1, h2 {
   );
   transform: skewX(-20deg);
   animation: shine-sweep 3.5s ease-in-out infinite;
+  will-change: transform, left;
   pointer-events: none;
   z-index: 1;
 }
@@ -808,9 +810,61 @@ h1, h2 {
 }
 
 @media (max-width: 767px) {
+  .btn-pulse-shine {
+    padding: 16px 32px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    min-height: 48px;
+  }
+  .btn-pulse-shine::before {
+    width: 70%;
+    animation-duration: 3.2s;
+  }
   .btn-pulse-shine.btn-mobile-block {
     width: 100%;
     min-height: 52px;
     font-size: 13px;
   }
+  .btn-pulse-shine.btn-pulse-compact {
+    padding: 12px 20px;
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    min-height: 44px;
+    width: auto;
+    flex-shrink: 0;
+  }
 }
+
+/* Touch-only devices: tap feedback (scale-down) and accelerated shine */
+@media (hover: none) {
+  .btn-pulse-shine:hover {
+    transform: none;
+    letter-spacing: 2.5px;
+    background: linear-gradient(135deg, #DC2627 0%, #C61F20 50%, #DC2627 100%);
+    box-shadow: none;
+  }
+  .btn-pulse-shine:active {
+    transform: scale(0.98);
+    transition-duration: 100ms;
+    box-shadow:
+      0 1px 0 rgba(242, 234, 224, 0.15) inset,
+      0 2px 8px rgba(220, 38, 39, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  .btn-pulse-shine:active::before {
+    animation-duration: 1.2s;
+  }
+}
+
+/* Lower-end mobile: slow the shine to keep 60fps */
+@media (max-width: 480px) and (max-resolution: 2dppx) {
+  .btn-pulse-shine::before {
+    animation-duration: 5s;
+  }
+}
+
+/* Safe area inset for sticky CTAs on notched iPhones */
+.sticky-cta-safe {
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+
