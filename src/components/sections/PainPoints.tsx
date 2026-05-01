@@ -1,62 +1,63 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "../Reveal";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-function MobileScrollPanel({
-  enabled,
-  children,
-  ...divProps
-}: React.HTMLAttributes<HTMLDivElement> & {
+type MobileScrollPanelProps = React.HTMLAttributes<HTMLDivElement> & {
   enabled: boolean;
   tabIndex?: number;
   role?: string;
   "aria-label"?: string;
   "aria-expanded"?: boolean;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(!enabled);
+};
 
-  useEffect(() => {
-    if (!enabled) {
-      setInView(true);
-      return;
-    }
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.4, rootMargin: "0px 0px -8% 0px" }
+const MobileScrollPanel = forwardRef<HTMLDivElement, MobileScrollPanelProps>(
+  function MobileScrollPanel({ enabled, children, ...divProps }, forwardedRef) {
+    const innerRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(forwardedRef, () => innerRef.current as HTMLDivElement);
+    const [inView, setInView] = useState(!enabled);
+
+    useEffect(() => {
+      if (!enabled) {
+        setInView(true);
+        return;
+      }
+      const el = innerRef.current;
+      if (!el) return;
+      const io = new IntersectionObserver(
+        ([entry]) => setInView(entry.isIntersecting),
+        { threshold: 0.4, rootMargin: "0px 0px -8% 0px" }
+      );
+      io.observe(el);
+      return () => io.disconnect();
+    }, [enabled]);
+
+    const baseStyle = divProps.style ?? {};
+    const baseTransform = (baseStyle.transform as string) ?? "";
+    const scrollTransform = enabled
+      ? `${baseTransform} scale(${inView ? 1 : 0.86})`.trim()
+      : baseTransform;
+    const baseTransition = (baseStyle.transition as string) ?? "";
+    const mergedTransition = enabled
+      ? `transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease-out${baseTransition ? ", " + baseTransition : ""}`
+      : baseTransition;
+
+    const mergedStyle: React.CSSProperties = {
+      ...baseStyle,
+      transform: scrollTransform,
+      opacity: enabled ? (inView ? 1 : 0.5) : (baseStyle.opacity ?? 1),
+      transition: mergedTransition,
+      transformOrigin: "center center",
+      willChange: enabled ? "transform, opacity" : baseStyle.willChange,
+    };
+
+    return (
+      <div ref={innerRef} {...divProps} style={mergedStyle}>
+        {children}
+      </div>
     );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [enabled]);
-
-  const baseStyle = divProps.style ?? {};
-  const baseTransform = (baseStyle.transform as string) ?? "";
-  const scrollTransform = enabled
-    ? `${baseTransform} scale(${inView ? 1 : 0.86})`.trim()
-    : baseTransform;
-  const baseTransition = (baseStyle.transition as string) ?? "";
-  const mergedTransition = enabled
-    ? `transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease-out${baseTransition ? ", " + baseTransition : ""}`
-    : baseTransition;
-
-  const mergedStyle: React.CSSProperties = {
-    ...baseStyle,
-    transform: scrollTransform,
-    opacity: enabled ? (inView ? 1 : 0.5) : (baseStyle.opacity ?? 1),
-    transition: mergedTransition,
-    transformOrigin: "center center",
-    willChange: enabled ? "transform, opacity" : baseStyle.willChange,
-  };
-
-  return (
-    <div ref={ref} {...divProps} style={mergedStyle}>
-      {children}
-    </div>
-  );
-}
+  }
+);
 
 type Panel = {
   image: string;
@@ -139,6 +140,7 @@ export function PainPoints() {
   const [hovered, setHovered] = useState<number | null>(null);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
+  const panelRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useEffect(() => {
     const check = () => {
@@ -148,6 +150,50 @@ export function PainPoints() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // Mobile: auto-activate the panel whose center is closest to viewport center
+  useEffect(() => {
+    if (!isMobile) return;
+    if (typeof window === "undefined") return;
+
+    let rafId: number | null = null;
+
+    const update = () => {
+      rafId = null;
+      const viewportCenter = window.innerHeight / 2;
+      let closestIdx = -1;
+      let closestDist = Infinity;
+      panelRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Skip if completely off-screen
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - viewportCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIdx = i;
+        }
+      });
+      if (closestIdx !== -1) {
+        setActive((prev) => (prev === closestIdx ? prev : closestIdx));
+      }
+    };
+
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [isMobile]);
 
   const useTap = isMobile || isTablet;
 
@@ -274,6 +320,7 @@ export function PainPoints() {
               return (
                 <MobileScrollPanel
                   key={i}
+                  ref={(el) => { panelRefs.current[i] = el; }}
                   enabled={isMobile}
                   role="button"
                   tabIndex={0}
