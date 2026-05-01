@@ -67,9 +67,7 @@ function CheckoutPage() {
 
   // Form state (kept minimal but real)
   const [form, setForm] = useState({
-    country: "Philippines",
-    firstName: "",
-    lastName: "",
+    fullName: "",
     phone: "",
     email: "",
     address: "",
@@ -77,11 +75,8 @@ function CheckoutPage() {
     city: "",
     barangay: "",
     saveInfo: true,
-    cardNumber: "",
-    cardExp: "",
-    cardCvv: "",
-    cardName: "",
   });
+  const [fullNameError, setFullNameError] = useState<string | null>(null);
 
   // Restore from sessionStorage
   useEffect(() => {
