@@ -320,6 +320,7 @@ export function PainPoints() {
               return (
                 <MobileScrollPanel
                   key={i}
+                  ref={(el) => { panelRefs.current[i] = el; }}
                   enabled={isMobile}
                   role="button"
                   tabIndex={0}
