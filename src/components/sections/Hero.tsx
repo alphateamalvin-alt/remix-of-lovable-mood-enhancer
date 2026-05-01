@@ -130,9 +130,9 @@ export function Hero() {
             position: relative;
             width: 100%;
             min-height: 0 !important;
-            height: calc(100vh - 102px);
-            height: calc(100dvh - 102px);
-            margin: 0 !important;
+            height: 100vh;
+            height: 100dvh;
+            margin: -70px 0 0 0 !important;
             padding: 0 !important;
             overflow: hidden;
             display: flex !important;
