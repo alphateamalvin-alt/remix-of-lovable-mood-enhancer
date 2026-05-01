@@ -236,7 +236,7 @@ export function Hero() {
             </div>
           </Reveal>
           <Reveal delay={0.45}>
-            <ul className="mt-8 flex flex-wrap items-center md:justify-start justify-center gap-x-4 gap-y-2">
+            <ul className="mt-5 md:mt-8 flex flex-wrap items-center md:justify-start justify-center gap-x-4 gap-y-2">
               {["30-Day Money Back", "100% Natural", "Made in USA"].map((item) => (
                 <li key={item} className="flex items-center gap-2" style={{ color: "#9A8880", fontSize: "10px" }}>
                   <span
