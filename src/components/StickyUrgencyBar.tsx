@@ -3,10 +3,6 @@ import { useShopState, type ShopVariant } from "@/lib/shop-store";
 
 const SESSION_KEY = "lovable-urgency-dismissed";
 
-function format(n: number) {
-  return n.toString().padStart(2, "0");
-}
-
 function ctaLabelFor(_variant: ShopVariant): { cta: string; unit: string } {
   return { cta: "Order Now", unit: "bottles" };
 }
