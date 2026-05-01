@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronLeft, ChevronRight, Plus, Truck, ShieldCheck, Gift, Droplet } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus, Truck, ShieldCheck, Droplet } from "lucide-react";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
