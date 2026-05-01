@@ -135,17 +135,8 @@ export function StickyUrgencyBar() {
                 }}
               />
               <span style={{ fontSize: 12, color: "#F2EAE0", fontWeight: 500 }}>
-                <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> ordered this week
+                <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> ordered today
               </span>
-              <span style={{ width: 1, height: 16, background: "rgba(255,255,255,0.15)" }} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 9, color: "#9A8880", letterSpacing: 1, textTransform: "uppercase" }}>
-                  Flash Promo Ends In
-                </span>
-                <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#DC2627", fontWeight: 700 }}>
-                  {format(h)} : {format(m)} : {format(s)}
-                </span>
-              </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <a href={ctaHref} className="btn-pulse-shine btn-pulse-compact">
