@@ -33,7 +33,7 @@ const links = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false); void mobileOpen; void setMobileOpen;
+  
   const [hidden, setHidden] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
