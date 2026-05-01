@@ -108,7 +108,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-3">
         <Link to="/" onClick={handleNav("")} className="flex items-center">
-          <Wordmark className="text-[18px]" />
+          <Wordmark className="text-[22px]" />
         </Link>
 
         <ul className="hidden md:flex items-center gap-8">
