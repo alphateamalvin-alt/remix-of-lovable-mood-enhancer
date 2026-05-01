@@ -44,13 +44,6 @@ export function StickyUrgencyBar() {
   }, [isMobile]);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setSeconds((s) => (s <= 1 ? 23 * 3600 + 59 * 60 + 59 : s - 1));
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
     let id: ReturnType<typeof setTimeout>;
     const tick = () => {
       setCount((c) => c + Math.floor(Math.random() * 3) + 1);
@@ -67,9 +60,6 @@ export function StickyUrgencyBar() {
 
   if (dismissed) return null;
 
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
   const priceLabel = `₱${shop.price.toLocaleString()}`;
 
   return (
