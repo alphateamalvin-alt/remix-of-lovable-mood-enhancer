@@ -63,7 +63,6 @@ export function Navbar() {
   }, [isHome]);
 
   const handleNav = (hash: string) => (e: React.MouseEvent) => {
-    setMobileOpen(false);
     if (!hash) {
       if (isHome) {
         e.preventDefault();
