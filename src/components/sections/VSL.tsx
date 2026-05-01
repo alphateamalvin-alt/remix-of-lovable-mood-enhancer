@@ -127,6 +127,7 @@ export function VSL() {
     p.playVideo();
     setMuted(false);
     setPlaying(true);
+    showControls();
   };
 
   const togglePlay = () => {
