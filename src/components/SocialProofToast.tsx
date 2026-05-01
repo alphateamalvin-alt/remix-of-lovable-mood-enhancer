@@ -115,7 +115,7 @@ export function SocialProofToast() {
   const t = toasts[idx];
   const bottom = isMobile
     ? urgencyDismissed ? 8 : 40
-    : urgencyDismissed ? 20 : 90;
+    : urgencyDismissed ? 8 : 24;
 
   return (
     <div
