@@ -116,13 +116,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        <button
-          onClick={() => setMobileOpen(true)}
-          className="md:hidden text-ivory tap-target -mr-2"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
       </nav>
 
       {mobileOpen && (
