@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Navbar } from "@/components/Navbar";
 import { SocialProofToast } from "@/components/SocialProofToast";
-import { StickyUrgencyBar } from "@/components/StickyUrgencyBar";
+
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { VSL } from "@/components/sections/VSL";
