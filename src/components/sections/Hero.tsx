@@ -60,24 +60,42 @@ export function Hero() {
         }
         @media (max-width: 767px) {
           .hero-image-container {
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            height: auto !important;
-            min-height: 0 !important;
-            max-height: none;
-            margin-top: 32px;
-            border-radius: 14px;
+            position: absolute !important;
+            inset: 0;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            z-index: 0 !important;
           }
           .hero-image {
             width: 100%;
+            height: 100%;
             margin-left: 0;
-            object-fit: contain;
-            object-position: center;
+            object-fit: cover;
+            object-position: 65% center;
             mask-image: none;
             -webkit-mask-image: none;
             background: #0A0606;
           }
+          .hero-mobile-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+              to bottom,
+              rgba(10, 6, 6, 0.85) 0%,
+              rgba(10, 6, 6, 0.65) 35%,
+              rgba(10, 6, 6, 0.75) 70%,
+              rgba(10, 6, 6, 0.95) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+          }
           .hero-bridge { display: none; }
+        }
+        @media (min-width: 768px) {
+          .hero-mobile-overlay { display: none; }
         }
         .hero-bridge {
           position: absolute;
@@ -121,6 +139,8 @@ export function Hero() {
           alt="Filipino couple in tender embrace holding LOVABLE bottles"
           className="hero-image"
         />
+        {/* Mobile overlay to darken image so text overlays cleanly */}
+        <div aria-hidden className="hero-mobile-overlay" />
         {/* Bridge gradient that paints over any seam on the left edge (desktop only) */}
         <div aria-hidden className="hero-bridge" />
       </div>
