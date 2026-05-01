@@ -116,8 +116,34 @@ function CheckoutPage() {
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+
+    const fullName = form.fullName.trim();
+    if (!fullName.includes(" ")) {
+      setFullNameError("Please enter your full name (first and last)");
+      return;
+    }
+
     setSubmitting(true);
+    const [firstName, ...rest] = fullName.split(/\s+/);
+    const lastName = rest.join(" ");
+    const order = {
+      country: "Philippines",
+      fullName,
+      firstName,
+      lastName,
+      phone: form.phone,
+      email: form.email,
+      address: form.address,
+      region: form.region,
+      city: form.city,
+      barangay: form.barangay,
+      paymentMethod: "COD",
+      variant,
+      bundle,
+      total,
+    };
     // Simulated submit
+    void order;
     await new Promise((r) => setTimeout(r, 1200));
     setSubmitting(false);
     navigate({ to: "/", search: {} as never });
