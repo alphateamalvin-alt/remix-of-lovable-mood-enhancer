@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Heart, Menu, X } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 
 function Wordmark({ className = "" }: { className?: string }) {
@@ -36,16 +36,41 @@ export function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [heroInView, setHeroInView] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
 
+  // Lock body scroll while overlay open (preserve scroll position on iOS)
   useEffect(() => {
     if (typeof document === "undefined") return;
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
+    if (mobileOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+      return () => {
+        const top = document.body.style.top;
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        window.scrollTo(0, Math.abs(parseInt(top || "0", 10)));
+      };
+    }
+  }, [mobileOpen]);
+
+  // ESC to close
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
     };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [mobileOpen]);
 
   useEffect(() => {
@@ -75,6 +100,30 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [isHome]);
 
+  // Track which section is currently in view (for active link highlight)
+  useEffect(() => {
+    if (!isHome) {
+      setActiveHash("");
+      return;
+    }
+    const ids = links.map((l) => l.hash).filter(Boolean);
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (!elements.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveHash(visible.target.id);
+      },
+      { threshold: [0.3, 0.6], rootMargin: "-20% 0px -40% 0px" },
+    );
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [isHome]);
+
   const handleNav = (hash: string) => (e: React.MouseEvent) => {
     setMobileOpen(false);
     if (!hash) {
@@ -94,12 +143,12 @@ export function Navbar() {
     }
   };
 
-  const transparent = isHome && heroInView && !scrolled;
+  const transparent = isHome && heroInView && !scrolled && !mobileOpen;
 
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-500 ${
-        hidden ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+        hidden && !mobileOpen ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
       } ${
         transparent
           ? "bg-transparent border-b border-transparent"
@@ -107,7 +156,7 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-3">
-        <Link to="/" onClick={handleNav("")} className="flex items-center">
+        <Link to="/" onClick={handleNav("")} className="flex items-center relative z-[210]">
           <Wordmark className="text-[22px]" />
         </Link>
 
@@ -131,82 +180,127 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile burger */}
+        {/* Mobile burger — animated to X */}
         <button
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-menu-overlay"
           onClick={() => setMobileOpen((v) => !v)}
-          className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors relative z-[60]"
+          className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-md text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors relative z-[210]"
         >
-          {mobileOpen ? <Menu size={22} className="opacity-0" /> : <Menu size={22} />}
+          <span className="relative block w-6 h-[18px]">
+            <span
+              className={`absolute left-0 top-0 block h-[2px] w-full rounded bg-current transition-all duration-300 ${
+                mobileOpen ? "translate-y-2 rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`absolute left-0 top-2 block h-[2px] w-full rounded bg-current transition-all duration-200 ${
+                mobileOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`absolute left-0 top-4 block h-[2px] w-full rounded bg-current transition-all duration-300 ${
+                mobileOpen ? "-translate-y-2 -rotate-45" : ""
+              }`}
+            />
+          </span>
         </button>
       </nav>
 
       {/* Mobile full-screen overlay */}
       <div
-        className={`md:hidden fixed inset-0 z-[55] transition-all duration-500 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        id="mobile-menu-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!mobileOpen}
+        className={`md:hidden fixed inset-0 z-[200] flex flex-col transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          mobileOpen
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-full pointer-events-none"
         }`}
         style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(40, 14, 14, 0.98) 0%, rgba(10, 6, 6, 0.99) 70%)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
+          background: "var(--color-noir)",
+          height: "100dvh",
         }}
-        aria-hidden={!mobileOpen}
       >
-        <button
-          type="button"
-          aria-label="Close menu"
-          onClick={() => setMobileOpen(false)}
-          className="absolute top-4 right-5 inline-flex items-center justify-center w-10 h-10 rounded-md text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors"
-        >
-          <X size={24} />
-        </button>
+        {/* Spacer to clear the header row (logo + burger live in the header itself) */}
+        <div className="h-[60px] flex-shrink-0 border-b border-[color-mix(in_oklab,var(--color-gold)_18%,transparent)]" />
 
-        <div className="h-full w-full flex flex-col items-center justify-center px-6">
-          <ul className="flex flex-col items-center gap-7 mb-10">
-            {links.map((l, i) => (
-              <li
-                key={l.label}
-                className={mobileOpen ? "animate-in fade-in slide-in-from-bottom-2 duration-500" : ""}
-                style={{ animationDelay: `${i * 70}ms`, animationFillMode: "both" }}
-              >
-                <a
-                  href={l.hash ? `#${l.hash}` : "/"}
-                  onClick={handleNav(l.hash)}
-                  className="uppercase text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors"
+        {/* Nav links */}
+        <nav className="flex-1 flex flex-col justify-center px-6 overflow-y-auto">
+          <ul className="flex flex-col">
+            {links.map((l, i) => {
+              const isActive = (l.hash === "" && false) || (l.hash && activeHash === l.hash);
+              return (
+                <li
+                  key={l.label}
+                  className={mobileOpen ? "animate-in fade-in slide-in-from-bottom-3 fill-mode-both" : ""}
                   style={{
-                    fontFamily: '"Playfair Display", Georgia, serif',
-                    fontSize: "22px",
-                    letterSpacing: "0.18em",
-                    fontWeight: 400,
+                    animationDelay: `${100 + i * 60}ms`,
+                    animationDuration: "500ms",
                   }}
                 >
-                  {l.label}
-                </a>
-              </li>
-            ))}
+                  <a
+                    href={l.hash ? `#${l.hash}` : "/"}
+                    onClick={handleNav(l.hash)}
+                    className={`group flex items-center justify-between py-5 px-2 border-b border-[color-mix(in_oklab,var(--color-gold)_12%,transparent)] transition-all duration-300 active:pl-4 ${
+                      isActive ? "" : ""
+                    }`}
+                  >
+                    <span
+                      className={`transition-colors ${
+                        isActive
+                          ? "text-[var(--color-brand-red)] italic"
+                          : "text-[var(--color-ivory)] group-active:text-[var(--color-brand-red)]"
+                      }`}
+                      style={{
+                        fontFamily: '"Playfair Display", Georgia, serif',
+                        fontSize: "26px",
+                        fontWeight: 400,
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {l.label}
+                    </span>
+                    <ArrowUpRight
+                      size={22}
+                      className={`transition-all ${
+                        isActive
+                          ? "opacity-100 text-[var(--color-brand-red)]"
+                          : "opacity-50 text-[var(--color-gold)] group-active:opacity-100 group-active:translate-x-1 group-active:text-[var(--color-brand-red)]"
+                      }`}
+                    />
+                  </a>
+                </li>
+              );
+            })}
           </ul>
+        </nav>
 
-          <div
-            aria-hidden
-            className="h-[1px] w-24 mb-8"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent 0%, rgba(184,149,90,0.6) 50%, transparent 100%)",
-            }}
-          />
-
+        {/* CTA + trust strip */}
+        <div
+          className={`flex-shrink-0 px-6 pt-5 pb-7 border-t border-[color-mix(in_oklab,var(--color-gold)_18%,transparent)] ${
+            mobileOpen ? "animate-in fade-in slide-in-from-bottom-3 fill-mode-both" : ""
+          }`}
+          style={{ animationDelay: "400ms", animationDuration: "500ms" }}
+        >
           <Link
             to="/shop"
             search={{}}
             onClick={() => setMobileOpen(false)}
-            className="btn-primary !py-3 !px-7 text-[11px]"
+            className="btn-primary block w-full text-center !py-4 text-[12px]"
           >
             Shop Now →
           </Link>
+          <div className="mt-4 flex items-center justify-around gap-2 text-[9px] tracking-[0.15em] uppercase text-[var(--color-ivory)]/55">
+            <span>Free Ship ₱899+</span>
+            <span className="opacity-40">•</span>
+            <span>30-Day Guarantee</span>
+            <span className="opacity-40">•</span>
+            <span>Discreet</span>
+          </div>
         </div>
       </div>
     </header>
