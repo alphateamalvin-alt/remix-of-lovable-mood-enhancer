@@ -7,10 +7,8 @@ function format(n: number) {
   return n.toString().padStart(2, "0");
 }
 
-function ctaLabelFor(variant: ShopVariant): { cta: string; unit: string } {
-  if (variant === "couples") return { cta: "Couples Bundle", unit: "bundles" };
-  if (variant === "him") return { cta: "Order For Him", unit: "bottles" };
-  return { cta: "Order For Her", unit: "bottles" };
+function ctaLabelFor(_variant: ShopVariant): { cta: string; unit: string } {
+  return { cta: "Order Now", unit: "bottles" };
 }
 
 export function StickyUrgencyBar() {
