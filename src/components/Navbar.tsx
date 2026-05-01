@@ -93,7 +93,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-3">
         <Link to="/" onClick={handleNav("")} className="flex items-center">
-          <img src={logo} alt="LOVABLE" className="h-5 w-auto" />
+          <Wordmark className="text-[18px]" />
         </Link>
 
         <ul className="hidden md:flex items-center gap-8">
@@ -128,7 +128,7 @@ export function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-[var(--color-noir)]/98 backdrop-blur-xl flex flex-col safe-top">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
-            <img src={logo} alt="LOVABLE" className="h-5 w-auto" />
+            <Wordmark className="text-[18px]" />
             <button onClick={() => setMobileOpen(false)} aria-label="Close menu" className="tap-target -mr-2">
               <X size={24} />
             </button>
