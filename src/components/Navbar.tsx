@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Heart } from "lucide-react";
+import { Heart, Menu, X } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 
 function Wordmark({ className = "" }: { className?: string }) {
@@ -33,11 +33,19 @@ const links = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  
   const [hidden, setHidden] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -63,6 +71,7 @@ export function Navbar() {
   }, [isHome]);
 
   const handleNav = (hash: string) => (e: React.MouseEvent) => {
+    setMobileOpen(false);
     if (!hash) {
       if (isHome) {
         e.preventDefault();
@@ -115,8 +124,84 @@ export function Navbar() {
           </Link>
         </div>
 
+        {/* Mobile burger */}
+        <button
+          type="button"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((v) => !v)}
+          className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors relative z-[60]"
+        >
+          {mobileOpen ? <Menu size={22} className="opacity-0" /> : <Menu size={22} />}
+        </button>
       </nav>
 
+      {/* Mobile full-screen overlay */}
+      <div
+        className={`md:hidden fixed inset-0 z-[55] transition-all duration-500 ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(40, 14, 14, 0.98) 0%, rgba(10, 6, 6, 0.99) 70%)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+        }}
+        aria-hidden={!mobileOpen}
+      >
+        <button
+          type="button"
+          aria-label="Close menu"
+          onClick={() => setMobileOpen(false)}
+          className="absolute top-4 right-5 inline-flex items-center justify-center w-10 h-10 rounded-md text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="h-full w-full flex flex-col items-center justify-center px-6">
+          <ul className="flex flex-col items-center gap-7 mb-10">
+            {links.map((l, i) => (
+              <li
+                key={l.label}
+                className={mobileOpen ? "animate-in fade-in slide-in-from-bottom-2 duration-500" : ""}
+                style={{ animationDelay: `${i * 70}ms`, animationFillMode: "both" }}
+              >
+                <a
+                  href={l.hash ? `#${l.hash}` : "/"}
+                  onClick={handleNav(l.hash)}
+                  className="uppercase text-[var(--color-ivory)] hover:text-[var(--color-brand-red)] transition-colors"
+                  style={{
+                    fontFamily: '"Playfair Display", Georgia, serif',
+                    fontSize: "22px",
+                    letterSpacing: "0.18em",
+                    fontWeight: 400,
+                  }}
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div
+            aria-hidden
+            className="h-[1px] w-24 mb-8"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent 0%, rgba(184,149,90,0.6) 50%, transparent 100%)",
+            }}
+          />
+
+          <Link
+            to="/shop"
+            search={{}}
+            onClick={() => setMobileOpen(false)}
+            className="btn-primary !py-3 !px-7 text-[11px]"
+          >
+            Shop Now →
+          </Link>
+        </div>
+      </div>
     </header>
   );
 }
