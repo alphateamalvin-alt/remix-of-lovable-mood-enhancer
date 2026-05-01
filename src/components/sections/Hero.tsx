@@ -125,28 +125,52 @@ export function Hero() {
           letter-spacing: 0.5px;
         }
         @media (max-width: 768px) {
-          /* Mobile: switch hero to a normal stacked column. Image on top, text below. */
+          /* Mobile: full-viewport image with text overlay at bottom (magazine cover). */
           .hero-section-root {
+            position: relative;
+            width: 100%;
             min-height: 0 !important;
-            height: auto !important;
-            padding: 16px 16px 40px !important;
-            gap: 0;
+            height: calc(100vh - 102px);
+            height: calc(100dvh - 102px);
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important;
           }
           .hero-image-container {
-            position: relative !important;
-            inset: auto !important;
-            order: 1;
+            position: absolute !important;
+            inset: 0 !important;
+            order: 0;
             width: 100% !important;
-            height: auto !important;
+            height: 100% !important;
             min-height: 0 !important;
-            aspect-ratio: 4 / 5;
-            margin: 0 0 20px 0 !important;
-            border-radius: 12px !important;
+            aspect-ratio: auto !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
             overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: none !important;
             z-index: 1 !important;
           }
-          .hero-image-container::after { display: none !important; }
+          .hero-image-container::after {
+            content: '' !important;
+            display: block !important;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+              180deg,
+              transparent 0%,
+              transparent 35%,
+              rgba(10, 6, 6, 0.4) 50%,
+              rgba(10, 6, 6, 0.78) 65%,
+              rgba(10, 6, 6, 0.94) 80%,
+              #0A0606 100%
+            ) !important;
+            box-shadow: none !important;
+            pointer-events: none;
+            z-index: 2;
+          }
           .hero-image {
             position: absolute;
             inset: 0;
@@ -154,7 +178,7 @@ export function Hero() {
             height: 100%;
             margin-left: 0;
             object-fit: cover;
-            object-position: center 30%;
+            object-position: center 25%;
             mask-image: none !important;
             -webkit-mask-image: none !important;
             background: #0A0606;
@@ -162,25 +186,29 @@ export function Hero() {
           .hero-mobile-overlay { display: none !important; }
           .hero-bridge { display: none !important; }
           .hero-text-col {
-            order: 2;
-            position: static !important;
+            position: relative !important;
+            z-index: 3 !important;
+            order: 1;
             min-height: 0 !important;
             height: auto !important;
-            padding: 0 4px !important;
+            width: 100%;
+            padding: 20px 22px calc(28px + env(safe-area-inset-bottom, 0px)) !important;
             align-items: flex-start !important;
+            justify-content: flex-start !important;
           }
           .hero-scroll-cue { display: none !important; }
 
-          /* Tighter Press section on mobile */
+          /* Tighter Press section on mobile overlay */
           .press-section {
-            margin-top: 12px !important;
-            margin-bottom: 16px !important;
-            padding: 12px 0 !important;
-            gap: 10px;
+            margin-top: 10px !important;
+            margin-bottom: 8px !important;
+            padding: 10px 0 !important;
+            gap: 8px;
+            border-top: 0.5px solid rgba(184, 149, 90, 0.25);
           }
-          .press-label { font-size: 8px; letter-spacing: 2.5px; }
-          .press-logos { gap: 16px; }
-          .press-logo { font-size: 12px; }
+          .press-label { font-size: 8px; letter-spacing: 2.5px; color: rgba(184, 149, 90, 0.7); }
+          .press-logos { gap: 18px; opacity: 0.85; }
+          .press-logo { font-size: 12px; color: rgba(242, 234, 224, 0.85); }
           .press-logo.metro { font-size: 11px; }
         }
         @media (min-width: 769px) {
