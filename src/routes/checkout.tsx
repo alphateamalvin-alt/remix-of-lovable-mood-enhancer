@@ -1,0 +1,770 @@
+import { useEffect, useMemo, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Lock, Truck, ShieldCheck, CreditCard, CheckCircle2, ArrowLeft, Star } from "lucide-react";
+
+const BOTTLE_HER_URL =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
+const BOTTLE_HIM_URL =
+  "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/11.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMS5wbmciLCJpYXQiOjE3NzcwODkyNTksImV4cCI6MTgwODYyNTI1OX0.K5QMIKYRD65B8p2BagU6a3SVO0gCmuwFYS78qwdHmPU";
+
+type Variant = "her" | "him" | "couples";
+type BundleId = "1" | "2" | "3";
+
+type CheckoutSearch = { variant: Variant; bundle: BundleId };
+
+const PRICING: Record<Variant, Record<BundleId, { price: number; baseEach: number; label: string; supply: string }>> = {
+  her: {
+    "1": { price: 599, baseEach: 599, label: "1 Bottle", supply: "30-day supply" },
+    "2": { price: 899, baseEach: 599, label: "2 Bottles", supply: "60-day supply" },
+    "3": { price: 1199, baseEach: 599, label: "3 Bottles", supply: "90-day supply" },
+  },
+  him: {
+    "1": { price: 599, baseEach: 599, label: "1 Bottle", supply: "30-day supply" },
+    "2": { price: 899, baseEach: 599, label: "2 Bottles", supply: "60-day supply" },
+    "3": { price: 1199, baseEach: 599, label: "3 Bottles", supply: "90-day supply" },
+  },
+  couples: {
+    "1": { price: 1099, baseEach: 1198, label: "1 Set", supply: "1 month for both" },
+    "2": { price: 1899, baseEach: 1099, label: "2 Sets", supply: "2 months for both" },
+    "3": { price: 2699, baseEach: 1099, label: "3 Sets", supply: "3 months for both" },
+  },
+};
+
+const VARIANT_NAME: Record<Variant, { full: React.ReactNode; plain: string }> = {
+  her: { full: <>LOVABLE for <em style={{ color: "#DC2627", fontStyle: "italic" }}>Her</em></>, plain: "LOVABLE for Her" },
+  him: { full: <>LOVABLE for <em style={{ color: "#DC2627", fontStyle: "italic" }}>Him</em></>, plain: "LOVABLE for Him" },
+  couples: { full: <>LOVABLE <em style={{ color: "#DC2627", fontStyle: "italic" }}>Couples</em> Bundle</>, plain: "LOVABLE Couples Bundle" },
+};
+
+export const Route = createFileRoute("/checkout")({
+  validateSearch: (search: Record<string, unknown>): CheckoutSearch => {
+    const v = search.variant;
+    const b = search.bundle;
+    const variant: Variant = v === "him" || v === "couples" ? v : "her";
+    const bundle: BundleId = b === "1" || b === "3" ? b : "2";
+    return { variant, bundle };
+  },
+  head: () => ({
+    meta: [
+      { title: "Checkout | LOVABLE Mood Drops" },
+      { name: "description", content: "Secure checkout for LOVABLE Mood Drops. Free nationwide shipping, 30-day money-back guarantee." },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: CheckoutPage,
+});
+
+function CheckoutPage() {
+  const { variant, bundle } = Route.useSearch();
+  const navigate = useNavigate();
+  const item = PRICING[variant][bundle];
+
+  const [payment, setPayment] = useState<"cod" | "qr" | "card">("qr");
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountApplied, setDiscountApplied] = useState<{ code: string; amount: number } | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [showMobileSummary, setShowMobileSummary] = useState(false);
+
+  // Form state (kept minimal but real)
+  const [form, setForm] = useState({
+    country: "Philippines",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    address: "",
+    region: "",
+    city: "",
+    barangay: "",
+    saveInfo: true,
+    cardNumber: "",
+    cardExp: "",
+    cardCvv: "",
+    cardName: "",
+  });
+
+  // Restore from sessionStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const saved = sessionStorage.getItem("lovable-checkout-form");
+    if (saved) {
+      try { setForm((f) => ({ ...f, ...JSON.parse(saved) })); } catch {}
+    }
+  }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    sessionStorage.setItem("lovable-checkout-form", JSON.stringify(form));
+  }, [form]);
+
+  const subtotal = item.baseEach * (variant === "couples" ? Number(bundle) : Number(bundle));
+  // Bundle savings = subtotal - price
+  const bundleSavings = Math.max(0, subtotal - item.price);
+  const discountAmount = discountApplied?.amount ?? 0;
+  const afterDiscount = item.price - discountAmount;
+  const shipping = afterDiscount >= 899 ? 0 : 150;
+  const total = afterDiscount + shipping;
+  const totalSavings = bundleSavings + discountAmount + (shipping === 0 && afterDiscount < 899 + 150 ? 0 : 0);
+
+  const handleApplyDiscount = () => {
+    const code = discountCode.trim().toUpperCase();
+    if (!code) return;
+    if (code === "SAVE10") {
+      setDiscountApplied({ code, amount: Math.round(item.price * 0.1) });
+    } else if (code === "LOVABLE50") {
+      setDiscountApplied({ code, amount: 50 });
+    } else {
+      setDiscountApplied(null);
+      alert("Invalid discount code");
+    }
+  };
+
+  const placeOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+    // Simulated submit
+    await new Promise((r) => setTimeout(r, 1200));
+    setSubmitting(false);
+    navigate({ to: "/", search: {} as never });
+  };
+
+  const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
+    setForm((f) => ({ ...f, [k]: v }));
+
+  return (
+    <div style={{ background: "#0D0D0D", minHeight: "100vh", color: "#F2EAE0", fontFamily: "Montserrat, sans-serif" }}>
+      <CheckoutHeader />
+
+      <main style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 140px" }}>
+        <TrustStrip />
+
+        <form onSubmit={placeOrder} className="checkout-grid">
+          <div>
+            <SectionCard>
+              <SectionHeader number={1} title="Delivery" italic="Information" right={<RequiredLabel />} />
+
+              <FieldRow>
+                <Field label="Country" required>
+                  <select value={form.country} onChange={(e) => update("country", e.target.value)} className="ck-input">
+                    <option>Philippines</option>
+                  </select>
+                </Field>
+              </FieldRow>
+
+              <FieldRow cols={2}>
+                <Field label="First Name" required>
+                  <input className="ck-input" required value={form.firstName} onChange={(e) => update("firstName", e.target.value)} />
+                </Field>
+                <Field label="Last Name" required>
+                  <input className="ck-input" required value={form.lastName} onChange={(e) => update("lastName", e.target.value)} />
+                </Field>
+              </FieldRow>
+
+              <FieldRow cols={2}>
+                <Field label="Phone Number" required>
+                  <input className="ck-input" required type="tel" placeholder="09XX XXX XXXX" value={form.phone} onChange={(e) => update("phone", e.target.value)} />
+                </Field>
+                <Field label="Email" sublabel="for receipt">
+                  <input className="ck-input" type="email" placeholder="example@email.com" value={form.email} onChange={(e) => update("email", e.target.value)} />
+                </Field>
+              </FieldRow>
+
+              <FieldRow>
+                <Field label="Complete Address" required>
+                  <input className="ck-input" required placeholder="House #, Street, Subdivision" value={form.address} onChange={(e) => update("address", e.target.value)} />
+                </Field>
+              </FieldRow>
+
+              <FieldRow cols={3}>
+                <Field label="Region" required>
+                  <select className="ck-input" required value={form.region} onChange={(e) => update("region", e.target.value)}>
+                    <option value="">Select region</option>
+                    <option>NCR</option>
+                    <option>Region III</option>
+                    <option>Region IV-A</option>
+                    <option>Region VII</option>
+                    <option>Region XI</option>
+                  </select>
+                </Field>
+                <Field label="City" required>
+                  <select className="ck-input" required disabled={!form.region} value={form.city} onChange={(e) => update("city", e.target.value)}>
+                    <option value="">Select city</option>
+                    <option>Quezon City</option>
+                    <option>Makati</option>
+                    <option>Pasig</option>
+                    <option>Taguig</option>
+                    <option>Manila</option>
+                  </select>
+                </Field>
+                <Field label="Barangay" required>
+                  <select className="ck-input" required disabled={!form.city} value={form.barangay} onChange={(e) => update("barangay", e.target.value)}>
+                    <option value="">Select barangay</option>
+                    <option>Barangay 1</option>
+                    <option>Barangay 2</option>
+                    <option>Barangay 3</option>
+                  </select>
+                </Field>
+              </FieldRow>
+
+              <label style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 16, fontSize: 12, color: "#F2EAE0", cursor: "pointer" }}>
+                <input
+                  type="checkbox"
+                  checked={form.saveInfo}
+                  onChange={(e) => update("saveInfo", e.target.checked)}
+                  style={{ width: 16, height: 16, accentColor: "#DC2627" }}
+                />
+                Save this information for next time
+              </label>
+            </SectionCard>
+
+            <div style={{ height: 24 }} />
+
+            <SectionCard>
+              <SectionHeader number={2} title="Payment" italic="Method" right={
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>
+                  <Lock size={11} /> Secure
+                </span>
+              } />
+
+              <PaymentCard
+                selected={payment === "cod"}
+                onClick={() => setPayment("cod")}
+                icon={<Truck size={20} color="#B8955A" />}
+                title={<>Cash on <em style={{ color: "#DC2627", fontStyle: "italic" }}>Delivery</em> (COD)</>}
+                subtitle="Pay when you receive your order"
+              />
+              <PaymentCard
+                selected={payment === "qr"}
+                onClick={() => setPayment("qr")}
+                icon={<ShieldCheck size={20} color="#B8955A" />}
+                title={<>Bank <em style={{ color: "#DC2627", fontStyle: "italic" }}>Transfer</em> (QR Code)</>}
+                subtitle="Pay via GCash, Maya, or InstaPay"
+                badge="MOST POPULAR"
+              />
+              <PaymentCard
+                selected={payment === "card"}
+                onClick={() => setPayment("card")}
+                icon={<CreditCard size={20} color="#B8955A" />}
+                title="Credit or Debit Card"
+                subtitle="Visa, Mastercard, JCB"
+                logos
+              >
+                {payment === "card" && (
+                  <div style={{ marginTop: 16, display: "grid", gap: 12 }}>
+                    <Field label="Card Number" required>
+                      <input className="ck-input" placeholder="1234 5678 9012 3456" value={form.cardNumber} onChange={(e) => update("cardNumber", e.target.value)} />
+                    </Field>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <Field label="Expiration" required>
+                        <input className="ck-input" placeholder="MM / YY" value={form.cardExp} onChange={(e) => update("cardExp", e.target.value)} />
+                      </Field>
+                      <Field label="CVV" required>
+                        <input className="ck-input" placeholder="123" value={form.cardCvv} onChange={(e) => update("cardCvv", e.target.value)} />
+                      </Field>
+                    </div>
+                    <Field label="Cardholder Name" required>
+                      <input className="ck-input" value={form.cardName} onChange={(e) => update("cardName", e.target.value)} />
+                    </Field>
+                  </div>
+                )}
+              </PaymentCard>
+
+              <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontStyle: "italic", color: "#9A8880" }}>
+                <Lock size={12} /> All transactions are secure and encrypted via SSL
+              </div>
+            </SectionCard>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-pulse-shine btn-pulse-medium ck-place-order"
+              style={{ width: "100%", marginTop: 32, opacity: submitting ? 0.7 : 1 }}
+            >
+              <span>
+                {submitting ? "PROCESSING..." : `PLACE ORDER · ₱${total.toLocaleString()}`}
+              </span>
+              <span className="arrow">{submitting ? "" : "🔒"}</span>
+            </button>
+          </div>
+
+          <aside className="checkout-summary">
+            <OrderSummary
+              variant={variant}
+              bundle={bundle}
+              item={item}
+              subtotal={subtotal}
+              bundleSavings={bundleSavings}
+              shipping={shipping}
+              discountApplied={discountApplied}
+              total={total}
+              discountCode={discountCode}
+              setDiscountCode={setDiscountCode}
+              onApplyDiscount={handleApplyDiscount}
+            />
+          </aside>
+        </form>
+      </main>
+
+      {/* Sticky mobile bottom CTA */}
+      <div className="ck-mobile-bottom">
+        <button
+          onClick={() => setShowMobileSummary((s) => !s)}
+          aria-expanded={showMobileSummary}
+          style={{
+            background: "transparent", border: "none", color: "#F2EAE0", textAlign: "left", flex: 1, cursor: "pointer",
+          }}
+        >
+          <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#9A8880" }}>Total</div>
+          <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 18, color: "#DC2627", fontStyle: "italic" }}>
+            ₱{total.toLocaleString()}
+          </div>
+        </button>
+        <button
+          form=""
+          onClick={(e) => {
+            // Submit the form
+            const f = (e.currentTarget.closest("body") as HTMLElement | null)?.querySelector("form");
+            if (f) (f as HTMLFormElement).requestSubmit();
+          }}
+          className="btn-pulse-shine btn-pulse-compact"
+          style={{ minWidth: 160 }}
+          disabled={submitting}
+        >
+          <span>{submitting ? "PROCESSING" : "PLACE ORDER"}</span> <span className="arrow">→</span>
+        </button>
+      </div>
+
+      <style>{`
+        .checkout-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+          gap: 32px;
+          align-items: start;
+        }
+        .checkout-summary { position: sticky; top: 100px; }
+        @media (max-width: 900px) {
+          .checkout-grid { grid-template-columns: 1fr; gap: 24px; }
+          .checkout-summary { position: static; }
+        }
+        .ck-input {
+          width: 100%;
+          background: #0D0D0D;
+          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          border-radius: 8px;
+          padding: 14px 16px;
+          color: #F2EAE0;
+          font-family: Montserrat, sans-serif;
+          font-size: 13px;
+          transition: border-color 200ms ease, box-shadow 200ms ease;
+          outline: none;
+        }
+        .ck-input:hover { border-color: rgba(184, 149, 90, 0.45); }
+        .ck-input:focus {
+          border: 1px solid #DC2627;
+          box-shadow: 0 0 0 3px rgba(220, 38, 39, 0.1);
+        }
+        .ck-input:disabled { opacity: 0.5; cursor: not-allowed; }
+        select.ck-input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #B8955A 50%), linear-gradient(135deg, #B8955A 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+
+        .ck-mobile-bottom {
+          display: none;
+          position: fixed; left: 0; right: 0; bottom: 0;
+          background: rgba(13, 13, 13, 0.95);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-top: 0.5px solid rgba(184, 149, 90, 0.22);
+          padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+          z-index: 50;
+          gap: 12px; align-items: center;
+        }
+        @media (max-width: 900px) {
+          .ck-mobile-bottom { display: flex; }
+          .ck-place-order { display: none; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function CheckoutHeader() {
+  return (
+    <header
+      style={{
+        position: "sticky", top: 0, zIndex: 100,
+        background: "rgba(13, 13, 13, 0.92)",
+        backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        padding: "20px 32px",
+        borderBottom: "0.5px solid rgba(184, 149, 90, 0.18)",
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <Link to="/" style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, letterSpacing: 4, color: "#F2EAE0", textDecoration: "none" }}>
+          LOVABLE
+        </Link>
+        <div
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            background: "rgba(184, 149, 90, 0.1)",
+            border: "0.5px solid rgba(184, 149, 90, 0.3)",
+            padding: "6px 14px", borderRadius: 999,
+          }}
+        >
+          <span style={{ display: "inline-flex", gap: 1 }}>
+            {[0,1,2,3,4].map((i) => <Star key={i} size={10} fill="#B8955A" stroke="#B8955A" />)}
+          </span>
+          <span style={{ fontSize: 10, letterSpacing: 1.5, color: "#F2EAE0" }}>1,200+ 5-Star Reviews</span>
+        </div>
+      </div>
+      <Link
+        to="/shop"
+        style={{
+          display: "inline-flex", alignItems: "center", gap: 6,
+          color: "#9A8880", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", textDecoration: "none",
+        }}
+      >
+        <ArrowLeft size={12} /> Back to Shop
+      </Link>
+    </header>
+  );
+}
+
+function TrustStrip() {
+  const items = [
+    "Free Nationwide Shipping",
+    "30-Day Money-Back Guarantee",
+    "Discreet Packaging",
+    "FDA-Registered Facility",
+  ];
+  return (
+    <div
+      style={{
+        background: "rgba(184, 149, 90, 0.04)",
+        border: "0.5px solid rgba(184, 149, 90, 0.18)",
+        borderRadius: 14,
+        padding: "16px 24px",
+        marginBottom: 32,
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: 12,
+      }}
+      className="ck-trust"
+    >
+      {items.map((it) => (
+        <div key={it} style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+          <span style={{ color: "#B8955A", fontSize: 12 }}>◊</span>
+          <span style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#F2EAE0" }}>{it}</span>
+        </div>
+      ))}
+      <style>{`
+        @media (max-width: 700px) { .ck-trust { grid-template-columns: repeat(2, 1fr); } }
+      `}</style>
+    </div>
+  );
+}
+
+function SectionCard({ children }: { children: React.ReactNode }) {
+  return (
+    <section
+      style={{
+        background: "#160808",
+        border: "0.5px solid rgba(184, 149, 90, 0.22)",
+        borderRadius: 14,
+        padding: "36px 32px",
+        boxShadow: "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 16px 48px rgba(0, 0, 0, 0.4)",
+      }}
+    >
+      {children}
+    </section>
+  );
+}
+
+function SectionHeader({ number, title, italic, right }: { number: number; title: string; italic: string; right?: React.ReactNode }) {
+  return (
+    <>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <span
+            style={{
+              width: 28, height: 28, borderRadius: "50%",
+              background: "#DC2627", color: "#F2EAE0",
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              fontFamily: '"Playfair Display", serif', fontStyle: "italic", fontSize: 14,
+            }}
+          >{number}</span>
+          <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, color: "#F2EAE0", margin: 0 }}>
+            {title} <em style={{ color: "#B8955A", fontStyle: "italic" }}>{italic}</em>
+          </h2>
+        </div>
+        {right}
+      </div>
+      <div style={{ height: 0.5, background: "linear-gradient(to right, rgba(184,149,90,0.5) 0%, rgba(184,149,90,0.3) 30%, transparent 100%)", margin: "16px 0 24px" }} />
+    </>
+  );
+}
+
+function RequiredLabel() {
+  return (
+    <span style={{ fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>Required</span>
+  );
+}
+
+function FieldRow({ children, cols = 1 }: { children: React.ReactNode; cols?: 1 | 2 | 3 }) {
+  return (
+    <div
+      style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 16, marginBottom: 14 }}
+      className={`ck-fieldrow-${cols}`}
+    >
+      {children}
+      {cols > 1 && (
+        <style>{`
+          @media (max-width: 600px) { .ck-fieldrow-${cols} { grid-template-columns: 1fr; } }
+        `}</style>
+      )}
+    </div>
+  );
+}
+
+function Field({ label, required, sublabel, children }: { label: string; required?: boolean; sublabel?: string; children: React.ReactNode }) {
+  return (
+    <label style={{ display: "block" }}>
+      <div style={{ marginBottom: 6, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>
+        {label}{required && <span style={{ color: "#DC2627", marginLeft: 4 }}>*</span>}
+        {sublabel && <span style={{ marginLeft: 6, color: "#9A8880", textTransform: "none", letterSpacing: 0.5, fontStyle: "italic" }}>({sublabel})</span>}
+      </div>
+      {children}
+    </label>
+  );
+}
+
+function PaymentCard({
+  selected, onClick, icon, title, subtitle, badge, logos, children,
+}: {
+  selected: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  title: React.ReactNode;
+  subtitle: string;
+  badge?: string;
+  logos?: boolean;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); }}}
+      style={{
+        border: selected ? "1px solid #DC2627" : "0.5px solid rgba(184, 149, 90, 0.22)",
+        background: selected ? "rgba(220, 38, 39, 0.04)" : "transparent",
+        borderRadius: 12,
+        padding: 20,
+        marginBottom: 12,
+        cursor: "pointer",
+        transition: "all 250ms ease",
+        boxShadow: selected ? "0 4px 16px rgba(220, 38, 39, 0.15)" : "none",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <span
+          style={{
+            width: 22, height: 22, borderRadius: "50%",
+            border: selected ? "6px solid #DC2627" : "1.5px solid #B8955A",
+            background: selected ? "#0D0D0D" : "transparent",
+            flexShrink: 0,
+          }}
+        />
+        <span style={{ width: 40, height: 40, display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "rgba(184,149,90,0.08)", flexShrink: 0 }}>
+          {icon}
+        </span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#F2EAE0" }}>{title}</div>
+          <div style={{ fontSize: 12, color: "#9A8880", marginTop: 2 }}>{subtitle}</div>
+        </div>
+        {badge && (
+          <span style={{
+            background: "rgba(184, 149, 90, 0.1)",
+            border: "0.5px solid rgba(184, 149, 90, 0.3)",
+            padding: "4px 10px", borderRadius: 999,
+            fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A",
+            flexShrink: 0,
+          }}>{badge}</span>
+        )}
+        {logos && (
+          <div style={{ display: "flex", gap: 6, color: "#B8955A", fontSize: 10, letterSpacing: 1 }}>
+            <span>VISA</span><span>MC</span>
+          </div>
+        )}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function OrderSummary({
+  variant, bundle, item, subtotal, bundleSavings, shipping, discountApplied, total,
+  discountCode, setDiscountCode, onApplyDiscount,
+}: {
+  variant: Variant;
+  bundle: BundleId;
+  item: { price: number; baseEach: number; label: string; supply: string };
+  subtotal: number;
+  bundleSavings: number;
+  shipping: number;
+  discountApplied: { code: string; amount: number } | null;
+  total: number;
+  discountCode: string;
+  setDiscountCode: (s: string) => void;
+  onApplyDiscount: () => void;
+}) {
+  const savingsTotal = bundleSavings + (discountApplied?.amount ?? 0) + (shipping === 0 ? 150 : 0);
+
+  return (
+    <div
+      style={{
+        background: "#160808",
+        border: "0.5px solid rgba(184, 149, 90, 0.22)",
+        borderRadius: 14,
+        padding: "32px 28px",
+        boxShadow: "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 16px 48px rgba(0, 0, 0, 0.4)",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, color: "#F2EAE0", margin: 0 }}>
+          Order <em style={{ color: "#B8955A", fontStyle: "italic" }}>Summary</em>
+        </h2>
+        <Link
+          to="/shop"
+          search={{ variant }}
+          style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#B8955A", textDecoration: "none" }}
+        >
+          Edit
+        </Link>
+      </div>
+      <div style={{ height: 0.5, background: "linear-gradient(to right, rgba(184,149,90,0.5) 0%, rgba(184,149,90,0.3) 30%, transparent 100%)", margin: "16px 0 20px" }} />
+
+      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        <div style={{ position: "relative", width: 64, height: 64, borderRadius: 8, border: "0.5px solid rgba(184, 149, 90, 0.22)", overflow: "hidden", background: "#0D0D0D", flexShrink: 0 }}>
+          {variant === "couples" ? (
+            <div style={{ display: "flex", height: "100%" }}>
+              <img src={BOTTLE_HER_URL} alt="" style={{ width: "50%", height: "100%", objectFit: "cover" }} />
+              <img src={BOTTLE_HIM_URL} alt="" style={{ width: "50%", height: "100%", objectFit: "cover" }} />
+            </div>
+          ) : (
+            <img src={variant === "her" ? BOTTLE_HER_URL : BOTTLE_HIM_URL} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          )}
+          <span style={{
+            position: "absolute", top: -6, right: -6,
+            width: 22, height: 22, borderRadius: "50%",
+            background: "rgba(0,0,0,0.85)", border: "0.5px solid #B8955A",
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            fontFamily: '"Playfair Display", serif', fontSize: 11, color: "#F2EAE0",
+          }}>{bundle}</span>
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 14, color: "#F2EAE0" }}>
+            {VARIANT_NAME[variant].full}
+          </div>
+          <div style={{ fontSize: 11, color: "#9A8880", marginTop: 2 }}>
+            {item.label} · {item.supply}
+          </div>
+        </div>
+        <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#F2EAE0", fontWeight: 500 }}>
+          ₱{item.price.toLocaleString()}
+        </div>
+      </div>
+
+      {/* Discount code */}
+      <div style={{ display: "flex", gap: 8, marginTop: 24 }}>
+        <input
+          className="ck-input"
+          placeholder="Discount code"
+          value={discountCode}
+          onChange={(e) => setDiscountCode(e.target.value)}
+          style={{ flex: 1 }}
+        />
+        <button
+          type="button"
+          onClick={onApplyDiscount}
+          style={{
+            background: "#0D0D0D",
+            border: "0.5px solid rgba(184, 149, 90, 0.4)",
+            borderRadius: 999,
+            padding: "12px 20px",
+            color: "#F2EAE0",
+            fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
+            cursor: "pointer",
+          }}
+        >
+          Apply
+        </button>
+      </div>
+
+      {/* Price breakdown */}
+      <div style={{ marginTop: 24 }}>
+        <PriceRow label="Subtotal" value={`₱${subtotal.toLocaleString()}`} />
+        {bundleSavings > 0 && (
+          <PriceRow label="Bundle Savings" value={`-₱${bundleSavings.toLocaleString()}`} accent="#B8955A" />
+        )}
+        <PriceRow
+          label="Shipping"
+          value={shipping === 0 ? "FREE" : `₱${shipping.toLocaleString()}`}
+          accent={shipping === 0 ? "#10B981" : undefined}
+        />
+        {discountApplied && (
+          <PriceRow label={`Promo: ${discountApplied.code}`} value={`-₱${discountApplied.amount.toLocaleString()}`} accent="#10B981" />
+        )}
+      </div>
+
+      {savingsTotal > 0 && (
+        <div
+          style={{
+            background: "rgba(16, 185, 129, 0.08)",
+            border: "0.5px solid rgba(16, 185, 129, 0.3)",
+            borderRadius: 8,
+            padding: "12px 16px",
+            margin: "12px 0",
+            display: "flex", alignItems: "center", gap: 8,
+          }}
+        >
+          <CheckCircle2 size={14} color="#10B981" />
+          <span style={{ fontSize: 12, color: "#10B981" }}>
+            You're saving ₱{savingsTotal.toLocaleString()} on this order!
+          </span>
+        </div>
+      )}
+
+      <div style={{ height: 1, background: "rgba(184, 149, 90, 0.3)", margin: "16px 0" }} />
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+        <span style={{ fontSize: 12, letterSpacing: 3, textTransform: "uppercase", color: "#F2EAE0" }}>Total</span>
+        <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 28, color: "#DC2627", fontStyle: "italic", fontWeight: 500 }}>
+          ₱{total.toLocaleString()}
+        </span>
+      </div>
+
+      <div style={{ marginTop: 24, paddingTop: 24, borderTop: "0.5px solid rgba(184, 149, 90, 0.18)", display: "grid", gap: 12 }}>
+        {[
+          "30-Day Money-Back Guarantee",
+          "Discreet, unmarked packaging",
+          "SSL secured payment",
+        ].map((t) => (
+          <div key={t} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <CheckCircle2 size={16} color="#10B981" />
+            <span style={{ fontSize: 12, color: "#F2EAE0" }}>{t}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PriceRow({ label, value, accent }: { label: string; value: string; accent?: string }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: 12 }}>
+      <span style={{ fontSize: 13, color: accent ?? "#F2EAE0" }}>{label}</span>
+      <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 14, color: accent ?? "#F2EAE0" }}>{value}</span>
+    </div>
+  );
+}
