@@ -92,7 +92,7 @@ export function Footer() {
       </div>
 
       {/* Newsletter */}
-      <div className="border-b border-white/[0.06]">
+      <div className="hidden md:block border-b border-white/[0.06]">
         <div className="mx-auto max-w-3xl px-6 sm:px-10 py-12 text-center">
           <h4
             style={{
