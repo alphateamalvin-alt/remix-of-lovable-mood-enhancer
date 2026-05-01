@@ -272,8 +272,9 @@ export function PainPoints() {
                 isHover && !isActive ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)";
 
               return (
-                <div
+                <MobileScrollPanel
                   key={i}
+                  enabled={isMobile}
                   role="button"
                   tabIndex={0}
                   aria-label={p.label}
