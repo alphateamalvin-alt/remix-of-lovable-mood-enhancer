@@ -185,7 +185,11 @@ export function VSL() {
               border: "0.5px solid color-mix(in oklab, var(--color-gold) 22%, transparent)",
             }}
           >
-            <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-noir)]">
+            <div
+              className="relative aspect-video w-full overflow-hidden bg-[var(--color-noir)]"
+              onClick={() => { if (!muted) showControls(); }}
+              onTouchStart={() => { if (!muted) showControls(); }}
+            >
               <div
                 ref={containerRef}
                 className="pointer-events-none absolute inset-0 block h-full w-full bg-[var(--color-noir)] [&>iframe]:absolute [&>iframe]:inset-0 [&>iframe]:block [&>iframe]:h-full [&>iframe]:w-full [&>iframe]:border-0 [&>iframe]:bg-[var(--color-noir)] [&>iframe]:object-contain"
