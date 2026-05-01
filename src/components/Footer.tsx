@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Youtube, ShieldCheck, BadgeCheck, PackageCheck, Headphones } from "lucide-react";
-import { useState } from "react";
+
 
 const logo = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Final%20Lovable%20Logo%20copy.png";
 
