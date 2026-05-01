@@ -160,6 +160,42 @@ function CheckoutPage() {
       <main style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 140px" }}>
         <TrustStrip />
 
+        <div className="ck-mobile-summary-wrap">
+          <button
+            type="button"
+            onClick={() => setShowMobileSummary((s) => !s)}
+            aria-expanded={showMobileSummary}
+            className="ck-mobile-summary-toggle"
+          >
+            <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
+              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, letterSpacing: 2, color: "#B8955A", textTransform: "uppercase" }}>
+                {showMobileSummary ? "Hide order summary" : "View order summary"}
+              </span>
+              <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, color: "#F2EAE0", fontWeight: 500 }}>
+                ₱{total.toLocaleString()}
+              </span>
+            </span>
+            <span aria-hidden style={{ color: "#B8955A", transition: "transform 300ms ease", transform: showMobileSummary ? "rotate(180deg)" : "rotate(0)" }}>▾</span>
+          </button>
+          <div className={`ck-mobile-summary-panel${showMobileSummary ? " is-open" : ""}`}>
+            <div style={{ padding: "0 4px 16px" }}>
+              <OrderSummary
+                variant={variant}
+                bundle={bundle}
+                item={item}
+                subtotal={subtotal}
+                bundleSavings={bundleSavings}
+                shipping={shipping}
+                discountApplied={discountApplied}
+                total={total}
+                discountCode={discountCode}
+                setDiscountCode={setDiscountCode}
+                onApplyDiscount={handleApplyDiscount}
+              />
+            </div>
+          </div>
+        </div>
+
         <form onSubmit={placeOrder} className="checkout-grid">
           <div>
             <SectionCard>
@@ -375,10 +411,35 @@ function CheckoutPage() {
           z-index: 50;
           gap: 12px; align-items: center;
         }
+        .ck-mobile-summary-wrap { display: none; }
+        .ck-mobile-summary-toggle {
+          width: 100%;
+          background: #160808;
+          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          border-radius: 12px;
+          padding: 14px 18px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #F2EAE0;
+          cursor: pointer;
+          font-family: Montserrat, sans-serif;
+        }
+        .ck-mobile-summary-panel {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ck-mobile-summary-panel.is-open {
+          max-height: 1400px;
+          padding-top: 12px;
+        }
         @media (max-width: 900px) {
           .ck-mobile-bottom { display: flex; }
           .ck-place-order { display: none; }
           .ck-hide-mobile { display: none !important; }
+          .ck-mobile-summary-wrap { display: block; margin-bottom: 24px; }
+          .checkout-summary { display: none !important; }
         }
       `}</style>
     </div>
@@ -465,13 +526,21 @@ function TrustStrip() {
       className="ck-trust"
     >
       {items.map((it) => (
-        <div key={it} style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
-          <span style={{ color: "#B8955A", fontSize: 12 }}>◊</span>
-          <span style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#F2EAE0" }}>{it}</span>
+        <div key={it} className="ck-trust-item" style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+          <span style={{ color: "#B8955A", fontSize: 12, flexShrink: 0 }}>◊</span>
+          <span className="ck-trust-label" style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#F2EAE0", lineHeight: 1.3 }}>{it}</span>
         </div>
       ))}
       <style>{`
-        @media (max-width: 700px) { .ck-trust { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) {
+          .ck-trust {
+            grid-template-columns: repeat(2, 1fr) !important;
+            padding: 14px 12px !important;
+            gap: 10px !important;
+          }
+          .ck-trust-item { justify-content: flex-start !important; padding: 6px 4px; }
+          .ck-trust-label { font-size: 9.5px !important; letter-spacing: 1.1px !important; }
+        }
       `}</style>
     </div>
   );

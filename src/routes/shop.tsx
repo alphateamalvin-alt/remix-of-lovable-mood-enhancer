@@ -295,6 +295,22 @@ function ProductTabs({ initial }: { initial: Variant }) {
         @media (min-width: 640px) {
           .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
         }
+        @media (max-width: 639px) {
+          .variant-tabs-inner {
+            justify-content: flex-start;
+            padding: 0 4px;
+          }
+          .tab-pill {
+            padding: 10px 14px !important;
+            font-size: 10.5px !important;
+            letter-spacing: 0.12em !important;
+          }
+          .variant-tabs.is-stuck .tab-pill {
+            padding: 9px 12px !important;
+            font-size: 10px !important;
+            letter-spacing: 0.1em !important;
+          }
+        }
         .product-display { padding-top: 8px; }
       `}</style>
       <div className={`variant-tabs ${scrolled ? "is-stuck" : ""}`}>

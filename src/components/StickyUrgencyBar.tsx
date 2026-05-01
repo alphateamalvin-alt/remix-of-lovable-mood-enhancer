@@ -3,10 +3,6 @@ import { useShopState, type ShopVariant } from "@/lib/shop-store";
 
 const SESSION_KEY = "lovable-urgency-dismissed";
 
-function format(n: number) {
-  return n.toString().padStart(2, "0");
-}
-
 function ctaLabelFor(_variant: ShopVariant): { cta: string; unit: string } {
   return { cta: "Order Now", unit: "bottles" };
 }
@@ -15,7 +11,6 @@ export function StickyUrgencyBar() {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [count, setCount] = useState(247);
-  const [seconds, setSeconds] = useState(23 * 3600 + 47 * 60 + 12);
   const [isMobile, setIsMobile] = useState(false);
   const [onShop, setOnShop] = useState(false);
 
@@ -49,13 +44,6 @@ export function StickyUrgencyBar() {
   }, [isMobile]);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setSeconds((s) => (s <= 1 ? 23 * 3600 + 59 * 60 + 59 : s - 1));
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
     let id: ReturnType<typeof setTimeout>;
     const tick = () => {
       setCount((c) => c + Math.floor(Math.random() * 3) + 1);
@@ -72,9 +60,6 @@ export function StickyUrgencyBar() {
 
   if (dismissed) return null;
 
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
   const priceLabel = `₱${shop.price.toLocaleString()}`;
 
   return (
@@ -121,16 +106,8 @@ export function StickyUrgencyBar() {
                   }}
                 />
                 <span style={{ fontSize: 11, color: "#F2EAE0", fontWeight: 500, letterSpacing: 0.5 }}>
-                  <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> today
+                  <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> ordered today
                 </span>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8, color: "#9A8880", letterSpacing: 1, textTransform: "uppercase" }}>
-                  Flash Promo Ends In
-                </div>
-                <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 14, color: "#DC2627", fontWeight: 700 }}>
-                  {format(h)} : {format(m)} : {format(s)}
-                </div>
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
@@ -158,17 +135,8 @@ export function StickyUrgencyBar() {
                 }}
               />
               <span style={{ fontSize: 12, color: "#F2EAE0", fontWeight: 500 }}>
-                <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> ordered this week
+                <strong style={{ color: "#DC2627", fontWeight: 700 }}>{count} {unit}</strong> ordered today
               </span>
-              <span style={{ width: 1, height: 16, background: "rgba(255,255,255,0.15)" }} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 9, color: "#9A8880", letterSpacing: 1, textTransform: "uppercase" }}>
-                  Flash Promo Ends In
-                </span>
-                <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#DC2627", fontWeight: 700 }}>
-                  {format(h)} : {format(m)} : {format(s)}
-                </span>
-              </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <a href={ctaHref} className="btn-pulse-shine btn-pulse-compact">
