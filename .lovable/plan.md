@@ -1,29 +1,27 @@
 
 ## Goal
 
-On mobile, hide the "ordered ..." social-proof toast while the hero section is on screen, and shrink the toast slightly so it doesn't feel oversized. Desktop is unchanged.
+Restore the social-proof toast to its original size on mobile, and lower its vertical position on screen so it sits closer to the bottom edge.
 
 ## Changes — `src/components/SocialProofToast.tsx`
 
-1. **Hide on hero (mobile only):**
-   - Add `heroInView` state, set via an `IntersectionObserver` on `#top` (the hero `<section>`).
-   - In the render guard, return `null` when `isMobile && heroInView`.
-   - Desktop continues to show the toast everywhere as today.
+1. **Revert mobile sizing to original:**
+   - `maxWidth`: `210` → `240`
+   - `padding`: `"10px 12px"` → `"14px 16px"` (always)
+   - `gridTemplateColumns`: `"38px 1fr 20px"` → `"48px 1fr 24px"` (always)
+   - `gap`: `10` → `12` (always)
+   - Thumbnail `<img>`: width/height back to `48`
+   - Name font: back to `13`
+   - Product font: back to `11`
+   - Time/verified font + check: back to `10`
+   - Close button: back to `24×24`, font `12`
 
-2. **Smaller mobile size:**
-   - Mobile `maxWidth`: `240` → `210`.
-   - Mobile padding: `14px 16px` → `10px 12px`.
-   - Mobile thumbnail: `48 × 48` → `38 × 38`; `gridTemplateColumns: "48px 1fr 24px"` → `"38px 1fr 20px"`.
-   - Mobile font sizes:
-     - Name line `13` → `12`.
-     - Product line `11` → `10`.
-     - Time/verified line `10` → `9`.
-   - Close button `24 × 24` → `20 × 20`, font `12` → `11`.
-   - Desktop sizes unchanged (use `isMobile` ternaries for each value).
+2. **Lower mobile position:**
+   - Mobile `bottom`: `urgencyDismissed ? 16 : 70` → `urgencyDismissed ? 8 : 40`
+   - Desktop `bottom` unchanged.
 
-3. No change to rotation timing, position logic, or copy.
+3. Keep the hero-in-view hide behavior (previous step) — no change there.
 
 ## Notes
 
-- IntersectionObserver is created once in a `useEffect`; if `#top` isn't found (e.g. shop/checkout pages), `heroInView` stays `false` so the toast still shows.
-- Toast remains hidden on `/checkout` (existing logic).
+- Desktop styling untouched.
