@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Lock, Truck, CheckCircle2, ArrowLeft, Star } from "lucide-react";
+import { Lock, Truck, CheckCircle2, ArrowLeft, Star, Heart } from "lucide-react";
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
@@ -397,8 +397,23 @@ function CheckoutHeader() {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <Link to="/" style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, letterSpacing: 4, color: "#F2EAE0", textDecoration: "none" }}>
-          LOVABLE
+        <Link
+          to="/"
+          aria-label="LOVABLE"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 0,
+            fontFamily: '"Playfair Display", serif',
+            fontWeight: 800,
+            fontSize: 22,
+            letterSpacing: "-0.02em",
+            color: "#DC2627",
+            textDecoration: "none",
+            lineHeight: 1,
+          }}
+        >
+          <span>LO</span>
+          <Heart size={18} fill="#DC2627" stroke="#DC2627" strokeWidth={1.5} style={{ margin: "0 1px" }} aria-hidden="true" />
+          <span>ABLE</span>
         </Link>
         <div
           style={{

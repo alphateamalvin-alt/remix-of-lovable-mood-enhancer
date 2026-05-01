@@ -1,7 +1,27 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-const logo = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/Final%20Lovable%20Logo%20copy.png";
+
+function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <span
+      aria-label="LOVABLE"
+      className={`inline-flex items-center font-extrabold tracking-tight text-[var(--color-brand-red)] leading-none ${className}`}
+      style={{ fontFamily: '"Playfair Display", serif', letterSpacing: "-0.02em" }}
+    >
+      <span>LO</span>
+      <Heart
+        className="mx-[1px]"
+        size="0.95em"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        aria-hidden="true"
+      />
+      <span>ABLE</span>
+    </span>
+  );
+}
 
 const links = [
   { label: "Home", hash: "" },
@@ -73,7 +93,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 py-3">
         <Link to="/" onClick={handleNav("")} className="flex items-center">
-          <img src={logo} alt="LOVABLE" className="h-5 w-auto" />
+          <Wordmark className="text-[18px]" />
         </Link>
 
         <ul className="hidden md:flex items-center gap-8">
@@ -108,7 +128,7 @@ export function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-[var(--color-noir)]/98 backdrop-blur-xl flex flex-col safe-top">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
-            <img src={logo} alt="LOVABLE" className="h-5 w-auto" />
+            <Wordmark className="text-[18px]" />
             <button onClick={() => setMobileOpen(false)} aria-label="Close menu" className="tap-target -mr-2">
               <X size={24} />
             </button>
