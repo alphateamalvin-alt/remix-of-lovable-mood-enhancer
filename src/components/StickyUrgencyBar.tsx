@@ -126,7 +126,7 @@ export function StickyUrgencyBar() {
               </div>
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: 8, color: "#9A8880", letterSpacing: 1, textTransform: "uppercase" }}>
-                  Free Shipping Ends In
+                  Flash Promo Ends In
                 </div>
                 <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 14, color: "#DC2627", fontWeight: 700 }}>
                   {format(h)} : {format(m)} : {format(s)}
@@ -163,7 +163,7 @@ export function StickyUrgencyBar() {
               <span style={{ width: 1, height: 16, background: "rgba(255,255,255,0.15)" }} />
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <span style={{ fontSize: 9, color: "#9A8880", letterSpacing: 1, textTransform: "uppercase" }}>
-                  Free Shipping Ends In
+                  Flash Promo Ends In
                 </span>
                 <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#DC2627", fontWeight: 700 }}>
                   {format(h)} : {format(m)} : {format(s)}
