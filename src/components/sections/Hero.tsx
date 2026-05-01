@@ -75,7 +75,7 @@ export function Hero() {
             margin-left: -7.5%;
             margin-top: -5%;
             object-fit: cover;
-            object-position: 65% 0%;
+            object-position: 90% 0%;
             mask-image: none;
             -webkit-mask-image: none;
             background: #0A0606;
