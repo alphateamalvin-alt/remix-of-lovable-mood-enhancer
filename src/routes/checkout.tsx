@@ -96,9 +96,10 @@ function CheckoutPage() {
   const bundleSavings = Math.max(0, subtotal - item.price);
   const discountAmount = discountApplied?.amount ?? 0;
   const afterDiscount = item.price - discountAmount;
-  const shipping = afterDiscount >= 899 ? 0 : 150;
+  const shipping = 0;
   const total = afterDiscount + shipping;
-  const totalSavings = bundleSavings + discountAmount + (shipping === 0 && afterDiscount < 899 + 150 ? 0 : 0);
+  const totalSavings = bundleSavings + discountAmount;
+  void totalSavings;
 
   const handleApplyDiscount = () => {
     const code = discountCode.trim().toUpperCase();
@@ -631,7 +632,7 @@ function OrderSummary({
   setDiscountCode: (s: string) => void;
   onApplyDiscount: () => void;
 }) {
-  const savingsTotal = bundleSavings + (discountApplied?.amount ?? 0) + (shipping === 0 ? 150 : 0);
+  const savingsTotal = bundleSavings + (discountApplied?.amount ?? 0);
 
   return (
     <div

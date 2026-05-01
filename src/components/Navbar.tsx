@@ -295,7 +295,7 @@ export function Navbar() {
             Shop Now →
           </Link>
           <div className="mt-4 flex items-center justify-around gap-2 text-[9px] tracking-[0.15em] uppercase text-[var(--color-ivory)]/55">
-            <span>Free Ship ₱899+</span>
+            <span>Free Shipping Nationwide</span>
             <span className="opacity-40">•</span>
             <span>30-Day Guarantee</span>
             <span className="opacity-40">•</span>

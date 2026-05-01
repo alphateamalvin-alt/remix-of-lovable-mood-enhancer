@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronLeft, ChevronRight, Plus, Truck, ShieldCheck, Gift, Droplet } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus, Truck, ShieldCheck, Droplet } from "lucide-react";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -557,9 +557,9 @@ function ProductDetail({
 
         {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
-          <span>🚚 Free Shipping ₱899+</span>
-          <span>💳 GCash, Maya, COD</span>
-          <span>🔄 30-Day Guarantee</span>
+          <span>🚚 Free Nationwide Shipping</span>
+          <span>💳 COD Available</span>
+          <span>🛡️ 30-Day Guarantee</span>
         </div>
 
       </Reveal>
@@ -789,9 +789,9 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
 
         {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
-          <span>🚚 Free Shipping</span>
-          <span>💳 GCash, Maya, COD</span>
-          <span>🔄 30-Day Guarantee</span>
+          <span>🚚 Free Nationwide Shipping</span>
+          <span>💳 COD Available</span>
+          <span>🛡️ 30-Day Guarantee</span>
         </div>
 
         {/* What's Inside the Bundle */}
@@ -811,23 +811,17 @@ function WhatsInsideCard() {
     {
       icon: <Droplet size={22} className="text-[#B8955A]" strokeWidth={1.4} style={{ transform: "rotate(-8deg)" }} />,
       title: "LOVABLE For Her",
-      sub: "30ml · Approx 60 doses · 1-month supply",
+      sub: "30ml · 1-month supply",
     },
     {
       icon: <Droplet size={22} className="text-[#B8955A]" strokeWidth={1.4} style={{ transform: "rotate(8deg)" }} />,
       title: "LOVABLE For Him",
-      sub: "30ml · Approx 60 doses · 1-month supply",
-    },
-    {
-      icon: <Gift size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
-      title: "Free Couples Intimacy Guide",
-      sub: "Digital PDF · ₱800 value",
-      free: true,
+      sub: "30ml · 1-month supply",
     },
     {
       icon: <Truck size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
-      title: "Free Nationwide Shipping",
-      sub: "J&T, Ninja Van, or Flash · Discreet packaging",
+      title: "FREE Nationwide Shipping",
+      sub: "Discreet packaging via J&T, Ninja Van, or Flash",
     },
     {
       icon: <ShieldCheck size={22} className="text-[#B8955A]" strokeWidth={1.4} />,
@@ -932,7 +926,7 @@ function WhatsInsideCard() {
           textAlign: "center",
         }}
       >
-        You save ₱398 vs buying separately + bonus guide.
+        You save ₱398 vs buying separately.
       </div>
     </div>
   );

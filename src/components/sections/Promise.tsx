@@ -326,7 +326,7 @@ export function Promise() {
               marginTop: "16px",
             }}
           >
-            Free shipping on orders ₱899+ · 100% money-back guarantee
+            Free nationwide shipping · 100% money-back guarantee
           </p>
         </div>
       </div>

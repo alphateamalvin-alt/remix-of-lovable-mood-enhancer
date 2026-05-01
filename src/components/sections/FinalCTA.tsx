@@ -30,7 +30,10 @@ export function FinalCTA() {
         </Reveal>
         <Reveal delay={0.3}>
           <p className="mt-12 text-[12px] tracking-[0.18em] uppercase text-[var(--color-ivory)]/60">
-            🔒 Secure Checkout · 🚚 Fast Nationwide Delivery · 💳 GCash, Maya, COD
+            🔒 Secure Checkout · 🚚 Free Nationwide Shipping · 💳 GCash, Maya, COD
+          </p>
+          <p className="mt-3 text-[11px] italic text-[var(--color-ivory)]/55">
+            Free shipping to anywhere in the Philippines. No minimum.
           </p>
         </Reveal>
       </div>
