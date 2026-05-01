@@ -160,6 +160,42 @@ function CheckoutPage() {
       <main style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 140px" }}>
         <TrustStrip />
 
+        <div className="ck-mobile-summary-wrap">
+          <button
+            type="button"
+            onClick={() => setShowMobileSummary((s) => !s)}
+            aria-expanded={showMobileSummary}
+            className="ck-mobile-summary-toggle"
+          >
+            <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
+              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, letterSpacing: 2, color: "#B8955A", textTransform: "uppercase" }}>
+                {showMobileSummary ? "Hide order summary" : "View order summary"}
+              </span>
+              <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, color: "#F2EAE0", fontWeight: 500 }}>
+                ₱{total.toLocaleString()}
+              </span>
+            </span>
+            <span aria-hidden style={{ color: "#B8955A", transition: "transform 300ms ease", transform: showMobileSummary ? "rotate(180deg)" : "rotate(0)" }}>▾</span>
+          </button>
+          <div className={`ck-mobile-summary-panel${showMobileSummary ? " is-open" : ""}`}>
+            <div style={{ padding: "0 4px 16px" }}>
+              <OrderSummary
+                variant={variant}
+                bundle={bundle}
+                item={item}
+                subtotal={subtotal}
+                bundleSavings={bundleSavings}
+                shipping={shipping}
+                discountApplied={discountApplied}
+                total={total}
+                discountCode={discountCode}
+                setDiscountCode={setDiscountCode}
+                onApplyDiscount={handleApplyDiscount}
+              />
+            </div>
+          </div>
+        </div>
+
         <form onSubmit={placeOrder} className="checkout-grid">
           <div>
             <SectionCard>
