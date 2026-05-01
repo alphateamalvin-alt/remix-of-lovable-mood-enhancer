@@ -32,10 +32,27 @@ export function SocialProofToast() {
   const [isMobile, setIsMobile] = useState(false);
   const [urgencyDismissed, setUrgencyDismissed] = useState(false);
   const [onCheckout, setOnCheckout] = useState(false);
+  const [heroInView, setHeroInView] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     setOnCheckout(window.location.pathname.startsWith("/checkout"));
+  }, []);
+
+  // Track hero visibility — used to hide the toast on mobile while hero is on screen
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hero = document.getElementById("top");
+    if (!hero) {
+      setHeroInView(false);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" }
+    );
+    io.observe(hero);
+    return () => io.disconnect();
   }, []);
 
   // Mobile detection
@@ -93,6 +110,7 @@ export function SocialProofToast() {
 
   if (closed) return null;
   if (onCheckout) return null;
+  if (isMobile && heroInView) return null;
 
   const t = toasts[idx];
   const bottom = isMobile
@@ -108,20 +126,20 @@ export function SocialProofToast() {
         bottom: `calc(${bottom}px + env(safe-area-inset-bottom, 0px))`,
         right: isMobile ? 16 : 20,
         left: "auto",
-        maxWidth: isMobile ? 240 : 300,
+        maxWidth: isMobile ? 210 : 300,
         zIndex: 40,
         background: "rgba(13, 13, 13, 0.95)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         border: "0.5px solid rgba(184, 149, 90, 0.3)",
         borderRadius: 12,
-        padding: "14px 16px",
+        padding: isMobile ? "10px 12px" : "14px 16px",
         boxShadow:
           "0 1px 0 rgba(242, 234, 224, 0.06) inset, 0 16px 36px rgba(0, 0, 0, 0.55), 0 4px 8px rgba(0, 0, 0, 0.3)",
         fontFamily: "Montserrat, sans-serif",
         display: "grid",
-        gridTemplateColumns: "48px 1fr 24px",
-        gap: 12,
+        gridTemplateColumns: isMobile ? "38px 1fr 20px" : "48px 1fr 24px",
+        gap: isMobile ? 10 : 12,
         alignItems: "center",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateX(0)" : "translateX(110%)",
@@ -134,11 +152,11 @@ export function SocialProofToast() {
       <img
         src={imageFor(t.product)}
         alt=""
-        width={48}
-        height={48}
+        width={isMobile ? 38 : 48}
+        height={isMobile ? 38 : 48}
         style={{
-          width: 48,
-          height: 48,
+          width: isMobile ? 38 : 48,
+          height: isMobile ? 38 : 48,
           borderRadius: 6,
           objectFit: "cover",
           flexShrink: 0,
@@ -150,7 +168,7 @@ export function SocialProofToast() {
           style={{
             color: "#F2EAE0",
             fontWeight: 500,
-            fontSize: 13,
+            fontSize: isMobile ? 12 : 13,
             lineHeight: 1.3,
             whiteSpace: "nowrap",
             overflow: "hidden",
@@ -159,11 +177,11 @@ export function SocialProofToast() {
         >
           {t.name} from {t.city}
         </div>
-        <div style={{ color: "rgba(154,136,128,0.85)", fontSize: 11, lineHeight: 1.4, marginTop: 2 }}>
+        <div style={{ color: "rgba(154,136,128,0.85)", fontSize: isMobile ? 10 : 11, lineHeight: 1.4, marginTop: 2 }}>
           ordered {t.product}
         </div>
-        <div style={{ color: "rgba(154,136,128,0.7)", fontSize: 10, lineHeight: 1.4, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
-          <span style={{ color: "#DC2627", fontSize: 10 }}>✓</span>
+        <div style={{ color: "rgba(154,136,128,0.7)", fontSize: isMobile ? 9 : 10, lineHeight: 1.4, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ color: "#DC2627", fontSize: isMobile ? 9 : 10 }}>✓</span>
           {t.time} · Verified
         </div>
       </div>
@@ -171,13 +189,13 @@ export function SocialProofToast() {
         onClick={() => setClosed(true)}
         aria-label="Close notification"
         style={{
-          width: 24,
-          height: 24,
+          width: isMobile ? 20 : 24,
+          height: isMobile ? 20 : 24,
           borderRadius: "50%",
           background: "transparent",
           border: "0.5px solid rgba(154,136,128,0.3)",
           color: "rgba(154,136,128,0.8)",
-          fontSize: 12,
+          fontSize: isMobile ? 11 : 12,
           lineHeight: 1,
           cursor: "pointer",
           padding: 0,
