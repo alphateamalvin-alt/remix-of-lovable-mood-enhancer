@@ -152,11 +152,11 @@ export function SocialProofToast() {
       <img
         src={imageFor(t.product)}
         alt=""
-        width={isMobile ? 38 : 48}
-        height={isMobile ? 38 : 48}
+        width={48}
+        height={48}
         style={{
-          width: isMobile ? 38 : 48,
-          height: isMobile ? 38 : 48,
+          width: 48,
+          height: 48,
           borderRadius: 6,
           objectFit: "cover",
           flexShrink: 0,
@@ -168,7 +168,7 @@ export function SocialProofToast() {
           style={{
             color: "#F2EAE0",
             fontWeight: 500,
-            fontSize: isMobile ? 12 : 13,
+            fontSize: 13,
             lineHeight: 1.3,
             whiteSpace: "nowrap",
             overflow: "hidden",
@@ -177,11 +177,11 @@ export function SocialProofToast() {
         >
           {t.name} from {t.city}
         </div>
-        <div style={{ color: "rgba(154,136,128,0.85)", fontSize: isMobile ? 10 : 11, lineHeight: 1.4, marginTop: 2 }}>
+        <div style={{ color: "rgba(154,136,128,0.85)", fontSize: 11, lineHeight: 1.4, marginTop: 2 }}>
           ordered {t.product}
         </div>
-        <div style={{ color: "rgba(154,136,128,0.7)", fontSize: isMobile ? 9 : 10, lineHeight: 1.4, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
-          <span style={{ color: "#DC2627", fontSize: isMobile ? 9 : 10 }}>✓</span>
+        <div style={{ color: "rgba(154,136,128,0.7)", fontSize: 10, lineHeight: 1.4, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ color: "#DC2627", fontSize: 10 }}>✓</span>
           {t.time} · Verified
         </div>
       </div>
@@ -189,13 +189,13 @@ export function SocialProofToast() {
         onClick={() => setClosed(true)}
         aria-label="Close notification"
         style={{
-          width: isMobile ? 20 : 24,
-          height: isMobile ? 20 : 24,
+          width: 24,
+          height: 24,
           borderRadius: "50%",
           background: "transparent",
           border: "0.5px solid rgba(154,136,128,0.3)",
           color: "rgba(154,136,128,0.8)",
-          fontSize: isMobile ? 11 : 12,
+          fontSize: 12,
           lineHeight: 1,
           cursor: "pointer",
           padding: 0,
