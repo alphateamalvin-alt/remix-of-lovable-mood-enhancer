@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { Reveal } from "../Reveal";
 import { HeroFX } from "../HeroFX";
 
-const HERO_IMAGE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM.png";
+const HERO_IMAGE_URL = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/1.2.png";
 
 function scrollTo(hash: string) {
   return (e: React.MouseEvent) => {
@@ -74,7 +74,7 @@ export function Hero() {
             height: 100%;
             margin-left: 0;
             object-fit: cover;
-            object-position: 65% 5%;
+            object-position: 65% 18%;
             mask-image: none;
             -webkit-mask-image: none;
             background: #0A0606;
@@ -146,7 +146,7 @@ export function Hero() {
       </div>
 
       {/* Left side: text content */}
-      <div className="order-1 md:order-1 relative z-[10] w-full md:w-1/2 flex items-end md:items-center justify-center px-6 pt-24 pb-28 md:py-28 md:min-h-[100svh] min-h-[100svh] md:min-h-0">
+      <div className="order-1 md:order-1 relative z-[10] w-full md:w-1/2 flex items-end md:items-center justify-center px-6 pt-24 pb-20 md:py-28 md:min-h-[100svh] min-h-[100svh] md:min-h-0">
         <div className="max-w-xl w-full text-left">
           <Reveal>
             <p
