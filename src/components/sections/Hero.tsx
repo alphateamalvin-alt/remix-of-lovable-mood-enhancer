@@ -270,6 +270,17 @@ export function Hero() {
               <span style={{ color: "#B8955A", fontStyle: "normal", fontWeight: 400 }}>first time</span>.
             </p>
           </Reveal>
+          <Reveal delay={0.25}>
+            <div className="press-section">
+              <span className="press-label">As Seen In</span>
+              <div className="press-logos">
+                <span className="press-logo vogue">VOGUE</span>
+                <span className="press-logo lofficiel">L'Officiel</span>
+                <span className="press-logo metro">METRO</span>
+                <span className="press-logo esquire">Esquire</span>
+              </div>
+            </div>
+          </Reveal>
           <Reveal delay={0.3}>
             <div className="flex flex-col items-start gap-3 sm:gap-6">
               <div className="flex flex-col items-start">
