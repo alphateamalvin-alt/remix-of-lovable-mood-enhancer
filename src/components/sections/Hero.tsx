@@ -32,6 +32,19 @@ export function Hero() {
           object-fit: cover;
           object-position: center right;
         }
+        /* Inset vignette to feather hero image edges into the dark bg */
+        .hero-image-container::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          box-shadow:
+            inset 0 60px 80px -20px #0A0606,
+            inset 0 -60px 80px -20px #0A0606,
+            inset 60px 0 80px -20px #0A0606,
+            inset -60px 0 80px -20px #0A0606;
+          z-index: 2;
+        }
         @media (min-width: 768px) {
           .hero-image {
             width: 115%;
@@ -55,6 +68,71 @@ export function Hero() {
               rgba(0,0,0,0.8) 32%,
               black 42%
             );
+          }
+        }
+        /* Press / "As seen in" styles */
+        .press-section {
+          margin-top: 24px;
+          margin-bottom: 24px;
+          padding: 18px 0;
+          border-top: 0.5px solid rgba(184, 149, 90, 0.18);
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .press-label {
+          font-family: Montserrat, sans-serif;
+          font-size: 9px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: rgba(154, 136, 128, 0.6);
+          margin: 0;
+          display: block;
+        }
+        .press-logos {
+          display: flex;
+          gap: 28px;
+          align-items: center;
+          flex-wrap: wrap;
+          opacity: 0.65;
+        }
+        .press-logo {
+          font-size: 14px;
+          color: rgba(242, 234, 224, 0.75);
+          transition: color 250ms ease, opacity 250ms ease;
+          opacity: 0.9;
+        }
+        .press-logo:hover { opacity: 1; color: #F2EAE0; }
+        .press-logo.vogue {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-weight: 600;
+          letter-spacing: 1.5px;
+        }
+        .press-logo.lofficiel {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          letter-spacing: 0.5px;
+        }
+        .press-logo.metro {
+          font-family: Montserrat, sans-serif;
+          font-weight: 700;
+          letter-spacing: 2px;
+          font-size: 13px;
+        }
+        .press-logo.esquire {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          letter-spacing: 0.5px;
+        }
+        @media (max-width: 768px) {
+          .press-section { padding: 14px 0; margin-top: 20px; }
+          .press-logos { gap: 20px; }
+          .press-logo { font-size: 12px; }
+          .press-logo.metro { font-size: 11px; }
+          .hero-image-container::after {
+            box-shadow:
+              inset 0 40px 60px -20px #0A0606,
+              inset 0 -40px 60px -20px #0A0606;
           }
         }
         @media (max-width: 767px) {
