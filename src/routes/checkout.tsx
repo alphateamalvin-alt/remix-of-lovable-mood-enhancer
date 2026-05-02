@@ -323,7 +323,7 @@ function CheckoutPage() {
               />
 
               <div style={{ marginTop: 12, fontSize: 12, fontStyle: "italic", color: "#B8955A" }}>
-                We'll text you when your order is ready for delivery.
+                We'll inform you when your order is ready for delivery.
               </div>
 
               <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontStyle: "italic", color: "#9A8880" }}>

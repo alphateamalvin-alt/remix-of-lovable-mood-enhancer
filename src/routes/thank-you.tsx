@@ -164,7 +164,7 @@ function ThankYouPage() {
           {firstName ? <>Salamat, <em>{firstName}</em>.</> : <>Order received. <em>Thank you.</em></>}
         </h1>
 
-        <p className="thank-you-subhead">Your order is in. We'll text you when it's on the way.</p>
+        <p className="thank-you-subhead">Your order is in. We'll inform you when it's on the way.</p>
 
         <div className="order-reference">
           <p className="order-reference-label">Order Reference</p>
@@ -230,8 +230,8 @@ function ThankYouPage() {
             <li className="expectation-item">
               <span className="expectation-number">02</span>
               <div className="expectation-content">
-                <p className="expectation-step-title">We'll text you when it ships</p>
-                <p className="expectation-step-desc">Watch out for an SMS at your phone with tracking details.</p>
+                <p className="expectation-step-title">We'll inform you when it ships</p>
+                <p className="expectation-step-desc">We'll reach out to you with delivery details.</p>
               </div>
             </li>
             <li className="expectation-item">
@@ -499,28 +499,65 @@ function PageStyles() {
       .support-footer { animation-delay: 1250ms; }
 
       @media (max-width: 768px) {
-        .thank-you-page { padding: 56px 16px 40px; }
+        .thank-you-page { padding: 32px 16px 32px; }
         .thank-you-content { max-width: 100%; }
-        .thank-you-logo { margin-bottom: 40px; }
-        .success-badge { width: 64px; height: 64px; margin-bottom: 28px; }
-        .thank-you-headline { font-size: 28px; }
-        .thank-you-subhead { font-size: 14px; margin-bottom: 36px; }
-        .order-reference { margin-bottom: 32px; }
+        .thank-you-logo { margin-bottom: 24px; }
+        .thank-you-logo img { height: 22px; }
+        .success-badge { width: 56px; height: 56px; margin-bottom: 20px; }
+        .success-badge svg { width: 22px; height: 22px; }
+        .thank-you-headline { font-size: 26px; margin-bottom: 10px; }
+        .thank-you-subhead { font-size: 13px; margin-bottom: 28px; max-width: 100%; padding: 0 8px; }
+        .order-reference { margin-bottom: 24px; padding: 14px 20px; }
+        .order-reference-label { font-size: 9px; margin-bottom: 4px; }
         .order-reference-id { font-size: 16px; }
-        .order-summary { padding: 20px 18px; margin-bottom: 32px; }
-        .summary-product-name { font-size: 14px; }
-        .summary-product-image { width: 48px; height: 48px; }
-        .summary-total-value { font-size: 22px; }
-        .delivery-block { margin-bottom: 32px; padding: 16px 18px; }
-        .expectations { margin-bottom: 40px; }
-        .expectations-title { font-size: 18px; margin-bottom: 20px; }
-        .expectation-item { padding: 14px 16px; gap: 12px; }
-        .expectation-number { font-size: 18px; width: 22px; }
-        .expectation-step-title { font-size: 14px; }
-        .expectation-step-desc { font-size: 11px; }
-        .back-home-btn { max-width: 100%; padding: 14px 24px; font-size: 10px; }
-        .support-footer { margin-top: 16px; padding-top: 20px; }
+        .order-summary { padding: 18px 16px; margin-bottom: 24px; }
+        .summary-product { padding-bottom: 14px; margin-bottom: 14px; }
+        .summary-product-image { width: 44px; height: 44px; }
+        .summary-product-name { font-size: 13px; }
+        .summary-product-meta { font-size: 10px; }
+        .summary-product-price { font-size: 14px; }
+        .summary-prices { gap: 8px; margin-bottom: 14px; }
+        .summary-price-row { font-size: 12px; }
+        .summary-total { padding-top: 12px; }
+        .summary-total-label { font-size: 11px; letter-spacing: 2px; }
+        .summary-total-value { font-size: 20px; }
+        .summary-payment-method { margin-top: 12px; padding-top: 12px; font-size: 10px; }
+        .delivery-block { margin-bottom: 24px; padding: 14px 16px; }
+        .delivery-block-label { font-size: 9px; margin-bottom: 6px; }
+        .delivery-block-address { font-size: 12px; line-height: 1.5; }
+        .expectations { margin-bottom: 28px; }
+        .expectations-title { font-size: 16px; margin-bottom: 14px; }
+        .expectations-list { gap: 10px; }
+        .expectation-item { padding: 12px 14px; gap: 10px; }
+        .expectation-number { font-size: 16px; width: 20px; }
+        .expectation-step-title { font-size: 13px; margin-bottom: 2px; }
+        .expectation-step-desc { font-size: 11px; line-height: 1.4; }
+        .back-home-btn { max-width: 100%; padding: 13px 24px; font-size: 10px; letter-spacing: 2px; }
+        .support-footer { margin-top: 12px; padding-top: 16px; }
+        .support-footer-text { font-size: 10px; margin-bottom: 4px; }
         .support-footer-info { font-size: 11px; line-height: 1.5; }
+
+        .thank-you-content > * { animation-duration: 400ms; }
+        .success-badge { animation-delay: 100ms; }
+        .thank-you-headline { animation-delay: 200ms; }
+        .thank-you-subhead { animation-delay: 280ms; }
+        .order-reference { animation-delay: 360ms; }
+        .order-summary { animation-delay: 440ms; }
+        .delivery-block { animation-delay: 520ms; }
+        .expectations { animation-delay: 600ms; }
+        .thank-you-cta-section { animation-delay: 680ms; }
+        .support-footer { animation-delay: 760ms; }
+      }
+
+      @media (max-width: 380px) {
+        .thank-you-page { padding: 24px 12px 24px; }
+        .thank-you-headline { font-size: 24px; }
+        .thank-you-subhead { font-size: 12px; }
+        .order-reference-id { font-size: 15px; }
+        .summary-product-image { width: 40px; height: 40px; }
+        .summary-product-name { font-size: 12px; }
+        .summary-total-value { font-size: 18px; }
+        .expectations-title { font-size: 15px; }
       }
     `}</style>
   );
