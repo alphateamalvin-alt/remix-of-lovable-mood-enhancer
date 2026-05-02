@@ -63,7 +63,7 @@ export function ForHim() {
             </div>
 
             <div className="mt-10">
-              <Link to="/shop" search={{ variant: "him" }} className="btn-primary">Shop For Him →</Link>
+              <Link to="/shop" search={{ variant: "him" }} className="btn-primary btn-shine btn-shine-primary"><span>Shop For Him →</span></Link>
             </div>
           </Reveal>
         </div>
