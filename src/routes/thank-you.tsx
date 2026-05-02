@@ -110,7 +110,7 @@ function ThankYouPage() {
           <h1 className="thank-you-headline">Order <em>not found.</em></h1>
           <p className="thank-you-subhead">We couldn't find an order to display.</p>
           <div className="thank-you-cta-section">
-            <Link to="/" className="back-home-btn btn-shine btn-shine-glass"><span>← BACK TO HOME</span</Link>
+            <Link to="/" className="back-home-btn btn-shine btn-shine-glass"><span>← BACK TO HOME</span></Link>
           </div>
         </div>
       </div>
@@ -245,7 +245,7 @@ function ThankYouPage() {
         </div>
 
         <div className="thank-you-cta-section">
-          <Link to="/" className="back-home-btn btn-shine btn-shine-glass"><span>← BACK TO HOME</span</Link>
+          <Link to="/" className="back-home-btn btn-shine btn-shine-glass"><span>← BACK TO HOME</span></Link>
         </div>
 
         <div className="support-footer">
