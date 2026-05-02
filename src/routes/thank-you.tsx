@@ -218,6 +218,10 @@ function ThankYouPage() {
           </div>
         )}
 
+        {Number(bundle) >= 2 && (
+          <BonusDownloadSection isThree={bundle === "3" || variant === "couples" && bundle === "3"} />
+        )}
+
         <div className="expectations">
           <h2 className="expectations-title">What happens <em>next.</em></h2>
           <ul className="expectations-list">
