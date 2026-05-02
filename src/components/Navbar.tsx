@@ -185,8 +185,8 @@ export function Navbar() {
         </ul>
 
         <div className="hidden md:block">
-          <Link to="/shop" search={{}} className="btn-primary !py-3 !px-6 text-[11px]">
-            Shop Now →
+          <Link to="/shop" search={{}} className="btn-pulse-shine btn-pulse-navbar">
+            <span>Shop Now</span> <span className="arrow">→</span>
           </Link>
         </div>
 
