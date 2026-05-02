@@ -258,13 +258,14 @@ function CheckoutPage() {
     setSubmitting(true);
     const [firstName, ...rest] = fullName.split(/\s+/);
     const lastName = rest.join(" ");
+    const landmark = form.landmark.trim();
     const fullAddress = [
       form.address.trim(),
       `Brgy. ${form.barangay}`,
       form.city,
       form.province,
       form.region,
-    ].filter(Boolean).join(", ");
+    ].filter(Boolean).join(", ") + (landmark ? `. Landmark: ${landmark}.` : "");
     const order = {
       country: "Philippines",
       fullName,
