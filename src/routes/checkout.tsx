@@ -317,7 +317,7 @@ function CheckoutPage() {
     setForm((f) => ({ ...f, [k]: v }));
 
   return (
-    <div style={{ background: "#0D0D0D", minHeight: "100vh", color: "#F2EAE0", fontFamily: "Montserrat, sans-serif" }}>
+    <div style={{ background: "linear-gradient(180deg, #100808 0%, #0D0606 50%, #100808 100%)", minHeight: "100vh", color: "#F2EAE0", fontFamily: "Montserrat, sans-serif" }}>
       <CheckoutHeader />
 
       <main style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 140px" }}>
@@ -612,23 +612,26 @@ function CheckoutPage() {
         }
         .ck-input {
           width: 100%;
-          background: #0D0D0D;
-          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          background: #150909;
+          border: 0.5px solid rgba(184, 149, 90, 0.32);
           border-radius: 8px;
           padding: 14px 16px;
           color: #F2EAE0;
           font-family: Montserrat, sans-serif;
           font-size: 13px;
-          transition: border-color 200ms ease, box-shadow 200ms ease;
+          transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
           outline: none;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
         }
-        .ck-input:hover { border-color: rgba(184, 149, 90, 0.45); }
+        .ck-input::placeholder { color: rgba(154, 136, 128, 0.7); }
+        .ck-input:hover { border-color: rgba(184, 149, 90, 0.55); background: #180A0A; }
         .ck-input:focus {
           border: 1px solid #DC2627;
-          box-shadow: 0 0 0 3px rgba(220, 38, 39, 0.1);
+          background: #180A0A;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(220, 38, 39, 0.12);
         }
         .ck-input:disabled { opacity: 0.5; cursor: not-allowed; }
-        select.ck-input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #B8955A 50%), linear-gradient(135deg, #B8955A 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+        select.ck-input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #C9A06D 50%), linear-gradient(135deg, #C9A06D 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
 
         .ck-mobile-bottom {
           display: none;
@@ -644,8 +647,8 @@ function CheckoutPage() {
         .ck-mobile-summary-wrap { display: none; }
         .ck-mobile-summary-toggle {
           width: 100%;
-          background: #160808;
-          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          background: linear-gradient(180deg, #1F1010 0%, #1A0E0E 100%);
+          border: 0.5px solid rgba(184, 149, 90, 0.35);
           border-radius: 12px;
           padding: 14px 18px;
           display: flex;
@@ -654,6 +657,7 @@ function CheckoutPage() {
           color: #F2EAE0;
           cursor: pointer;
           font-family: Montserrat, sans-serif;
+          box-shadow: 0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         .ck-mobile-summary-panel {
           max-height: 0;
@@ -681,10 +685,11 @@ function CheckoutHeader() {
     <header
       style={{
         position: "sticky", top: 0, zIndex: 100,
-        background: "rgba(13, 13, 13, 0.92)",
-        backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        background: "rgba(20, 12, 12, 0.88)",
+        backdropFilter: "blur(20px) saturate(1.2)", WebkitBackdropFilter: "blur(20px) saturate(1.2)",
         padding: "20px 32px",
-        borderBottom: "0.5px solid rgba(184, 149, 90, 0.18)",
+        borderBottom: "0.5px solid rgba(184, 149, 90, 0.32)",
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.3)",
         display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
       }}
     >
@@ -725,8 +730,11 @@ function CheckoutHeader() {
         to="/shop"
         style={{
           display: "inline-flex", alignItems: "center", gap: 6,
-          color: "#9A8880", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", textDecoration: "none",
+          color: "rgba(184, 149, 90, 0.75)", fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", textDecoration: "none",
+          transition: "color 250ms ease",
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A06D")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(184, 149, 90, 0.75)")}
       >
         <ArrowLeft size={12} /> Back to Shop
       </Link>
@@ -744,21 +752,22 @@ function TrustStrip() {
   return (
     <div
       style={{
-        background: "rgba(184, 149, 90, 0.04)",
-        border: "0.5px solid rgba(184, 149, 90, 0.18)",
+        background: "linear-gradient(180deg, rgba(184, 149, 90, 0.08) 0%, rgba(184, 149, 90, 0.04) 100%)",
+        border: "0.5px solid rgba(184, 149, 90, 0.3)",
         borderRadius: 14,
         padding: "16px 24px",
         marginBottom: 32,
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
         gap: 12,
+        boxShadow: "0 1px 0 rgba(242, 234, 224, 0.06) inset, 0 4px 16px rgba(0, 0, 0, 0.3)",
       }}
       className="ck-trust"
     >
       {items.map((it) => (
         <div key={it} className="ck-trust-item" style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
-          <span style={{ color: "#B8955A", fontSize: 12, flexShrink: 0 }}>◊</span>
-          <span className="ck-trust-label" style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#F2EAE0", lineHeight: 1.3 }}>{it}</span>
+          <span style={{ color: "#C9A06D", fontSize: 12, flexShrink: 0 }}>◊</span>
+          <span className="ck-trust-label" style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(242, 234, 224, 0.92)", lineHeight: 1.3 }}>{it}</span>
         </div>
       ))}
       <style>{`
@@ -780,11 +789,12 @@ function SectionCard({ children }: { children: React.ReactNode }) {
   return (
     <section
       style={{
-        background: "#160808",
-        border: "0.5px solid rgba(184, 149, 90, 0.22)",
+        background: "linear-gradient(180deg, #1F1010 0%, #1A0E0E 100%)",
+        border: "0.5px solid rgba(184, 149, 90, 0.35)",
         borderRadius: 14,
         padding: "36px 32px",
-        boxShadow: "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 16px 48px rgba(0, 0, 0, 0.4)",
+        boxShadow:
+          "0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 8px 24px rgba(0, 0, 0, 0.5), 0 16px 48px rgba(0, 0, 0, 0.3), 0 32px 64px rgba(0, 0, 0, 0.2)",
       }}
     >
       {children}
@@ -800,13 +810,14 @@ function SectionHeader({ number, title, italic, right }: { number: number; title
           <span
             style={{
               width: 28, height: 28, borderRadius: "50%",
-              background: "#DC2627", color: "#F2EAE0",
+              background: "linear-gradient(135deg, #FF3F40 0%, #DC2627 100%)", color: "#F2EAE0",
               display: "inline-flex", alignItems: "center", justifyContent: "center",
               fontFamily: '"Playfair Display", serif', fontStyle: "italic", fontSize: 14,
+              boxShadow: "0 1px 0 rgba(242, 234, 224, 0.2) inset, 0 4px 12px rgba(220, 38, 39, 0.4), 0 0 0 4px rgba(220, 38, 39, 0.1)",
             }}
           >{number}</span>
           <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, color: "#F2EAE0", margin: 0 }}>
-            {title} <em style={{ color: "#B8955A", fontStyle: "italic" }}>{italic}</em>
+            {title} <em style={{ color: "#C9A06D", fontStyle: "italic" }}>{italic}</em>
           </h2>
         </div>
         {right}
@@ -818,7 +829,7 @@ function SectionHeader({ number, title, italic, right }: { number: number; title
 
 function RequiredLabel() {
   return (
-    <span style={{ fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>Required</span>
+    <span style={{ fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#C9A06D" }}>Required</span>
   );
 }
 
@@ -841,9 +852,9 @@ function FieldRow({ children, cols = 1 }: { children: React.ReactNode; cols?: 1 
 function Field({ label, required, sublabel, children }: { label: string; required?: boolean; sublabel?: string; children: React.ReactNode }) {
   return (
     <label style={{ display: "block" }}>
-      <div style={{ marginBottom: 6, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A" }}>
-        {label}{required && <span style={{ color: "#DC2627", marginLeft: 4 }}>*</span>}
-        {sublabel && <span style={{ marginLeft: 6, color: "#9A8880", textTransform: "none", letterSpacing: 0.5, fontStyle: "italic" }}>({sublabel})</span>}
+      <div style={{ marginBottom: 6, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#C9A06D" }}>
+        {label}{required && <span style={{ color: "#FF3F40", marginLeft: 4 }}>*</span>}
+        {sublabel && <span style={{ marginLeft: 6, color: "rgba(154, 136, 128, 0.85)", textTransform: "none", letterSpacing: 0.5, fontStyle: "italic" }}>({sublabel})</span>}
       </div>
       {children}
     </label>
@@ -869,43 +880,46 @@ function PaymentCard({
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); }}}
       style={{
-        border: selected ? "1px solid #DC2627" : "0.5px solid rgba(184, 149, 90, 0.22)",
-        background: selected ? "rgba(220, 38, 39, 0.04)" : "transparent",
+        border: selected ? "1px solid #DC2627" : "0.5px solid rgba(184, 149, 90, 0.32)",
+        background: selected ? "rgba(220, 38, 39, 0.06)" : "rgba(20, 12, 12, 0.4)",
         borderRadius: 12,
         padding: 20,
         marginBottom: 12,
         cursor: "pointer",
         transition: "all 250ms ease",
-        boxShadow: selected ? "0 4px 16px rgba(220, 38, 39, 0.15)" : "none",
+        boxShadow: selected
+          ? "0 1px 0 rgba(242, 234, 224, 0.1) inset, 0 8px 20px rgba(220, 38, 39, 0.25), 0 0 0 4px rgba(220, 38, 39, 0.08)"
+          : "0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 4px 12px rgba(0, 0, 0, 0.25)",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <span
           style={{
             width: 22, height: 22, borderRadius: "50%",
-            border: selected ? "6px solid #DC2627" : "1.5px solid #B8955A",
-            background: selected ? "#0D0D0D" : "transparent",
+            border: selected ? "6px solid #DC2627" : "1.5px solid #C9A06D",
+            background: selected ? "#0D0606" : "transparent",
+            boxShadow: selected ? "0 0 12px rgba(220, 38, 39, 0.5)" : "none",
             flexShrink: 0,
           }}
         />
-        <span style={{ width: 40, height: 40, display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "rgba(184,149,90,0.08)", flexShrink: 0 }}>
+        <span style={{ width: 40, height: 40, display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: 8, background: "rgba(184,149,90,0.14)", flexShrink: 0 }}>
           {icon}
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#F2EAE0" }}>{title}</div>
-          <div style={{ fontSize: 12, color: "#9A8880", marginTop: 2 }}>{subtitle}</div>
+          <div style={{ fontSize: 12, color: "rgba(242, 234, 224, 0.7)", marginTop: 2 }}>{subtitle}</div>
         </div>
         {badge && (
           <span style={{
-            background: "rgba(184, 149, 90, 0.1)",
-            border: "0.5px solid rgba(184, 149, 90, 0.3)",
+            background: "rgba(184, 149, 90, 0.14)",
+            border: "0.5px solid rgba(184, 149, 90, 0.4)",
             padding: "4px 10px", borderRadius: 999,
-            fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#B8955A",
+            fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#C9A06D",
             flexShrink: 0,
           }}>{badge}</span>
         )}
         {logos && (
-          <div style={{ display: "flex", gap: 6, color: "#B8955A", fontSize: 10, letterSpacing: 1 }}>
+          <div style={{ display: "flex", gap: 6, color: "#C9A06D", fontSize: 10, letterSpacing: 1 }}>
             <span>VISA</span><span>MC</span>
           </div>
         )}
@@ -936,21 +950,22 @@ function OrderSummary({
   return (
     <div
       style={{
-        background: "#160808",
-        border: "0.5px solid rgba(184, 149, 90, 0.22)",
+        background: "linear-gradient(180deg, #1F1010 0%, #180A0A 100%)",
+        border: "0.5px solid rgba(220, 38, 39, 0.25)",
         borderRadius: 14,
         padding: "32px 28px",
-        boxShadow: "0 1px 0 rgba(242, 234, 224, 0.05) inset, 0 16px 48px rgba(0, 0, 0, 0.4)",
+        boxShadow:
+          "0 1px 0 rgba(242, 234, 224, 0.1) inset, 0 12px 32px rgba(0, 0, 0, 0.5), 0 24px 56px rgba(0, 0, 0, 0.3), 0 0 64px rgba(220, 38, 39, 0.05)",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 22, color: "#F2EAE0", margin: 0 }}>
-          Order <em style={{ color: "#B8955A", fontStyle: "italic" }}>Summary</em>
+          Order <em style={{ color: "#C9A06D", fontStyle: "italic" }}>Summary</em>
         </h2>
         <Link
           to="/shop"
           search={{ variant }}
-          style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#B8955A", textDecoration: "none" }}
+          style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#C9A06D", textDecoration: "none" }}
         >
           Edit
         </Link>
@@ -958,7 +973,7 @@ function OrderSummary({
       <div style={{ height: 0.5, background: "linear-gradient(to right, rgba(184,149,90,0.5) 0%, rgba(184,149,90,0.3) 30%, transparent 100%)", margin: "16px 0 20px" }} />
 
       <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-        <div style={{ position: "relative", width: 64, height: 64, borderRadius: 8, border: "0.5px solid rgba(184, 149, 90, 0.22)", overflow: "hidden", background: "#0D0D0D", flexShrink: 0 }}>
+        <div style={{ position: "relative", width: 64, height: 64, borderRadius: 8, border: "0.5px solid rgba(184, 149, 90, 0.35)", overflow: "hidden", background: "#0D0606", flexShrink: 0 }}>
           {variant === "couples" ? (
             <div style={{ display: "flex", height: "100%" }}>
               <img src={BOTTLE_HER_URL} alt="" style={{ width: "50%", height: "100%", objectFit: "cover" }} />
@@ -970,7 +985,7 @@ function OrderSummary({
           <span style={{
             position: "absolute", top: -6, right: -6,
             width: 22, height: 22, borderRadius: "50%",
-            background: "rgba(0,0,0,0.85)", border: "0.5px solid #B8955A",
+            background: "rgba(0,0,0,0.85)", border: "0.5px solid #C9A06D",
             display: "inline-flex", alignItems: "center", justifyContent: "center",
             fontFamily: '"Playfair Display", serif', fontSize: 11, color: "#F2EAE0",
           }}>{bundle}</span>
@@ -979,7 +994,7 @@ function OrderSummary({
           <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 14, color: "#F2EAE0" }}>
             {VARIANT_NAME[variant].full}
           </div>
-          <div style={{ fontSize: 11, color: "#9A8880", marginTop: 2 }}>
+          <div style={{ fontSize: 11, color: "rgba(242, 234, 224, 0.7)", marginTop: 2 }}>
             {item.label} · {item.supply}
           </div>
         </div>
@@ -1001,13 +1016,14 @@ function OrderSummary({
           type="button"
           onClick={onApplyDiscount}
           style={{
-            background: "#0D0D0D",
-            border: "0.5px solid rgba(184, 149, 90, 0.4)",
+            background: "#150909",
+            border: "0.5px solid rgba(184, 149, 90, 0.5)",
             borderRadius: 999,
             padding: "12px 20px",
             color: "#F2EAE0",
             fontSize: 11, letterSpacing: 2, textTransform: "uppercase",
             cursor: "pointer",
+            boxShadow: "0 1px 0 rgba(242, 234, 224, 0.06) inset, 0 4px 12px rgba(0, 0, 0, 0.3)",
           }}
         >
           Apply
@@ -1018,53 +1034,55 @@ function OrderSummary({
       <div style={{ marginTop: 24 }}>
         <PriceRow label="Subtotal" value={`₱${subtotal.toLocaleString()}`} />
         {bundleSavings > 0 && (
-          <PriceRow label="Bundle Savings" value={`-₱${bundleSavings.toLocaleString()}`} accent="#B8955A" />
+          <PriceRow label="Bundle Savings" value={`-₱${bundleSavings.toLocaleString()}`} accent="#C9A06D" />
         )}
         <PriceRow
           label="Shipping"
           value={shipping === 0 ? "FREE" : `₱${shipping.toLocaleString()}`}
-          accent={shipping === 0 ? "#10B981" : undefined}
+          accent={shipping === 0 ? "#1FBB7B" : undefined}
+          glow={shipping === 0}
         />
         {discountApplied && (
-          <PriceRow label={`Promo: ${discountApplied.code}`} value={`-₱${discountApplied.amount.toLocaleString()}`} accent="#10B981" />
+          <PriceRow label={`Promo: ${discountApplied.code}`} value={`-₱${discountApplied.amount.toLocaleString()}`} accent="#1FBB7B" />
         )}
       </div>
 
       {savingsTotal > 0 && (
         <div
           style={{
-            background: "rgba(16, 185, 129, 0.08)",
-            border: "0.5px solid rgba(16, 185, 129, 0.3)",
+            background: "rgba(31, 187, 123, 0.1)",
+            border: "0.5px solid rgba(31, 187, 123, 0.4)",
             borderRadius: 8,
             padding: "12px 16px",
             margin: "12px 0",
             display: "flex", alignItems: "center", gap: 8,
+            boxShadow: "0 0 16px rgba(31, 187, 123, 0.08)",
           }}
         >
-          <CheckCircle2 size={14} color="#10B981" />
-          <span style={{ fontSize: 12, color: "#10B981" }}>
+          <CheckCircle2 size={14} color="#1FBB7B" />
+          <span style={{ fontSize: 12, color: "#1FBB7B" }}>
             You're saving ₱{savingsTotal.toLocaleString()} on this order!
           </span>
         </div>
       )}
 
-      <div style={{ height: 1, background: "rgba(184, 149, 90, 0.3)", margin: "16px 0" }} />
+      <div style={{ height: 1, background: "rgba(184, 149, 90, 0.4)", margin: "16px 0" }} />
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span style={{ fontSize: 12, letterSpacing: 3, textTransform: "uppercase", color: "#F2EAE0" }}>Total</span>
-        <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 28, color: "#DC2627", fontStyle: "italic", fontWeight: 500 }}>
+        <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 28, color: "#FF3F40", fontStyle: "italic", fontWeight: 500, textShadow: "0 0 12px rgba(220, 38, 39, 0.3)" }}>
           ₱{total.toLocaleString()}
         </span>
       </div>
 
-      <div style={{ marginTop: 24, paddingTop: 24, borderTop: "0.5px solid rgba(184, 149, 90, 0.18)", display: "grid", gap: 12 }}>
+      <div style={{ marginTop: 24, paddingTop: 24, borderTop: "0.5px solid rgba(184, 149, 90, 0.3)", display: "grid", gap: 12 }}>
         {[
           "30-Day Money-Back Guarantee",
           "Discreet, unmarked packaging",
           "SSL secured payment",
         ].map((t) => (
           <div key={t} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <CheckCircle2 size={16} color="#10B981" />
+            <CheckCircle2 size={16} color="#1FBB7B" />
             <span style={{ fontSize: 12, color: "#F2EAE0" }}>{t}</span>
           </div>
         ))}
@@ -1073,11 +1091,22 @@ function OrderSummary({
   );
 }
 
-function PriceRow({ label, value, accent }: { label: string; value: string; accent?: string }) {
+function PriceRow({ label, value, accent, glow }: { label: string; value: string; accent?: string; glow?: boolean }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: 12 }}>
-      <span style={{ fontSize: 13, color: accent ?? "#F2EAE0" }}>{label}</span>
-      <span style={{ fontFamily: '"Playfair Display", serif', fontSize: 14, color: accent ?? "#F2EAE0" }}>{value}</span>
+      <span style={{ fontSize: 13, color: accent ?? "rgba(242, 234, 224, 0.85)" }}>{label}</span>
+      <span
+        style={{
+          fontFamily: '"Playfair Display", serif',
+          fontSize: 14,
+          color: accent ?? "#F2EAE0",
+          fontWeight: glow ? 700 : 500,
+          letterSpacing: glow ? 1.5 : undefined,
+          textShadow: glow ? "0 0 8px rgba(31, 187, 123, 0.3)" : undefined,
+        }}
+      >
+        {value}
+      </span>
     </div>
   );
 }
