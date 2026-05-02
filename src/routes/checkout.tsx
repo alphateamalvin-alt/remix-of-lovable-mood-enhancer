@@ -1015,6 +1015,7 @@ function OrderSummary({
         <button
           type="button"
           onClick={onApplyDiscount}
+          className="btn-shine btn-shine-gold"
           style={{
             background: "#150909",
             border: "0.5px solid rgba(184, 149, 90, 0.5)",
@@ -1026,7 +1027,7 @@ function OrderSummary({
             boxShadow: "0 1px 0 rgba(242, 234, 224, 0.06) inset, 0 4px 12px rgba(0, 0, 0, 0.3)",
           }}
         >
-          Apply
+          <span>Apply</span>
         </button>
       </div>
 
