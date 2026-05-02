@@ -995,7 +995,7 @@ function OrderSummary({
             {VARIANT_NAME[variant].full}
           </div>
           <div style={{ fontSize: 11, color: "rgba(242, 234, 224, 0.7)", marginTop: 2 }}>
-            {item.label} · {item.supply}
+            {item.label}
           </div>
         </div>
         <div style={{ fontFamily: '"Playfair Display", serif', fontSize: 16, color: "#F2EAE0", fontWeight: 500 }}>
