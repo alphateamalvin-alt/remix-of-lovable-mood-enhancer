@@ -20,6 +20,12 @@ export function FinalCTA() {
           <p className="mt-7 text-[var(--color-ivory)]/80 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Join thousands of Filipino couples who chose to <span style={{ color: "#F2EAE0", fontWeight: 600 }}>reignite their connection</span>. Naturally.
           </p>
+          <p
+            className="mt-4 text-[12px] sm:text-[13px] italic max-w-lg mx-auto"
+            style={{ color: "rgba(184, 149, 90, 0.85)", letterSpacing: "0.3px" }}
+          >
+            Bundle orders include <em style={{ color: "#C9A06D", fontStyle: "italic", fontWeight: 500 }}>The Reconnection Manual</em>, our private guide for couples.
+          </p>
         </Reveal>
         <Reveal delay={0.2}>
           <div className="final-cta-buttons-row">
