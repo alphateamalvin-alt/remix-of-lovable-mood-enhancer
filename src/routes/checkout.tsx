@@ -92,6 +92,7 @@ function CheckoutPage() {
     city: "",
     barangayCode: "",
     barangay: "",
+    landmark: "",
     saveInfo: true,
   });
   const [fullNameError, setFullNameError] = useState<string | null>(null);
