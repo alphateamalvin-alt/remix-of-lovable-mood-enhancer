@@ -42,20 +42,6 @@ const PRICING: Record<Variant, Record<BundleId, { price: number; baseEach: numbe
   },
 };
 
-const searchSchema = z.object({
-  orderId: fallback(z.string(), "").default(""),
-  variant: fallback(z.enum(["her", "him", "couples"]), "her").default("her"),
-  bundle: fallback(z.enum(["1", "2", "3"]), "1").default("1"),
-  total: fallback(z.string(), "").default(""),
-  firstName: fallback(z.string(), "").default(""),
-  fullName: fallback(z.string(), "").default(""),
-  phone: fallback(z.string(), "").default(""),
-  address: fallback(z.string(), "").default(""),
-  region: fallback(z.string(), "").default(""),
-  city: fallback(z.string(), "").default(""),
-  barangay: fallback(z.string(), "").default(""),
-});
-
 export const Route = createFileRoute("/thank-you")({
   validateSearch: (search: Record<string, unknown>): ThankYouSearch => {
     const str = (k: string) => (typeof search[k] === "string" ? (search[k] as string) : "");
