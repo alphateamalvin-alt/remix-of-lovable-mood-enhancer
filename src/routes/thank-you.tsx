@@ -262,6 +262,60 @@ function ThankYouPage() {
   );
 }
 
+const MANUAL_PDF = "/lovable-reconnection-manual.pdf";
+
+function BonusDownloadSection({ isThree }: { isThree: boolean }) {
+  const [clicked, setClicked] = useState(false);
+
+  const onDownload = () => {
+    setClicked(true);
+    // Force download via temporary anchor
+    const a = document.createElement("a");
+    a.href = MANUAL_PDF;
+    a.download = "LOVABLE-Reconnection-Manual.pdf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  return (
+    <div className="bonus-download-section">
+      <span className="bonus-label">{isThree ? "Your Bonuses" : "Your Bonus"}</span>
+      <h2 className="bonus-title">
+        {isThree ? <>Two <em>exclusive</em> guides</> : <>The <em>Reconnection</em> Manual</>}
+      </h2>
+      <p className="bonus-subtitle">Available now for download.</p>
+
+      <div className="bonus-cover-display">
+        <img src={manualCover} alt="The Reconnection Manual cover" />
+      </div>
+
+      <button type="button" className="download-manual-btn" onClick={onDownload}>
+        <Download size={14} strokeWidth={2.2} />
+        <span>Download Manual (PDF)</span>
+      </button>
+
+      <p className="bonus-meta">
+        {isThree
+          ? "Two PDFs · Compatible with all devices · Lifetime access"
+          : "PDF · Compatible with all devices · Lifetime access"}
+      </p>
+
+      {clicked && (
+        <p className="download-success-message is-visible">
+          ✓ Download started. Check your Downloads folder.
+        </p>
+      )}
+
+      {isThree && (
+        <p className="bonus-meta" style={{ marginTop: 12 }}>
+          The Daily Ritual Companion is included with your manual download.
+        </p>
+      )}
+    </div>
+  );
+}
+
 function PageStyles() {
   return (
     <style>{`
