@@ -617,6 +617,117 @@ function PageStyles() {
         .summary-product-name { font-size: 12px; }
         .summary-total-value { font-size: 18px; }
         .expectations-title { font-size: 15px; }
+        .bonus-download-section { padding: 24px 16px; margin: 24px 0; }
+        .bonus-title { font-size: 22px; }
+        .bonus-subtitle { font-size: 12px; }
+        .bonus-cover-display { width: 120px; height: 165px; }
+        .download-manual-btn { padding: 14px 24px; font-size: 11px; letter-spacing: 1.5px; width: 100%; max-width: 280px; justify-content: center; }
+        .bonus-meta { font-size: 10px; }
+      }
+
+      /* Bonus download section */
+      .bonus-download-section {
+        margin: 32px 0;
+        padding: 32px 24px;
+        background: linear-gradient(180deg, #1F1010 0%, #1A0E0E 100%);
+        border: 1px solid rgba(184, 149, 90, 0.4);
+        border-radius: 16px;
+        text-align: center;
+        box-shadow:
+          0 1px 0 rgba(242, 234, 224, 0.1) inset,
+          0 12px 32px rgba(0, 0, 0, 0.5),
+          0 0 64px rgba(184, 149, 90, 0.08);
+        animation: ty-fade-up 800ms cubic-bezier(0.4,0,0.2,1) both;
+        animation-delay: 900ms;
+      }
+      .bonus-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 9px;
+        letter-spacing: 3px;
+        color: #C9A06D;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+      }
+      .bonus-title {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 28px;
+        color: #F2EAE0;
+        margin: 0 0 6px;
+        font-weight: 400;
+        line-height: 1.2;
+      }
+      .bonus-title em {
+        font-style: italic;
+        color: #DC2627;
+      }
+      .bonus-subtitle {
+        font-size: 13px;
+        color: rgba(184, 149, 90, 0.85);
+        font-style: italic;
+        margin: 0 0 24px;
+      }
+      .bonus-cover-display {
+        width: 160px;
+        height: 220px;
+        margin: 24px auto;
+        background: #0D0606;
+        border-radius: 8px;
+        border: 0.5px solid rgba(184, 149, 90, 0.3);
+        box-shadow:
+          0 12px 32px rgba(0, 0, 0, 0.6),
+          0 24px 56px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+      }
+      .bonus-cover-display img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .download-manual-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #FF3F40, #DC2627);
+        border: none;
+        border-radius: 999px;
+        color: #F2EAE0;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12px;
+        letter-spacing: 2px;
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+        margin-top: 16px;
+        box-shadow:
+          0 8px 24px rgba(220, 38, 39, 0.4),
+          0 0 32px rgba(220, 38, 39, 0.15);
+        transition: all 250ms ease;
+      }
+      .download-manual-btn:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 12px 32px rgba(220, 38, 39, 0.5),
+          0 0 48px rgba(220, 38, 39, 0.2);
+      }
+      .bonus-meta {
+        font-size: 11px;
+        color: rgba(154, 136, 128, 0.8);
+        font-style: italic;
+        margin: 16px 0 0;
+        letter-spacing: 0.3px;
+      }
+      .download-success-message {
+        margin-top: 16px;
+        padding: 12px 16px;
+        background: rgba(31, 187, 123, 0.1);
+        border: 0.5px solid rgba(31, 187, 123, 0.4);
+        border-radius: 8px;
+        color: #1FBB7B;
+        font-size: 12px;
+        font-style: italic;
       }
     `}</style>
   );
