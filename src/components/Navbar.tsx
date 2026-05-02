@@ -80,7 +80,8 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Track hero visibility — drives navbar transparency and auto-hide on home
+  // Track hero visibility — drives navbar transparency and auto-hide on home.
+  // On mobile (<= 768px), never auto-hide: navbar must remain sticky/visible at all times.
   useEffect(() => {
     if (!isHome) {
       setHidden(false);
@@ -89,15 +90,24 @@ export function Navbar() {
     }
     const hero = document.getElementById("top");
     if (!hero) return;
+    const isMobile = () =>
+      typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setHidden(!entry.isIntersecting);
+        setHidden(isMobile() ? false : !entry.isIntersecting);
         setHeroInView(entry.isIntersecting);
       },
       { threshold: 0, rootMargin: "0px" },
     );
     observer.observe(hero);
-    return () => observer.disconnect();
+    const onResize = () => {
+      if (isMobile()) setHidden(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", onResize);
+    };
   }, [isHome]);
 
   // Track which section is currently in view (for active link highlight)
