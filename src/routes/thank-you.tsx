@@ -1,8 +1,20 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart, Check } from "lucide-react";
-import { zodValidator, fallback } from "@tanstack/zod-adapter";
-import { z } from "zod";
+
+type ThankYouSearch = {
+  orderId: string;
+  variant: "her" | "him" | "couples";
+  bundle: "1" | "2" | "3";
+  total: string;
+  firstName: string;
+  fullName: string;
+  phone: string;
+  address: string;
+  region: string;
+  city: string;
+  barangay: string;
+};
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
@@ -45,7 +57,26 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/thank-you")({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: (search: Record<string, unknown>): ThankYouSearch => {
+    const str = (k: string) => (typeof search[k] === "string" ? (search[k] as string) : "");
+    const v = search.variant;
+    const variant: ThankYouSearch["variant"] = v === "him" || v === "couples" ? v : "her";
+    const b = search.bundle;
+    const bundle: ThankYouSearch["bundle"] = b === "2" || b === "3" ? b : "1";
+    return {
+      orderId: str("orderId"),
+      variant,
+      bundle,
+      total: str("total"),
+      firstName: str("firstName"),
+      fullName: str("fullName"),
+      phone: str("phone"),
+      address: str("address"),
+      region: str("region"),
+      city: str("city"),
+      barangay: str("barangay"),
+    };
+  },
   head: () => ({
     meta: [
       { title: "Thank You | LOVABLE Mood Drops" },
