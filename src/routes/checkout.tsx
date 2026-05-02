@@ -647,8 +647,8 @@ function CheckoutPage() {
         .ck-mobile-summary-wrap { display: none; }
         .ck-mobile-summary-toggle {
           width: 100%;
-          background: #160808;
-          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          background: linear-gradient(180deg, #1F1010 0%, #1A0E0E 100%);
+          border: 0.5px solid rgba(184, 149, 90, 0.35);
           border-radius: 12px;
           padding: 14px 18px;
           display: flex;
@@ -657,6 +657,7 @@ function CheckoutPage() {
           color: #F2EAE0;
           cursor: pointer;
           font-family: Montserrat, sans-serif;
+          box-shadow: 0 1px 0 rgba(242, 234, 224, 0.08) inset, 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         .ck-mobile-summary-panel {
           max-height: 0;
