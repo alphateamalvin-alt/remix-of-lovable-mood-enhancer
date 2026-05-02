@@ -611,57 +611,12 @@ h1, h2 {
 }
 
 /* ============================================
-   .btn-pulse-shine — Heartbeat + Metallic Shine
-   Applied only to top-priority conversion CTAs
+   .btn-pulse-shine — Enhanced Metallic Shine (no pulse)
+   Applied to top-priority conversion CTAs
    ============================================ */
-@keyframes heartbeat-pulse {
-  0% {
-    transform: scale(1);
-    box-shadow:
-      0 0 0 0 rgba(220, 38, 39, 0.6),
-      0 4px 12px rgba(220, 38, 39, 0.3),
-      0 1px 0 rgba(242, 234, 224, 0.15) inset;
-  }
-  14% {
-    transform: scale(1.04);
-    box-shadow:
-      0 0 0 6px rgba(220, 38, 39, 0.35),
-      0 8px 20px rgba(220, 38, 39, 0.5),
-      0 1px 0 rgba(242, 234, 224, 0.2) inset;
-  }
-  28% {
-    transform: scale(1);
-    box-shadow:
-      0 0 0 12px rgba(220, 38, 39, 0.15),
-      0 6px 16px rgba(220, 38, 39, 0.35),
-      0 1px 0 rgba(242, 234, 224, 0.15) inset;
-  }
-  42% {
-    transform: scale(1.03);
-    box-shadow:
-      0 0 0 18px rgba(220, 38, 39, 0.08),
-      0 8px 18px rgba(220, 38, 39, 0.45),
-      0 1px 0 rgba(242, 234, 224, 0.2) inset;
-  }
-  70% {
-    transform: scale(1);
-    box-shadow:
-      0 0 0 24px rgba(220, 38, 39, 0),
-      0 4px 12px rgba(220, 38, 39, 0.3),
-      0 1px 0 rgba(242, 234, 224, 0.15) inset;
-  }
-  100% {
-    transform: scale(1);
-    box-shadow:
-      0 0 0 0 rgba(220, 38, 39, 0.6),
-      0 4px 12px rgba(220, 38, 39, 0.3),
-      0 1px 0 rgba(242, 234, 224, 0.15) inset;
-  }
-}
-
 @keyframes shine-sweep {
-  0% { left: -150%; }
-  60% { left: 150%; }
+  0%   { left: -150%; }
+  45%  { left: 150%; }
   100% { left: 150%; }
 }
 
@@ -686,8 +641,13 @@ h1, h2 {
   text-decoration: none;
   z-index: 1;
   will-change: transform;
-  animation: heartbeat-pulse 2.4s ease-in-out infinite;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Static ambient red glow — no animation */
+  box-shadow:
+    0 1px 0 rgba(242, 234, 224, 0.15) inset,
+    0 4px 12px rgba(220, 38, 39, 0.35),
+    0 8px 24px rgba(220, 38, 39, 0.2),
+    0 0 32px rgba(220, 38, 39, 0.08);
 }
 
 .btn-pulse-shine::before {
@@ -695,19 +655,19 @@ h1, h2 {
   position: absolute;
   top: 0;
   left: -150%;
-  width: 80%;
+  width: 75%;
   height: 100%;
   background: linear-gradient(
     115deg,
     transparent 0%,
-    transparent 30%,
-    rgba(255, 255, 255, 0.05) 40%,
-    rgba(255, 255, 255, 0.25) 50%,
-    rgba(255, 255, 255, 0.05) 60%,
-    transparent 70%,
+    transparent 25%,
+    rgba(255, 255, 255, 0.10) 35%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.10) 65%,
+    transparent 75%,
     transparent 100%
   );
-  transform: skewX(-20deg);
+  transform: skewX(-22deg);
   animation: shine-sweep 3.5s ease-in-out infinite;
   will-change: transform, left;
   pointer-events: none;
@@ -720,29 +680,23 @@ h1, h2 {
 }
 
 .btn-pulse-shine:hover {
-  animation-play-state: paused;
-  transform: scale(1.06);
+  transform: scale(1.04);
   will-change: transform, box-shadow;
-  background: linear-gradient(135deg, #E83436 0%, #DC2627 50%, #E83436 100%);
+  background: linear-gradient(135deg, #FF3F40 0%, #DC2627 50%, #FF3F40 100%);
   box-shadow:
-    0 0 0 8px rgba(220, 38, 39, 0.2),
-    0 12px 32px rgba(220, 38, 39, 0.5),
-    0 4px 12px rgba(0, 0, 0, 0.4),
-    0 1px 0 rgba(242, 234, 224, 0.25) inset;
+    0 1px 0 rgba(242, 234, 224, 0.25) inset,
+    0 12px 32px rgba(220, 38, 39, 0.55),
+    0 24px 56px rgba(0, 0, 0, 0.4);
   letter-spacing: 3px;
 }
 
 .btn-pulse-shine:hover::before {
-  animation-duration: 1.2s;
+  animation-duration: 1s;
 }
 
 .btn-pulse-shine:active {
   transform: scale(1.01);
   transition-duration: 80ms;
-  box-shadow:
-    0 0 0 4px rgba(220, 38, 39, 0.3),
-    0 4px 12px rgba(220, 38, 39, 0.4),
-    0 1px 0 rgba(242, 234, 224, 0.15) inset;
 }
 
 .btn-pulse-shine:focus-visible {
@@ -771,13 +725,17 @@ h1, h2 {
   font-size: 13px;
 }
 
+/* Navbar variant — slightly faster shine for prominence */
+.btn-pulse-shine.btn-pulse-navbar {
+  padding: 12px 28px;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.btn-pulse-shine.btn-pulse-navbar::before {
+  animation-duration: 3s;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .btn-pulse-shine {
-    animation: none;
-    box-shadow:
-      0 4px 12px rgba(220, 38, 39, 0.3),
-      0 1px 0 rgba(242, 234, 224, 0.15) inset;
-  }
   .btn-pulse-shine::before {
     animation: none;
     display: none;
@@ -793,7 +751,7 @@ h1, h2 {
   }
   .btn-pulse-shine::before {
     width: 70%;
-    animation-duration: 3.2s;
+    animation-duration: 3s;
   }
   .btn-pulse-shine.btn-mobile-block {
     width: 100%;
@@ -816,18 +774,13 @@ h1, h2 {
     transform: none;
     letter-spacing: 2.5px;
     background: linear-gradient(135deg, #DC2627 0%, #C61F20 50%, #DC2627 100%);
-    box-shadow: none;
   }
   .btn-pulse-shine:active {
     transform: scale(0.98);
     transition-duration: 100ms;
-    box-shadow:
-      0 1px 0 rgba(242, 234, 224, 0.15) inset,
-      0 2px 8px rgba(220, 38, 39, 0.4),
-      0 4px 12px rgba(0, 0, 0, 0.3);
   }
   .btn-pulse-shine:active::before {
-    animation-duration: 1.2s;
+    animation-duration: 0.8s;
   }
 }
 
@@ -837,6 +790,7 @@ h1, h2 {
     animation-duration: 5s;
   }
 }
+
 
 /* Safe area inset for sticky CTAs on notched iPhones */
 .sticky-cta-safe {
