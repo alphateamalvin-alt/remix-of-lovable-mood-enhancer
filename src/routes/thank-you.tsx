@@ -44,11 +44,16 @@ const PRICING: Record<Variant, Record<BundleId, { price: number; baseEach: numbe
 
 export const Route = createFileRoute("/thank-you")({
   validateSearch: (search: Record<string, unknown>): ThankYouSearch => {
-    const str = (k: string) => (typeof search[k] === "string" ? (search[k] as string) : "");
+    const str = (k: string) => {
+      const v = search[k];
+      if (typeof v === "string") return v;
+      if (typeof v === "number" || typeof v === "boolean") return String(v);
+      return "";
+    };
     const v = search.variant;
     const variant: ThankYouSearch["variant"] = v === "him" || v === "couples" ? v : "her";
-    const b = search.bundle;
-    const bundle: ThankYouSearch["bundle"] = b === "2" || b === "3" ? b : "1";
+    const bRaw = typeof search.bundle === "number" ? String(search.bundle) : search.bundle;
+    const bundle: ThankYouSearch["bundle"] = bRaw === "2" || bRaw === "3" ? bRaw : "1";
     return {
       orderId: str("orderId"),
       variant,
