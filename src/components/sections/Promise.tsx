@@ -314,8 +314,8 @@ export function Promise() {
           >
             Ready to feel it again?
           </p>
-          <a href="/shop" className="btn-primary inline-block">
-            SHOP NOW
+          <a href="/shop" className="btn-primary btn-shine btn-shine-primary inline-block">
+            <span>SHOP NOW</span>
           </a>
           <p
             style={{
