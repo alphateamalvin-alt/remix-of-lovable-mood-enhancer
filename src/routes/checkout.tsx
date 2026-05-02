@@ -391,7 +391,7 @@ function CheckoutPage() {
                   <input className="ck-input" required type="tel" placeholder="09XX XXX XXXX" value={form.phone} onChange={(e) => update("phone", e.target.value)} />
                 </Field>
                 <div className="ck-hide-mobile" style={{ display: "contents" }}>
-                  <Field label="Email" sublabel="for receipt">
+                  <Field label="Email">
                     <input className="ck-input" type="email" placeholder="example@email.com" value={form.email} onChange={(e) => update("email", e.target.value)} />
                   </Field>
                 </div>
