@@ -36,7 +36,8 @@ export function SocialProofToast() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    setOnCheckout(window.location.pathname.startsWith("/checkout"));
+    const p = window.location.pathname;
+    setOnCheckout(p.startsWith("/checkout") || p.startsWith("/thank-you"));
   }, []);
 
   // Track hero visibility — used to hide the toast on mobile while hero is on screen

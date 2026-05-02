@@ -55,7 +55,9 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
-  const { variant, bundle } = Route.useSearch();
+  const search = Route.useSearch();
+  const variant = search.variant as Variant;
+  const bundle = search.bundle as BundleId;
   const navigate = useNavigate();
   const item = PRICING[variant][bundle];
 
@@ -143,11 +145,32 @@ function CheckoutPage() {
       bundle,
       total,
     };
-    // Simulated submit
+    // Simulated submit (POS receives order on backend in production)
     void order;
     await new Promise((r) => setTimeout(r, 1200));
     setSubmitting(false);
-    navigate({ to: "/", search: {} as never });
+
+    // Generate a simple order reference like LV-2026-001234
+    const year = new Date().getFullYear();
+    const seq = Math.floor(100000 + Math.random() * 900000);
+    const orderId = `LV-${year}-${seq}`;
+
+    navigate({
+      to: "/thank-you",
+      search: {
+        orderId,
+        variant,
+        bundle,
+        total: String(total),
+        firstName,
+        fullName,
+        phone: form.phone,
+        address: form.address,
+        region: form.region,
+        city: form.city,
+        barangay: form.barangay,
+      } as never,
+    });
   };
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
