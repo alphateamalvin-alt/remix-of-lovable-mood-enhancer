@@ -185,8 +185,8 @@ export function Navbar() {
         </ul>
 
         <div className="hidden md:block">
-          <Link to="/shop" search={{}} className="btn-primary !py-3 !px-6 text-[11px]">
-            Shop Now →
+          <Link to="/shop" search={{}} className="btn-pulse-shine btn-pulse-navbar">
+            <span>Shop Now</span> <span className="arrow">→</span>
           </Link>
         </div>
 
@@ -300,9 +300,9 @@ export function Navbar() {
             to="/shop"
             search={{}}
             onClick={() => setMobileOpen(false)}
-            className="btn-primary block w-full text-center !py-4 text-[12px]"
+            className="btn-pulse-shine btn-mobile-block"
           >
-            Shop Now →
+            <span>Shop Now</span> <span className="arrow">→</span>
           </Link>
           <div className="mt-4 flex items-center justify-around gap-2 text-[9px] tracking-[0.15em] uppercase text-[var(--color-ivory)]/55">
             <span>Free Shipping Nationwide</span>
