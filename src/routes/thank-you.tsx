@@ -219,7 +219,7 @@ function ThankYouPage() {
         )}
 
         {Number(bundle) >= 2 && (
-          <BonusDownloadSection isThree={bundle === "3" || variant === "couples" && bundle === "3"} />
+          <BonusDownloadSection isThree={bundle === "3"} />
         )}
 
         <div className="expectations">
