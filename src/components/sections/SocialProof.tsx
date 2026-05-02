@@ -621,8 +621,8 @@ export function SocialProof() {
         >
           Join thousands of couples who already feel the difference.
         </p>
-        <button onClick={handleCTA} className="btn-primary sp-cta-btn">
-          I've Seen Enough, Order Mine
+        <button onClick={handleCTA} className="btn-primary btn-shine btn-shine-primary sp-cta-btn">
+          <span>I've Seen Enough, Order Mine</span>
         </button>
       </div>
     </section>
