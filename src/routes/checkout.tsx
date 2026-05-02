@@ -55,7 +55,9 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
-  const { variant, bundle } = Route.useSearch();
+  const search = Route.useSearch();
+  const variant = search.variant as Variant;
+  const bundle = search.bundle as BundleId;
   const navigate = useNavigate();
   const item = PRICING[variant][bundle];
 
