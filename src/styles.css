@@ -212,7 +212,7 @@
   }
 
   /* ============================================
-     FINAL CTA — Variant B: Glow Pulse
+     FINAL CTA — Static (pulse removed)
      ============================================ */
   .btn-final-cta {
     font-family: 'Montserrat', sans-serif;
@@ -233,10 +233,13 @@
     gap: 10px;
     text-decoration: none;
     transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
-    animation: glow-pulse 2.5s ease-in-out infinite;
+    box-shadow:
+      0 1px 0 rgba(242, 234, 224, 0.15) inset,
+      0 4px 12px rgba(220, 38, 39, 0.35),
+      0 8px 24px rgba(220, 38, 39, 0.2),
+      0 0 32px rgba(220, 38, 39, 0.08);
   }
   .btn-final-cta:hover {
-    animation-play-state: paused;
     transform: scale(1.04);
     will-change: transform;
     box-shadow: 0 0 36px rgba(220, 38, 39, 0.6),
@@ -244,7 +247,7 @@
   }
   .btn-final-cta:active {
     transform: scale(1.01);
-    transition-duration: 100ms;
+    transition-duration: 80ms;
   }
 
   /* ============================================
