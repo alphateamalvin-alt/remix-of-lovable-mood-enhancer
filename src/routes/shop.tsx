@@ -8,6 +8,7 @@ import { SocialProofToast } from "@/components/SocialProofToast";
 import { StickyUrgencyBar } from "@/components/StickyUrgencyBar";
 import { Reveal } from "@/components/Reveal";
 import { setShopState, type ShopVariant } from "@/lib/shop-store";
+import { BundleBonusIndicator, BundleIncludesSection } from "@/components/shop/BundleBonus";
 
 import hero from "@/assets/hero.jpg";
 const forher = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMiAoMSkucG5nIiwiaWF0IjoxNzc3MTMyNzg2LCJleHAiOjE4MDg2Njg3ODZ9.B-AMqN_dXsCpMyXZQlOCFNt-OQtx30ikTNBNvzfd9Kk";
@@ -536,40 +537,50 @@ function ProductDetail({
                 {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
                 </span>
                 <BottleStack src={bottleImage} count={Number(b.id) || 1} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
-                    {b.badge && (
-                      <span
-                        className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
-                          b.badge === "BEST SELLER"
-                            ? "bg-[var(--color-brand-red)] text-white"
-                            : "bg-[var(--color-gold)] text-[var(--color-noir)]"
-                        }`}
-                      >
-                        {b.badge}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
-                    ₱{b.price.toLocaleString()}
-                    {b.save ? ` · Save ₱${b.save}` : ""}
-                  </div>
-                </div>
-                <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
-              </button>
-            );
-          })}
-        </div>
+                 <div className="flex-1 min-w-0">
+                   <div className="flex items-center gap-2 flex-wrap">
+                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
+                     {b.badge && (
+                       <span
+                         className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
+                           b.badge === "BEST SELLER"
+                             ? "bg-[var(--color-brand-red)] text-white"
+                             : "bg-[var(--color-gold)] text-[var(--color-noir)]"
+                         }`}
+                       >
+                         {b.badge}
+                       </span>
+                     )}
+                   </div>
+                   <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
+                     ₱{b.price.toLocaleString()}
+                     {b.save ? ` · Save ₱${b.save}` : ""}
+                   </div>
+                   {b.id !== "1" && <BundleBonusIndicator tier={b.id as "2" | "3"} />}
+                 </div>
+                 <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
+               </button>
+             );
+           })}
+         </div>
 
-        {/* CTA */}
-        <Link
-          to="/checkout"
-          search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-          className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
-        >
-          <span>Order Now, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-        </Link>
+         {/* What's included (bonus + product) */}
+         {selectedBundle.id !== "1" && (
+           <BundleIncludesSection
+             productImage={bottleImage}
+             productName={`LOVABLE for ${variant === "her" ? "Her" : "Him"} — ${selectedBundle.label}`}
+             tier={selectedBundle.id as "2" | "3"}
+           />
+         )}
+
+         {/* CTA */}
+         <Link
+           to="/checkout"
+           search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
+           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
+         >
+           <span>Order Now, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
+         </Link>
 
         {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
@@ -768,40 +779,48 @@ function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
                     ));
                   })}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
-                    {b.badge && (
-                      <span
-                        className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
-                          b.badge === "BEST SELLER"
-                            ? "bg-[var(--color-brand-red)] text-white"
-                            : "bg-[var(--color-gold)] text-[var(--color-noir)]"
-                        }`}
-                      >
-                        {b.badge}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
-                    ₱{b.price.toLocaleString()}
-                    {b.save ? ` · Save ₱${b.save}` : ""}
-                  </div>
-                </div>
-                <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
-              </button>
-            );
-          })}
-        </div>
+                 <div className="flex-1 min-w-0">
+                   <div className="flex items-center gap-2 flex-wrap">
+                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
+                     {b.badge && (
+                       <span
+                         className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
+                           b.badge === "BEST SELLER"
+                             ? "bg-[var(--color-brand-red)] text-white"
+                             : "bg-[var(--color-gold)] text-[var(--color-noir)]"
+                         }`}
+                       >
+                         {b.badge}
+                       </span>
+                     )}
+                   </div>
+                   <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
+                     ₱{b.price.toLocaleString()}
+                     {b.save ? ` · Save ₱${b.save}` : ""}
+                   </div>
+                   <BundleBonusIndicator tier={(b.id === "3" ? "3" : "2") as "2" | "3"} />
+                 </div>
+                 <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
+               </button>
+             );
+           })}
+         </div>
 
-        {/* CTA */}
-        <Link
-          to="/checkout"
-          search={{ variant: "couples" as const, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-          className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
-        >
-          <span>Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-        </Link>
+         {/* What's included (couples always include the bonus) */}
+         <BundleIncludesSection
+           productImage={BOTTLE_HER_URL}
+           productName={`LOVABLE Couples Bundle — ${selectedBundle.label}`}
+           tier={(selectedBundle.id === "3" ? "3" : "2") as "2" | "3"}
+         />
+
+         {/* CTA */}
+         <Link
+           to="/checkout"
+           search={{ variant: "couples" as const, bundle: (selectedBundle.id as "1" | "2" | "3") }}
+           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
+         >
+           <span>Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
+         </Link>
 
         {/* Trust chips */}
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
