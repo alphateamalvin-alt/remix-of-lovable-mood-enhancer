@@ -60,8 +60,11 @@ const json = (data: unknown, status = 200) =>
 
 async function pancakeGet(path: string, apiKey: string) {
   const sep = path.includes("?") ? "&" : "?";
-  const res = await fetch(`${PANCAKE_BASE}${path}${sep}api_key=${encodeURIComponent(apiKey)}`);
+  const url = `${PANCAKE_BASE}${path}${sep}api_key=${encodeURIComponent(apiKey)}`;
+  console.log("[pancake] GET", url.replace(apiKey, "***"));
+  const res = await fetch(url);
   const text = await res.text();
+  console.log("[pancake] GET status", res.status, "body:", text.slice(0, 500));
   if (!res.ok) throw new Error(`Pancake ${res.status}: ${text.slice(0, 300)}`);
   try { return JSON.parse(text); } catch { return text; }
 }
