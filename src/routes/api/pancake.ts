@@ -86,7 +86,6 @@ export const Route = createFileRoute("/api/pancake")({
       POST: async ({ request }) => {
         const apiKey = process.env.PANCAKE_API_KEY;
         const shopId = process.env.PANCAKE_SHOP_ID;
-        console.log("[pancake] secrets check — apiKey present:", !!apiKey, "len:", apiKey?.length, "shopId:", shopId);
         if (!apiKey || !shopId) return json({ error: "Missing PANCAKE_API_KEY or PANCAKE_SHOP_ID" }, 500);
 
         let parsed: z.infer<typeof Body>;
@@ -103,14 +102,9 @@ export const Route = createFileRoute("/api/pancake")({
               return json({ data });
             }
             case "getProvinces": {
-              const candidates = ["PH", "63", "VN", "84"];
-              for (const cc of candidates) {
-                const data = await pancakeGet(`/geo/provinces?country_code=${cc}`, apiKey);
-                const list = Array.isArray((data as { data?: unknown[] })?.data) ? (data as { data: unknown[] }).data : [];
-                console.log("[pancake] provinces country_code=", cc, "count=", list.length);
-                if (list.length > 0) return json({ data, _country: cc });
-              }
-              return json({ error: "Pancake returned 0 provinces for all country codes (PH/63/VN/84)" }, 502);
+              // Pancake uses ISO calling code 63 for Philippines (not "PH")
+              const data = await pancakeGet(`/geo/provinces?country_code=63`, apiKey);
+              return json({ data });
             }
             case "getDistricts": {
               const data = await pancakeGet(`/geo/districts?province_id=${encodeURIComponent(String(parsed.provinceId))}`, apiKey);
