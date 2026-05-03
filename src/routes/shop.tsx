@@ -71,48 +71,29 @@ type Bundle = {
   id: string;
   label: string;
   price: number;
-  save?: number;
-  badge?: "BEST SELLER" | "BEST VALUE";
-};
-
-const herBundles: Bundle[] = [
-  { id: "1", label: "1 Bottle", price: 599 },
-  { id: "2", label: "2 Bottles", price: 899, save: 299, badge: "BEST SELLER" },
-  { id: "3", label: "3 Bottles", price: 1199, save: 598, badge: "BEST VALUE" },
-];
-
-const himBundles: Bundle[] = [
-  { id: "1", label: "1 Bottle", price: 599 },
-  { id: "2", label: "2 Bottles", price: 899, save: 299, badge: "BEST SELLER" },
-  { id: "3", label: "3 Bottles", price: 1199, save: 598, badge: "BEST VALUE" },
-];
-
-type CouplesBundle = Bundle & {
   originalPrice: number;
   supply: string;
   perDay: number;
   savePercent?: number;
+  badge?: "BEST SELLER" | "BEST VALUE";
 };
 
-const couplesBundles: CouplesBundle[] = [
-  {
-    id: "1",
-    label: "1 Bottle Men + 1 Bottle Women",
-    price: 899,
-    originalPrice: 3596,
-    supply: "30-day supply",
-    perDay: 30,
-  },
-  {
-    id: "2",
-    label: "2 Bottles Men + 2 Bottles Women",
-    price: 1476,
-    originalPrice: 7196,
-    supply: "60-day supply",
-    perDay: 25,
-    savePercent: 22,
-    badge: "BEST SELLER",
-  },
+const herBundles: Bundle[] = [
+  { id: "1", label: "1 Bottle", price: 599, originalPrice: 599, supply: "30-day supply", perDay: 20 },
+  { id: "2", label: "2 Bottles", price: 899, originalPrice: 1198, supply: "60-day supply", perDay: 15, savePercent: 25, badge: "BEST SELLER" },
+  { id: "3", label: "3 Bottles", price: 1199, originalPrice: 1797, supply: "90-day supply", perDay: 13, savePercent: 33, badge: "BEST VALUE" },
+];
+
+const himBundles: Bundle[] = [
+  { id: "1", label: "1 Bottle", price: 599, originalPrice: 599, supply: "30-day supply", perDay: 20 },
+  { id: "2", label: "2 Bottles", price: 899, originalPrice: 1198, supply: "60-day supply", perDay: 15, savePercent: 25, badge: "BEST SELLER" },
+  { id: "3", label: "3 Bottles", price: 1199, originalPrice: 1797, supply: "90-day supply", perDay: 13, savePercent: 33, badge: "BEST VALUE" },
+];
+
+const couplesBundles: Bundle[] = [
+  { id: "1", label: "1 Bottle Men + 1 Bottle Women", price: 1099, originalPrice: 1198, supply: "30-day supply", perDay: 37, savePercent: 8 },
+  { id: "2", label: "2 Bottles Men + 2 Bottles Women", price: 1899, originalPrice: 2396, supply: "60-day supply", perDay: 32, savePercent: 21, badge: "BEST SELLER" },
+  { id: "3", label: "3 Bottles Men + 3 Bottles Women", price: 2699, originalPrice: 3594, supply: "90-day supply", perDay: 30, savePercent: 25, badge: "BEST VALUE" },
 ];
 
 function ShopPage() {
