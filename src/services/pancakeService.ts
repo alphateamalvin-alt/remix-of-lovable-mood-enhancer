@@ -48,8 +48,7 @@ type RawVariation = {
   product?: { id?: string; display_id?: string };
 };
 
-let variationCache: Map<string, string> | null = null;
-let variationPromise: Promise<Map<string, string>> | null = null;
+// Cache disabled — always fetch fresh variations from Pancake.
 
 function extractSku(v: RawVariation): string | undefined {
   if (v.sku) return v.sku;
@@ -69,27 +68,21 @@ function extractId(v: RawVariation): string | undefined {
 }
 
 export async function fetchVariations(): Promise<Map<string, string>> {
-  if (variationCache) return variationCache;
-  if (variationPromise) return variationPromise;
-  variationPromise = (async () => {
-    const data = await call<unknown>({ action: "getVariations" });
-    const list: RawVariation[] = Array.isArray(data)
-      ? (data as RawVariation[])
-      : Array.isArray((data as { variations?: RawVariation[] })?.variations)
-        ? ((data as { variations: RawVariation[] }).variations)
-        : Array.isArray((data as { data?: RawVariation[] })?.data)
-          ? ((data as { data: RawVariation[] }).data)
-          : [];
-    const map = new Map<string, string>();
-    for (const v of list) {
-      const sku = extractSku(v);
-      const id = extractId(v);
-      if (sku && id) map.set(sku.toUpperCase(), id);
-    }
-    variationCache = map;
-    return map;
-  })();
-  return variationPromise;
+  const data = await call<unknown>({ action: "getVariations" });
+  const list: RawVariation[] = Array.isArray(data)
+    ? (data as RawVariation[])
+    : Array.isArray((data as { variations?: RawVariation[] })?.variations)
+      ? ((data as { variations: RawVariation[] }).variations)
+      : Array.isArray((data as { data?: RawVariation[] })?.data)
+        ? ((data as { data: RawVariation[] }).data)
+        : [];
+  const map = new Map<string, string>();
+  for (const v of list) {
+    const sku = extractSku(v);
+    const id = extractId(v);
+    if (sku && id) map.set(sku.toUpperCase(), id);
+  }
+  return map;
 }
 
 // ---------- Geo ----------
