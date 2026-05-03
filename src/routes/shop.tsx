@@ -174,7 +174,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
     const defaults: Record<Variant, { price: number; label: string }> = {
       her: { price: 899, label: "2 Bottles" },
       him: { price: 899, label: "2 Bottles" },
-      couples: { price: 2796, label: "2 Bottles Men + 2 Bottles Women" },
+      couples: { price: 1476, label: "2 Bottles Men + 2 Bottles Women" },
     };
     const d = defaults[tab];
     setShopState({ variant: tab, price: d.price, bundleLabel: d.label });
