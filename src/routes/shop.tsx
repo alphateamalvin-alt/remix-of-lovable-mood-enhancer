@@ -143,49 +143,122 @@ function ShopHero() {
   );
 }
 
+type VariantConfig = {
+  eyebrow: string;
+  title: React.ReactNode;
+  rating: string;
+  reviews: string;
+  description: React.ReactNode;
+  mainImage: string;
+  thumbnails: string[];
+  bundles: Bundle[];
+  bottleImage: string;
+};
+
+const COUPLES_IMG_1 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2011_46_31%20PM.png";
+const COUPLES_IMG_2 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM%20(1).png";
+const COUPLES_IMG_3 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2002_19_52%20AM%20(1).png";
+const COUPLES_IMG_4 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2004_28_13%20PM.png";
+
+function getVariantConfig(v: Variant): VariantConfig {
+  if (v === "her") {
+    return {
+      eyebrow: "LOVABLE Drops For Her",
+      title: <>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>,
+      rating: "4.9",
+      reviews: "1,200+",
+      description: <>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>,
+      mainImage: forher,
+      thumbnails: [forher, herThumb1, herThumb2, bottleHer],
+      bundles: herBundles,
+      bottleImage: BOTTLE_HER_URL,
+    };
+  }
+  if (v === "him") {
+    return {
+      eyebrow: "LOVABLE Drops For Him",
+      title: <>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>,
+      rating: "4.8",
+      reviews: "980+",
+      description: <>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>,
+      mainImage: forhim,
+      thumbnails: [forhim, himThumb1, himThumb2, bottleHim],
+      bundles: himBundles,
+      bottleImage: BOTTLE_HIM_URL,
+    };
+  }
+  return {
+    eyebrow: "LOVABLE Couples Bundle",
+    title: <>The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span></>,
+    rating: "4.9",
+    reviews: "2,000+",
+    description: <>For couples na pareho ng goal: <span style={{ color: "#F2EAE0", fontWeight: 600 }}>bumalik sa kung sino kayo dati</span>. Synced formulas, designed to be taken together.</>,
+    mainImage: COUPLES_IMG_1,
+    thumbnails: [COUPLES_IMG_1, COUPLES_IMG_2, COUPLES_IMG_3, COUPLES_IMG_4],
+    bundles: couplesBundles,
+    bottleImage: BOTTLE_HER_URL,
+  };
+}
+
+function VenusIcon({ active }: { active: boolean }) {
+  const c = active ? "#F2EAE0" : "#B8955A";
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round">
+      <circle cx="12" cy="9" r="5" />
+      <path d="M12 14v8M9 19h6" />
+    </svg>
+  );
+}
+function MarsIcon({ active }: { active: boolean }) {
+  const c = active ? "#F2EAE0" : "#B8955A";
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round">
+      <circle cx="10" cy="14" r="5" />
+      <path d="M14 10l6-6M15 4h5v5" />
+    </svg>
+  );
+}
+function HeartIcon({ active }: { active: boolean }) {
+  const c = active ? "#F2EAE0" : "#B8955A";
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill={c} stroke={c} strokeWidth="1.2">
+      <path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z" />
+    </svg>
+  );
+}
+
+function SectionHeader({ num, label }: { num: number; label: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <span
+        style={{
+          width: 26, height: 26, borderRadius: "50%",
+          background: "linear-gradient(135deg, #DC2627, #C61F20)",
+          color: "#F2EAE0",
+          fontFamily: '"Playfair Display", Georgia, serif',
+          fontStyle: "italic", fontSize: 14, fontWeight: 500,
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          boxShadow: "0 1px 0 rgba(242,234,224,0.2) inset, 0 4px 10px rgba(220,38,39,0.35)",
+        }}
+      >
+        {num}
+      </span>
+      <span
+        style={{
+          fontFamily: "Montserrat, sans-serif", fontSize: 11, letterSpacing: 2.5,
+          textTransform: "uppercase", color: "#F2EAE0", fontWeight: 600,
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
 function ProductTabs({ initial }: { initial: Variant }) {
   const [tab, setTab] = useState<Variant>(initial);
 
-  useEffect(() => {
-    setTab(initial);
-  }, [initial]);
-
-  // Broadcast active variant to global shop store (for the sticky bar)
-  useEffect(() => {
-    const defaults: Record<Variant, { price: number; label: string }> = {
-      her: { price: 899, label: "2 Bottles" },
-      him: { price: 899, label: "2 Bottles" },
-      couples: { price: 1476, label: "2 Bottles Men + 2 Bottles Women" },
-    };
-    const d = defaults[tab];
-    setShopState({ variant: tab, price: d.price, bundleLabel: d.label });
-  }, [tab]);
-
-  const tabs: { id: Variant; label: string }[] = [
-    { id: "her", label: "For Her" },
-    { id: "him", label: "For Him" },
-    { id: "couples", label: "Couples Bundle" },
-  ];
-
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    let ticking = false;
-    const update = () => {
-      setScrolled(window.scrollY > 120);
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(update);
-        ticking = true;
-      }
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useEffect(() => { setTab(initial); }, [initial]);
 
   const handleTabClick = (id: Variant) => {
     setTab(id);
@@ -194,8 +267,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
         const target = document.querySelector(".product-display") as HTMLElement | null;
         if (target) {
           const rect = target.getBoundingClientRect();
-          const offset = 100;
-          const top = rect.top + window.pageYOffset - offset;
+          const top = rect.top + window.pageYOffset - 100;
           window.scrollTo({ top, behavior: "smooth" });
         }
       });
@@ -203,187 +275,14 @@ function ProductTabs({ initial }: { initial: Variant }) {
   };
 
   return (
-    <>
-      <style>{`
-        .variant-tabs {
-          position: sticky;
-          top: 64px;
-          z-index: 30;
-          background: rgba(13, 13, 13, 0.4);
-          backdrop-filter: blur(32px) saturate(1.4);
-          -webkit-backdrop-filter: blur(32px) saturate(1.4);
-          border-bottom: none;
-          transition: background 300ms ease,
-                      box-shadow 300ms ease,
-                      padding 300ms ease,
-                      backdrop-filter 300ms ease;
-          box-shadow: none;
-          padding: 18px 24px;
-          margin-top: 24px;
-          margin-bottom: 24px;
-        }
-        .variant-tabs::after { display: none; }
-        @media (max-width: 767px) {
-          .variant-tabs {
-            top: 56px;
-            padding: 12px 16px;
-            margin-top: 16px;
-            margin-bottom: 16px;
-            backdrop-filter: blur(20px) saturate(1.3);
-            -webkit-backdrop-filter: blur(20px) saturate(1.3);
-          }
-        }
-        .variant-tabs.is-stuck {
-          background: rgba(13, 13, 13, 0.45);
-          backdrop-filter: blur(40px) saturate(1.5);
-          -webkit-backdrop-filter: blur(40px) saturate(1.5);
-          padding: 14px 24px;
-          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-        }
-        @media (max-width: 767px) {
-          .variant-tabs.is-stuck {
-            padding: 10px 16px;
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-          }
-        }
-        .variant-tabs.is-stuck .tab-pill {
-          padding: 9px 18px !important;
-          font-size: 10.5px !important;
-        }
-        .tab-pill {
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.06) inset,
-            0 4px 12px rgba(0, 0, 0, 0.3),
-            0 8px 24px rgba(0, 0, 0, 0.2);
-          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .tab-pill:not(.active) {
-          background: rgba(13, 13, 13, 0.7) !important;
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-        }
-        .tab-pill.active {
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.15) inset,
-            0 6px 16px rgba(220, 38, 39, 0.35),
-            0 12px 32px rgba(0, 0, 0, 0.3);
-          transform: translateY(-1px);
-        }
-        .tab-pill:not(.active):hover {
-          transform: translateY(-2px);
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.08) inset,
-            0 8px 20px rgba(0, 0, 0, 0.4),
-            0 16px 32px rgba(220, 38, 39, 0.1);
-          border-color: rgba(220, 38, 39, 0.3);
-        }
-        .variant-tabs.is-stuck .tab-pill.active {
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.15) inset,
-            0 0 0 3px rgba(220, 38, 39, 0.15),
-            0 6px 16px rgba(220, 38, 39, 0.35);
-        }
-        .variant-tabs-inner {
-          display: flex;
-          flex-wrap: nowrap;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-        }
-        .variant-tabs-inner::-webkit-scrollbar { display: none; }
-        .variant-tabs-inner > button { scroll-snap-align: center; flex-shrink: 0; }
-        @media (min-width: 640px) {
-          .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
-        }
-        @media (max-width: 639px) {
-          .variant-tabs-inner {
-            justify-content: center;
-            padding: 0 4px;
-          }
-          .tab-pill {
-            padding: 10px 14px !important;
-            font-size: 10.5px !important;
-            letter-spacing: 0.12em !important;
-          }
-          .variant-tabs.is-stuck .tab-pill {
-            padding: 9px 12px !important;
-            font-size: 10px !important;
-            letter-spacing: 0.1em !important;
-          }
-        }
-        .product-display { padding-top: 8px; }
-      `}</style>
-      <div className={`variant-tabs ${scrolled ? "is-stuck" : ""}`}>
-        <div className="variant-tabs-inner mx-auto max-w-7xl" role="tablist" aria-label="Product variant">
-          {tabs.map((t) => {
-            const active = tab === t.id;
-            return (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => handleTabClick(t.id)}
-                className={`tab-pill ${active ? "active" : ""} px-6 sm:px-8 py-3 rounded-full text-[11px] sm:text-[12px] tracking-[0.2em] uppercase font-semibold transition-all ${
-                  active
-                    ? "bg-[var(--color-brand-red)] text-white border border-[var(--color-brand-red)]"
-                    : "bg-transparent text-[var(--color-ivory)] border border-[var(--color-ivory)]/40"
-                }`}
-              >
-                {t.label}
-              </button>
-            );
-          })}
-        </div>
+    <section className="bg-[var(--color-noir)] pt-6 pb-16 md:pb-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
+        <ProductDetail key={tab} variant={tab} setTab={handleTabClick} />
       </div>
-      <section className="bg-[var(--color-noir)] pb-16 md:pb-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
-
-          {tab === "her" && (
-            <ProductDetail
-              key="her"
-              variant="her"
-              setTab={setTab}
-              eyebrow="LOVABLE Drops For Her"
-              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
-              rating="4.9"
-              reviews="1,200+"
-              description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
-              mainImage={forher}
-              thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
-              bundles={herBundles}
-              bottleImage={BOTTLE_HER_URL}
-              checkoutUrl="https://lovablecouple.shop/lovableforher"
-            />
-          )}
-
-          {tab === "him" && (
-            <ProductDetail
-              key="him"
-              variant="him"
-              setTab={setTab}
-              eyebrow="LOVABLE Drops For Him"
-              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
-              rating="4.8"
-              reviews="980+"
-              description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
-              mainImage={forhim}
-              thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
-              bundles={himBundles}
-              bottleImage={BOTTLE_HIM_URL}
-              checkoutUrl="https://lovablecouple.shop/lovableforhim"
-            />
-          )}
-
-          {tab === "couples" && <CouplesBundle setTab={setTab} />}
-        </div>
-      </section>
-    </>
+    </section>
   );
 }
+
 
 function BottleStack({ src, count }: { src: string; count: number }) {
   const items = Array.from({ length: Math.max(1, Math.min(count, 3)) });
