@@ -91,9 +91,8 @@ const himBundles: Bundle[] = [
 ];
 
 const couplesBundles: Bundle[] = [
-  { id: "1", label: "1 Bottle Men + 1 Bottle Women", price: 1099, originalPrice: 1198, supply: "30-day supply", perDay: 37, savePercent: 8 },
-  { id: "2", label: "2 Bottles Men + 2 Bottles Women", price: 1899, originalPrice: 2396, supply: "60-day supply", perDay: 32, savePercent: 21, badge: "BEST SELLER" },
-  { id: "3", label: "3 Bottles Men + 3 Bottles Women", price: 2699, originalPrice: 3594, supply: "90-day supply", perDay: 30, savePercent: 25, badge: "BEST VALUE" },
+  { id: "1", label: "1 Bottle Men + 1 Bottle Women", price: 899, originalPrice: 3596, supply: "30-day supply", perDay: 30 },
+  { id: "2", label: "2 Bottles Men + 2 Bottles Women", price: 1476, originalPrice: 7196, supply: "60-day supply", perDay: 25, savePercent: 22, badge: "BEST SELLER" },
 ];
 
 function ShopPage() {
