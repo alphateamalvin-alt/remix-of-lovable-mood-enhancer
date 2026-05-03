@@ -107,6 +107,7 @@ function ShopPage() {
         <ProductTabs initial={variant} />
         <TrustAssurance />
         <HowToOrder />
+        <MobileTestimonials />
         <ComprehensiveFAQ />
         <FinalShopCTA />
       </main>
@@ -1512,6 +1513,107 @@ function ComprehensiveFAQ() {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+const TESTIMONIAL_BASE = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS";
+const mobileTestimonials = [
+  { img: `${TESTIMONIAL_BASE}/Joan%202.png`, quote: "Bumalik yung connection na akala ko wala na.", name: "Joan" },
+  { img: `${TESTIMONIAL_BASE}/Beth.png`, quote: "Naging mas malapit kami na hindi ko ineexpect.", name: "Beth" },
+  { img: `${TESTIMONIAL_BASE}/Mark%202.png`, quote: "For the first time in years, may control ako.", name: "Mark" },
+  { img: `${TESTIMONIAL_BASE}/Geraldine%202.png`, quote: "Naramdaman namin yung pagbabago pareho.", name: "Geraldine" },
+  { img: `${TESTIMONIAL_BASE}/Luis%202.png`, quote: "Mas nagiging present ako sa aming relasyon.", name: "Luis" },
+  { img: `${TESTIMONIAL_BASE}/Grace%202.png`, quote: "Sulit talaga, balik yung kilig na nawala.", name: "Grace" },
+];
+
+function MobileTestimonials() {
+  return (
+    <section className="shop-testimonial-mobile">
+      <style>{`
+        .shop-testimonial-mobile {
+          padding: 48px 16px 40px;
+          background: #0F0808;
+        }
+        @media (min-width: 769px) {
+          .shop-testimonial-mobile { display: none; }
+        }
+        .shop-testimonial-mobile .eyebrow-tm {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+          color: #DC2627; text-align: center; margin: 0 0 10px; font-weight: 600;
+        }
+        .shop-testimonial-mobile .headline-tm {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 26px; color: #F2EAE0; text-align: center;
+          font-weight: 400; margin: 0 0 8px; line-height: 1.15;
+        }
+        .shop-testimonial-mobile .headline-tm em { font-style: italic; color: #B8955A; }
+        .shop-testimonial-mobile .sub-tm {
+          font-size: 12px; color: rgba(154, 136, 128, 0.85);
+          text-align: center; font-style: italic; margin: 0 0 28px;
+        }
+        .quote-wall { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 480px) and (max-width: 768px) {
+          .quote-wall { grid-template-columns: repeat(2, 1fr); }
+        }
+        .quote-card {
+          background: #160808;
+          border: 0.5px solid rgba(184, 149, 90, 0.22);
+          border-radius: 10px; overflow: hidden;
+          box-shadow: 0 1px 0 rgba(242, 234, 224, 0.04) inset, 0 8px 20px rgba(0, 0, 0, 0.3);
+          animation: fade-up-card 500ms ease-out backwards;
+        }
+        .quote-card:nth-child(1) { animation-delay: 50ms; }
+        .quote-card:nth-child(2) { animation-delay: 150ms; }
+        .quote-card:nth-child(3) { animation-delay: 250ms; }
+        .quote-card:nth-child(4) { animation-delay: 350ms; }
+        .quote-card:nth-child(5) { animation-delay: 450ms; }
+        .quote-card:nth-child(6) { animation-delay: 550ms; }
+        @keyframes fade-up-card {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .quote-image-wrap {
+          width: 100%; aspect-ratio: 16 / 10; position: relative; overflow: hidden;
+        }
+        .quote-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .quote-image-wrap::after {
+          content: ''; position: absolute; inset: 0;
+          background: linear-gradient(180deg, transparent 0%, rgba(13, 13, 13, 0.3) 100%);
+          pointer-events: none;
+        }
+        .quote-content { padding: 14px 14px 16px; }
+        .quote-stars { color: #B8955A; font-size: 11px; letter-spacing: 2px; margin-bottom: 8px; }
+        .quote-text {
+          font-family: 'Playfair Display', Georgia, serif; font-style: italic;
+          font-size: 12px; color: #F2EAE0; line-height: 1.4;
+          margin: 0 0 12px; min-height: 50px;
+        }
+        .quote-meta {
+          font-family: 'Montserrat', sans-serif; font-size: 9px;
+          letter-spacing: 1.5px; color: #B8955A; text-transform: uppercase;
+          display: flex; align-items: center; gap: 6px;
+        }
+        .quote-meta::before { content: '◆'; color: #DC2627; font-size: 7px; }
+      `}</style>
+      <p className="eyebrow-tm">Real Couples, Real Results</p>
+      <h2 className="headline-tm">In Their <em>Own Words.</em></h2>
+      <p className="sub-tm">Stories from couples na nagbalik sa bawat isa.</p>
+      <div className="quote-wall">
+        {mobileTestimonials.map((t) => (
+          <div key={t.name} className="quote-card">
+            <div className="quote-image-wrap">
+              <img src={t.img} alt={`${t.name} testimonial`} loading="lazy" />
+            </div>
+            <div className="quote-content">
+              <div className="quote-stars">★★★★★</div>
+              <p className="quote-text">"{t.quote}"</p>
+              <div className="quote-meta">{t.name} · Verified Customer</div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
