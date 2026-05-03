@@ -105,9 +105,14 @@ export const Route = createFileRoute("/api/pancake")({
               return json({ data });
             }
             case "getProvinces": {
-              // Probe several known Pancake geo paths until one returns 200
-              const data = await pancakeGet(`/geo/provinces?country_code=PH`, apiKey);
-              return json({ data });
+              const candidates = ["PH", "63", "VN", "84"];
+              for (const cc of candidates) {
+                const data = await pancakeGet(`/geo/provinces?country_code=${cc}`, apiKey);
+                const list = Array.isArray((data as { data?: unknown[] })?.data) ? (data as { data: unknown[] }).data : [];
+                console.log("[pancake] provinces country_code=", cc, "count=", list.length);
+                if (list.length > 0) return json({ data, _country: cc });
+              }
+              return json({ error: "Pancake returned 0 provinces for all country codes (PH/63/VN/84)" }, 502);
             }
             case "getDistricts": {
               const data = await pancakeGet(`/geo/districts?province_id=${encodeURIComponent(String(parsed.provinceId))}`, apiKey);
