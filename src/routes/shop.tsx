@@ -1233,7 +1233,7 @@ function HowToOrder() {
           align-items: flex-end;
           gap: 0;
           margin: 0 auto 24px;
-          width: 200px;
+          width: 250px;
         }
         .howuse-bottles::before {
           content: '';
@@ -1245,7 +1245,7 @@ function HowToOrder() {
           pointer-events: none;
         }
         .howuse-bottle {
-          width: 95px;
+          width: 120px;
           height: auto;
           position: relative;
           filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))
@@ -1254,7 +1254,7 @@ function HowToOrder() {
         .howuse-bottle-him {
           transform: rotate(-4deg);
           z-index: 1;
-          margin-right: -16px;
+          margin-right: -20px;
         }
         .howuse-bottle-her {
           transform: rotate(4deg);
@@ -1398,10 +1398,10 @@ function HowToOrder() {
             position: static;
           }
           .howuse-bottles {
-            width: 180px;
+            width: 220px;
           }
           .howuse-bottle {
-            width: 85px;
+            width: 105px;
           }
           .howuse-step-num {
             font-size: 30px;
