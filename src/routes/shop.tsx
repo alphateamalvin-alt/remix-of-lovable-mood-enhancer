@@ -71,48 +71,29 @@ type Bundle = {
   id: string;
   label: string;
   price: number;
-  save?: number;
-  badge?: "BEST SELLER" | "BEST VALUE";
-};
-
-const herBundles: Bundle[] = [
-  { id: "1", label: "1 Bottle", price: 599 },
-  { id: "2", label: "2 Bottles", price: 899, save: 299, badge: "BEST SELLER" },
-  { id: "3", label: "3 Bottles", price: 1199, save: 598, badge: "BEST VALUE" },
-];
-
-const himBundles: Bundle[] = [
-  { id: "1", label: "1 Bottle", price: 599 },
-  { id: "2", label: "2 Bottles", price: 899, save: 299, badge: "BEST SELLER" },
-  { id: "3", label: "3 Bottles", price: 1199, save: 598, badge: "BEST VALUE" },
-];
-
-type CouplesBundle = Bundle & {
   originalPrice: number;
   supply: string;
   perDay: number;
   savePercent?: number;
+  badge?: "BEST SELLER" | "BEST VALUE";
 };
 
-const couplesBundles: CouplesBundle[] = [
-  {
-    id: "1",
-    label: "1 Bottle Men + 1 Bottle Women",
-    price: 899,
-    originalPrice: 3596,
-    supply: "30-day supply",
-    perDay: 30,
-  },
-  {
-    id: "2",
-    label: "2 Bottles Men + 2 Bottles Women",
-    price: 1476,
-    originalPrice: 7196,
-    supply: "60-day supply",
-    perDay: 25,
-    savePercent: 22,
-    badge: "BEST SELLER",
-  },
+const herBundles: Bundle[] = [
+  { id: "1", label: "1 Bottle", price: 599, originalPrice: 599, supply: "30-day supply", perDay: 20 },
+  { id: "2", label: "2 Bottles", price: 899, originalPrice: 1198, supply: "60-day supply", perDay: 15, savePercent: 25, badge: "BEST SELLER" },
+  { id: "3", label: "3 Bottles", price: 1199, originalPrice: 1797, supply: "90-day supply", perDay: 13, savePercent: 33, badge: "BEST VALUE" },
+];
+
+const himBundles: Bundle[] = [
+  { id: "1", label: "1 Bottle", price: 599, originalPrice: 599, supply: "30-day supply", perDay: 20 },
+  { id: "2", label: "2 Bottles", price: 899, originalPrice: 1198, supply: "60-day supply", perDay: 15, savePercent: 25, badge: "BEST SELLER" },
+  { id: "3", label: "3 Bottles", price: 1199, originalPrice: 1797, supply: "90-day supply", perDay: 13, savePercent: 33, badge: "BEST VALUE" },
+];
+
+const couplesBundles: Bundle[] = [
+  { id: "1", label: "1 Bottle Men + 1 Bottle Women", price: 1099, originalPrice: 1198, supply: "30-day supply", perDay: 37, savePercent: 8 },
+  { id: "2", label: "2 Bottles Men + 2 Bottles Women", price: 1899, originalPrice: 2396, supply: "60-day supply", perDay: 32, savePercent: 21, badge: "BEST SELLER" },
+  { id: "3", label: "3 Bottles Men + 3 Bottles Women", price: 2699, originalPrice: 3594, supply: "90-day supply", perDay: 30, savePercent: 25, badge: "BEST VALUE" },
 ];
 
 function ShopPage() {
@@ -162,49 +143,122 @@ function ShopHero() {
   );
 }
 
+type VariantConfig = {
+  eyebrow: string;
+  title: React.ReactNode;
+  rating: string;
+  reviews: string;
+  description: React.ReactNode;
+  mainImage: string;
+  thumbnails: string[];
+  bundles: Bundle[];
+  bottleImage: string;
+};
+
+const COUPLES_IMG_1 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2011_46_31%20PM.png";
+const COUPLES_IMG_2 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM%20(1).png";
+const COUPLES_IMG_3 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2002_19_52%20AM%20(1).png";
+const COUPLES_IMG_4 = "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2004_28_13%20PM.png";
+
+function getVariantConfig(v: Variant): VariantConfig {
+  if (v === "her") {
+    return {
+      eyebrow: "LOVABLE Drops For Her",
+      title: <>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>,
+      rating: "4.9",
+      reviews: "1,200+",
+      description: <>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>,
+      mainImage: forher,
+      thumbnails: [forher, herThumb1, herThumb2, bottleHer],
+      bundles: herBundles,
+      bottleImage: BOTTLE_HER_URL,
+    };
+  }
+  if (v === "him") {
+    return {
+      eyebrow: "LOVABLE Drops For Him",
+      title: <>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>,
+      rating: "4.8",
+      reviews: "980+",
+      description: <>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>,
+      mainImage: forhim,
+      thumbnails: [forhim, himThumb1, himThumb2, bottleHim],
+      bundles: himBundles,
+      bottleImage: BOTTLE_HIM_URL,
+    };
+  }
+  return {
+    eyebrow: "LOVABLE Couples Bundle",
+    title: <>The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span></>,
+    rating: "4.9",
+    reviews: "2,000+",
+    description: <>For couples na pareho ng goal: <span style={{ color: "#F2EAE0", fontWeight: 600 }}>bumalik sa kung sino kayo dati</span>. Synced formulas, designed to be taken together.</>,
+    mainImage: COUPLES_IMG_1,
+    thumbnails: [COUPLES_IMG_1, COUPLES_IMG_2, COUPLES_IMG_3, COUPLES_IMG_4],
+    bundles: couplesBundles,
+    bottleImage: BOTTLE_HER_URL,
+  };
+}
+
+function VenusIcon({ active }: { active: boolean }) {
+  const c = active ? "#F2EAE0" : "#B8955A";
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round">
+      <circle cx="12" cy="9" r="5" />
+      <path d="M12 14v8M9 19h6" />
+    </svg>
+  );
+}
+function MarsIcon({ active }: { active: boolean }) {
+  const c = active ? "#F2EAE0" : "#B8955A";
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round">
+      <circle cx="10" cy="14" r="5" />
+      <path d="M14 10l6-6M15 4h5v5" />
+    </svg>
+  );
+}
+function HeartIcon({ active }: { active: boolean }) {
+  const c = active ? "#F2EAE0" : "#B8955A";
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill={c} stroke={c} strokeWidth="1.2">
+      <path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z" />
+    </svg>
+  );
+}
+
+function SectionHeader({ num, label }: { num: number; label: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <span
+        style={{
+          width: 26, height: 26, borderRadius: "50%",
+          background: "linear-gradient(135deg, #DC2627, #C61F20)",
+          color: "#F2EAE0",
+          fontFamily: '"Playfair Display", Georgia, serif',
+          fontStyle: "italic", fontSize: 14, fontWeight: 500,
+          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+          boxShadow: "0 1px 0 rgba(242,234,224,0.2) inset, 0 4px 10px rgba(220,38,39,0.35)",
+        }}
+      >
+        {num}
+      </span>
+      <span
+        style={{
+          fontFamily: "Montserrat, sans-serif", fontSize: 11, letterSpacing: 2.5,
+          textTransform: "uppercase", color: "#F2EAE0", fontWeight: 600,
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
 function ProductTabs({ initial }: { initial: Variant }) {
   const [tab, setTab] = useState<Variant>(initial);
 
-  useEffect(() => {
-    setTab(initial);
-  }, [initial]);
-
-  // Broadcast active variant to global shop store (for the sticky bar)
-  useEffect(() => {
-    const defaults: Record<Variant, { price: number; label: string }> = {
-      her: { price: 899, label: "2 Bottles" },
-      him: { price: 899, label: "2 Bottles" },
-      couples: { price: 1476, label: "2 Bottles Men + 2 Bottles Women" },
-    };
-    const d = defaults[tab];
-    setShopState({ variant: tab, price: d.price, bundleLabel: d.label });
-  }, [tab]);
-
-  const tabs: { id: Variant; label: string }[] = [
-    { id: "her", label: "For Her" },
-    { id: "him", label: "For Him" },
-    { id: "couples", label: "Couples Bundle" },
-  ];
-
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    let ticking = false;
-    const update = () => {
-      setScrolled(window.scrollY > 120);
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(update);
-        ticking = true;
-      }
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useEffect(() => { setTab(initial); }, [initial]);
 
   const handleTabClick = (id: Variant) => {
     setTab(id);
@@ -213,8 +267,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
         const target = document.querySelector(".product-display") as HTMLElement | null;
         if (target) {
           const rect = target.getBoundingClientRect();
-          const offset = 100;
-          const top = rect.top + window.pageYOffset - offset;
+          const top = rect.top + window.pageYOffset - 100;
           window.scrollTo({ top, behavior: "smooth" });
         }
       });
@@ -222,187 +275,14 @@ function ProductTabs({ initial }: { initial: Variant }) {
   };
 
   return (
-    <>
-      <style>{`
-        .variant-tabs {
-          position: sticky;
-          top: 64px;
-          z-index: 30;
-          background: rgba(13, 13, 13, 0.4);
-          backdrop-filter: blur(32px) saturate(1.4);
-          -webkit-backdrop-filter: blur(32px) saturate(1.4);
-          border-bottom: none;
-          transition: background 300ms ease,
-                      box-shadow 300ms ease,
-                      padding 300ms ease,
-                      backdrop-filter 300ms ease;
-          box-shadow: none;
-          padding: 18px 24px;
-          margin-top: 24px;
-          margin-bottom: 24px;
-        }
-        .variant-tabs::after { display: none; }
-        @media (max-width: 767px) {
-          .variant-tabs {
-            top: 56px;
-            padding: 12px 16px;
-            margin-top: 16px;
-            margin-bottom: 16px;
-            backdrop-filter: blur(20px) saturate(1.3);
-            -webkit-backdrop-filter: blur(20px) saturate(1.3);
-          }
-        }
-        .variant-tabs.is-stuck {
-          background: rgba(13, 13, 13, 0.45);
-          backdrop-filter: blur(40px) saturate(1.5);
-          -webkit-backdrop-filter: blur(40px) saturate(1.5);
-          padding: 14px 24px;
-          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-        }
-        @media (max-width: 767px) {
-          .variant-tabs.is-stuck {
-            padding: 10px 16px;
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-          }
-        }
-        .variant-tabs.is-stuck .tab-pill {
-          padding: 9px 18px !important;
-          font-size: 10.5px !important;
-        }
-        .tab-pill {
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.06) inset,
-            0 4px 12px rgba(0, 0, 0, 0.3),
-            0 8px 24px rgba(0, 0, 0, 0.2);
-          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .tab-pill:not(.active) {
-          background: rgba(13, 13, 13, 0.7) !important;
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-        }
-        .tab-pill.active {
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.15) inset,
-            0 6px 16px rgba(220, 38, 39, 0.35),
-            0 12px 32px rgba(0, 0, 0, 0.3);
-          transform: translateY(-1px);
-        }
-        .tab-pill:not(.active):hover {
-          transform: translateY(-2px);
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.08) inset,
-            0 8px 20px rgba(0, 0, 0, 0.4),
-            0 16px 32px rgba(220, 38, 39, 0.1);
-          border-color: rgba(220, 38, 39, 0.3);
-        }
-        .variant-tabs.is-stuck .tab-pill.active {
-          box-shadow:
-            0 1px 0 rgba(242, 234, 224, 0.15) inset,
-            0 0 0 3px rgba(220, 38, 39, 0.15),
-            0 6px 16px rgba(220, 38, 39, 0.35);
-        }
-        .variant-tabs-inner {
-          display: flex;
-          flex-wrap: nowrap;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-        }
-        .variant-tabs-inner::-webkit-scrollbar { display: none; }
-        .variant-tabs-inner > button { scroll-snap-align: center; flex-shrink: 0; }
-        @media (min-width: 640px) {
-          .variant-tabs-inner { gap: 16px; flex-wrap: wrap; overflow-x: visible; }
-        }
-        @media (max-width: 639px) {
-          .variant-tabs-inner {
-            justify-content: center;
-            padding: 0 4px;
-          }
-          .tab-pill {
-            padding: 10px 14px !important;
-            font-size: 10.5px !important;
-            letter-spacing: 0.12em !important;
-          }
-          .variant-tabs.is-stuck .tab-pill {
-            padding: 9px 12px !important;
-            font-size: 10px !important;
-            letter-spacing: 0.1em !important;
-          }
-        }
-        .product-display { padding-top: 8px; }
-      `}</style>
-      <div className={`variant-tabs ${scrolled ? "is-stuck" : ""}`}>
-        <div className="variant-tabs-inner mx-auto max-w-7xl" role="tablist" aria-label="Product variant">
-          {tabs.map((t) => {
-            const active = tab === t.id;
-            return (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => handleTabClick(t.id)}
-                className={`tab-pill ${active ? "active" : ""} px-6 sm:px-8 py-3 rounded-full text-[11px] sm:text-[12px] tracking-[0.2em] uppercase font-semibold transition-all ${
-                  active
-                    ? "bg-[var(--color-brand-red)] text-white border border-[var(--color-brand-red)]"
-                    : "bg-transparent text-[var(--color-ivory)] border border-[var(--color-ivory)]/40"
-                }`}
-              >
-                {t.label}
-              </button>
-            );
-          })}
-        </div>
+    <section className="bg-[var(--color-noir)] pt-6 pb-16 md:pb-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
+        <ProductDetail key={tab} variant={tab} setTab={handleTabClick} />
       </div>
-      <section className="bg-[var(--color-noir)] pb-16 md:pb-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 product-display">
-
-          {tab === "her" && (
-            <ProductDetail
-              key="her"
-              variant="her"
-              setTab={setTab}
-              eyebrow="LOVABLE Drops For Her"
-              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Women</span></>}
-              rating="4.9"
-              reviews="1,200+"
-              description={<>Supports natural arousal, <span style={{ color: "#F2EAE0", fontWeight: 600 }}>mood balance, and intimate wellness</span>, safely and naturally.</>}
-              mainImage={forher}
-              thumbnails={[forher, herThumb1, herThumb2, bottleHer]}
-              bundles={herBundles}
-              bottleImage={BOTTLE_HER_URL}
-              checkoutUrl="https://lovablecouple.shop/lovableforher"
-            />
-          )}
-
-          {tab === "him" && (
-            <ProductDetail
-              key="him"
-              variant="him"
-              setTab={setTab}
-              eyebrow="LOVABLE Drops For Him"
-              title={<>LOVABLE <span style={{ color: "#A81716", fontStyle: "italic" }}>For Men</span></>}
-              rating="4.8"
-              reviews="980+"
-              description={<>Supports natural stamina, mental focus, and the <span style={{ color: "#F2EAE0", fontWeight: 600 }}>quiet confidence that brings her closer to you</span>.</>}
-              mainImage={forhim}
-              thumbnails={[forhim, himThumb1, himThumb2, bottleHim]}
-              bundles={himBundles}
-              bottleImage={BOTTLE_HIM_URL}
-              checkoutUrl="https://lovablecouple.shop/lovableforhim"
-            />
-          )}
-
-          {tab === "couples" && <CouplesBundle setTab={setTab} />}
-        </div>
-      </section>
-    </>
+    </section>
   );
 }
+
 
 function BottleStack({ src, count }: { src: string; count: number }) {
   const items = Array.from({ length: Math.max(1, Math.min(count, 3)) });
@@ -427,33 +307,10 @@ function BottleStack({ src, count }: { src: string; count: number }) {
   );
 }
 
-function ProductDetail({
-  variant,
-  setTab,
-  eyebrow,
-  title,
-  rating,
-  reviews,
-  description,
-  mainImage,
-  thumbnails,
-  bundles,
-  bottleImage,
-  checkoutUrl,
-}: {
-  variant: Variant;
-  setTab: (v: Variant) => void;
-  eyebrow: string;
-  title: React.ReactNode;
-  rating: string;
-  reviews: string;
-  description: React.ReactNode;
-  mainImage: string;
-  thumbnails: string[];
-  bundles: Bundle[];
-  bottleImage: string;
-  checkoutUrl: string;
-}) {
+function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Variant) => void }) {
+  const cfg = getVariantConfig(variant);
+  const { eyebrow, title, rating, reviews, description, mainImage, thumbnails, bundles, bottleImage } = cfg;
+
   const [active, setActive] = useState(mainImage);
   const defaultBundle = bundles.find((b) => b.badge === "BEST SELLER") ?? bundles[0];
   const [selected, setSelected] = useState<string>(defaultBundle.id);
@@ -462,159 +319,324 @@ function ProductDetail({
     setActive(mainImage);
     setSelected(defaultBundle.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mainImage]);
+  }, [variant]);
 
   const selectedBundle = bundles.find((b) => b.id === selected) ?? defaultBundle;
 
-  // Broadcast selected price/label to global store for the sticky bar
   useEffect(() => {
     setShopState({ variant, price: selectedBundle.price, bundleLabel: selectedBundle.label });
   }, [variant, selectedBundle.price, selectedBundle.label]);
 
+  const variantTabs: { id: Variant; label: string; Icon: typeof VenusIcon }[] = [
+    { id: "her", label: "FOR HER", Icon: VenusIcon },
+    { id: "him", label: "FOR HIM", Icon: MarsIcon },
+    { id: "couples", label: "COUPLES", Icon: HeartIcon },
+  ];
 
   return (
-    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
-      {/* LEFT: image gallery */}
-      <Reveal>
-        <div
-          className="relative w-full overflow-hidden group lift-image lift-halo"
-          style={{
-            aspectRatio: "1 / 1",
-            border: "0.5px solid rgba(184, 149, 90, 0.22)",
-            background: "transparent",
-          }}
-        >
-          <img
-            src={active}
-            alt=""
-            loading="lazy"
-            className="absolute inset-0 h-full w-full block object-cover"
-            style={{ objectPosition: "center 30%" }}
-          />
-          <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
-        </div>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {thumbnails.slice(1, 4).map((thumb, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(thumb)}
-              className={`aspect-square rounded-xl overflow-hidden ring-1 transition-all ${
-                active === thumb ? "ring-[var(--color-brand-red)]" : "ring-white/10 hover:ring-white/30"
-              }`}
-            >
-              <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
-            </button>
-          ))}
-        </div>
-      </Reveal>
-
-      {/* RIGHT: details */}
-      <Reveal delay={0.1}>
-        
-        <p className="eyebrow mb-3">{eyebrow}</p>
-        <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
-          {title}
-        </h2>
-        <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
-          <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
-          <span>{rating} · {reviews} reviews</span>
-        </div>
-        <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
-          {description}
-        </p>
-
-        {/* Bundles */}
-        <div className="mt-6 space-y-3">
-          {bundles.map((b) => {
-            const isSelected = selected === b.id;
-            const borderClass =
-              b.badge === "BEST SELLER"
-                ? "border-[var(--color-brand-red)]"
-                : b.badge === "BEST VALUE"
-                ? "border-[var(--color-gold)]"
-                : isSelected
-                ? "border-[var(--color-ivory)]/60"
-                : "border-white/10";
-            return (
+    <>
+      <style>{`
+        .lvb-variant-container {
+          display: flex;
+          background: #1A0E0E;
+          border: 0.5px solid rgba(184, 149, 90, 0.3);
+          border-radius: 14px;
+          padding: 6px;
+          gap: 4px;
+          margin-bottom: 28px;
+          box-shadow: 0 1px 0 rgba(242,234,224,0.05) inset, 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .lvb-variant-pill {
+          flex: 1;
+          padding: 14px 6px;
+          border-radius: 10px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+          color: rgba(242, 234, 224, 0.7);
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 1px;
+        }
+        @media (min-width: 640px) { .lvb-variant-pill { padding: 16px 8px; font-size: 12px; } }
+        .lvb-variant-pill:hover:not(.active) { background: rgba(184,149,90,0.06); color: #F2EAE0; }
+        .lvb-variant-pill.active {
+          background: linear-gradient(135deg, #DC2627, #C61F20);
+          color: #F2EAE0;
+          box-shadow: 0 1px 0 rgba(242,234,224,0.2) inset, 0 6px 14px rgba(220,38,39,0.4);
+        }
+        .lvb-section-divider {
+          width: 100%;
+          height: 0.5px;
+          background: linear-gradient(to right, transparent, rgba(184,149,90,0.25) 30%, rgba(184,149,90,0.25) 70%, transparent);
+          margin: 28px 0;
+        }
+        .lvb-bundle-card {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px;
+          background: #160808;
+          border: 0.5px solid rgba(184,149,90,0.25);
+          border-radius: 12px;
+          cursor: pointer;
+          width: 100%;
+          text-align: left;
+          transition: all 300ms cubic-bezier(0.4,0,0.2,1);
+        }
+        @media (min-width: 640px) { .lvb-bundle-card { padding: 18px 20px; gap: 16px; } }
+        .lvb-bundle-card:hover:not(.selected) {
+          border-color: rgba(184,149,90,0.5);
+          background: #1A0E0E;
+        }
+        .lvb-bundle-card.selected {
+          border: 1px solid #DC2627;
+          background: rgba(220,38,39,0.06);
+          box-shadow: 0 1px 0 rgba(242,234,224,0.06) inset, 0 8px 24px rgba(220,38,39,0.2), 0 0 0 4px rgba(220,38,39,0.08);
+        }
+        .lvb-bundle-radio {
+          width: 22px; height: 22px; border-radius: 50%;
+          border: 1.5px solid rgba(184,149,90,0.5);
+          flex-shrink: 0; position: relative;
+          transition: all 250ms ease;
+        }
+        .lvb-bundle-card.selected .lvb-bundle-radio { border-color: #DC2627; background: #DC2627; }
+        .lvb-bundle-card.selected .lvb-bundle-radio::after {
+          content: ''; position: absolute; inset: 4px; background: #F2EAE0; border-radius: 50%;
+        }
+        .lvb-checkout-btn {
+          width: 100%;
+          padding: 16px 24px;
+          background: linear-gradient(135deg, #FF3F40, #DC2627);
+          border: none;
+          border-radius: 999px;
+          color: #F2EAE0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 20px;
+          box-shadow: 0 1px 0 rgba(242,234,224,0.2) inset, 0 8px 24px rgba(220,38,39,0.45), 0 16px 40px rgba(0,0,0,0.4), 0 0 32px rgba(220,38,39,0.1);
+          transition: all 300ms cubic-bezier(0.4,0,0.2,1);
+          position: relative;
+          overflow: hidden;
+          text-decoration: none;
+        }
+        @media (min-width: 640px) { .lvb-checkout-btn { padding: 18px 32px; font-size: 14px; letter-spacing: 3px; } }
+        .lvb-checkout-btn:hover { transform: translateY(-2px); }
+        .lvb-trust-pills {
+          display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px;
+        }
+        .lvb-trust-pill {
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 7px 12px;
+          background: rgba(184,149,90,0.06);
+          border: 0.5px solid rgba(184,149,90,0.3);
+          border-radius: 999px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10px;
+          letter-spacing: 0.5px;
+          color: rgba(242,234,224,0.85);
+          white-space: nowrap;
+        }
+        @media (min-width: 640px) { .lvb-trust-pill { font-size: 11px; padding: 8px 14px; } }
+      `}</style>
+      <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
+        {/* LEFT */}
+        <Reveal>
+          <div
+            className="relative w-full overflow-hidden group lift-image lift-halo"
+            style={{ aspectRatio: "1 / 1", border: "0.5px solid rgba(184,149,90,0.22)", background: "transparent" }}
+          >
+            <img
+              src={active}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 h-full w-full block object-cover"
+              style={{ objectPosition: variant === "couples" ? "center 35%" : "center 30%" }}
+            />
+            <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            {thumbnails.slice(1, 4).map((thumb, i) => (
               <button
-                key={b.id}
-                onClick={() => setSelected(b.id)}
-                className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
-                  isSelected ? "bg-white/[0.04]" : "bg-transparent"
-                } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
-                style={
-                  isSelected
-                    ? {
-                        boxShadow:
-                          "inset 0 0 0 1px rgba(220, 38, 39, 0.4), 0 12px 32px rgba(220, 38, 39, 0.15)",
-                      }
-                    : undefined
-                }
+                key={i}
+                onClick={() => setActive(thumb)}
+                className={`aspect-square rounded-xl overflow-hidden ring-1 transition-all ${
+                  active === thumb ? "ring-[var(--color-brand-red)]" : "ring-white/10 hover:ring-white/30"
+                }`}
               >
-                <span
-                  className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
-                    isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
-                  }`}
+                <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* RIGHT */}
+        <Reveal delay={0.1}>
+          <p className="eyebrow mb-3">{eyebrow}</p>
+          <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
+            {title}
+          </h2>
+          <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
+            <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
+            <span>{rating} · {reviews} reviews</span>
+          </div>
+          <p className="mt-4 mb-7 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
+            {description}
+          </p>
+
+          {/* SECTION 1 */}
+          <SectionHeader num={1} label="PICK YOUR VARIANT" />
+          <div className="lvb-variant-container">
+            {variantTabs.map((t) => {
+              const isActive = variant === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`lvb-variant-pill ${isActive ? "active" : ""}`}
+                  aria-pressed={isActive}
                 >
-                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
-                </span>
-                <BottleStack src={bottleImage} count={Number(b.id) || 1} />
-                 <div className="flex-1 min-w-0">
-                   <div className="flex items-center gap-2 flex-wrap">
-                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
-                     {b.badge && (
-                       <span
-                         className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
-                           b.badge === "BEST SELLER"
-                             ? "bg-[var(--color-brand-red)] text-white"
-                             : "bg-[var(--color-gold)] text-[var(--color-noir)]"
-                         }`}
-                       >
-                         {b.badge}
-                       </span>
-                     )}
-                   </div>
-                   <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
-                     ₱{b.price.toLocaleString()}
-                     {b.save ? ` · Save ₱${b.save}` : ""}
-                   </div>
-                   {b.id !== "1" && <BundleBonusIndicator tier={b.id as "2" | "3"} />}
-                 </div>
-                 <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
-               </button>
-             );
-           })}
-         </div>
+                  <t.Icon active={isActive} />
+                  <span>{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
 
-         {/* What's included (bonus + product) */}
-         {selectedBundle.id !== "1" && (
-           <BundleIncludesSection
-             productImage={bottleImage}
-             productName={`LOVABLE for ${variant === "her" ? "Her" : "Him"} — ${selectedBundle.label}`}
-             tier={selectedBundle.id as "2" | "3"}
-           />
-         )}
+          <div className="lvb-section-divider" />
 
-         {/* CTA */}
-         <Link
-           to="/checkout"
-           search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
-         >
-           <span>Order Now, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-         </Link>
+          {/* SECTION 2 */}
+          <SectionHeader num={2} label="CHOOSE YOUR BUNDLE" />
+          <div className="flex flex-col gap-2.5 mb-7">
+            {bundles.map((b) => {
+              const isSelected = selected === b.id;
+              return (
+                <div key={b.id} className="relative">
+                  {b.savePercent && (
+                    <div
+                      style={{
+                        position: "absolute", top: -8, right: 16, zIndex: 2,
+                        padding: "4px 10px",
+                        background: "#0D0606",
+                        border: "0.5px solid #B8955A",
+                        borderRadius: 999,
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: 9,
+                        letterSpacing: 1.5,
+                        color: "#B8955A",
+                        fontWeight: 600,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <span style={{ color: "#B8955A" }}>★</span> SAVE {b.savePercent}%
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setSelected(b.id)}
+                    className={`lvb-bundle-card ${isSelected ? "selected" : ""}`}
+                  >
+                    <span className="lvb-bundle-radio" />
+                    <div className="flex-1 min-w-0">
+                      <div
+                        style={{
+                          fontFamily: '"Playfair Display", Georgia, serif',
+                          color: "#F2EAE0", fontWeight: 400,
+                          lineHeight: 1.2,
+                        }}
+                        className="text-[14px] sm:text-[16px]"
+                      >
+                        {b.label}
+                      </div>
+                      <div className="mt-1 flex items-center gap-2 flex-wrap text-[10px] sm:text-[11px]">
+                        {b.originalPrice > b.price && (
+                          <span style={{ color: "rgba(154,136,128,0.65)", textDecoration: "line-through" }}>
+                            ₱{b.originalPrice.toLocaleString()}
+                          </span>
+                        )}
+                        <span style={{ color: "rgba(154,136,128,0.85)" }}>{b.supply}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-0.5 flex-shrink-0">
+                      <div
+                        style={{
+                          fontFamily: '"Playfair Display", Georgia, serif',
+                          fontStyle: "italic",
+                          color: "#DC2627",
+                          fontWeight: 500,
+                          lineHeight: 1,
+                        }}
+                        className="text-[19px] sm:text-[22px]"
+                      >
+                        ₱{b.price.toLocaleString()}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "Montserrat, sans-serif",
+                          fontSize: 10,
+                          color: "rgba(184,149,90,0.85)",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        ₱{b.perDay}/day
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Trust chips */}
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
-          <span>🚚 Free Nationwide Shipping</span>
-          <span>💳 COD Available</span>
-          <span>🛡️ 30-Day Guarantee</span>
-        </div>
+          {/* What's included (bonus + product) for tiers 2/3 */}
+          {selectedBundle.id !== "1" && (
+            <BundleIncludesSection
+              productImage={bottleImage}
+              productName={`${variant === "couples" ? "LOVABLE Couples Bundle" : `LOVABLE for ${variant === "her" ? "Her" : "Him"}`} — ${selectedBundle.label}`}
+              tier={selectedBundle.id as "2" | "3"}
+            />
+          )}
 
-      </Reveal>
-    </div>
+          {/* CHECK OUT */}
+          <Link
+            to="/checkout"
+            search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
+            className="lvb-checkout-btn btn-shine mt-6"
+          >
+            <span>CHECK OUT</span>
+            <span aria-hidden>🛒</span>
+          </Link>
+
+          {/* Trust pills */}
+          <div className="lvb-trust-pills">
+            <span className="lvb-trust-pill"><span style={{ color: "#B8955A" }}>💵</span> COD Available</span>
+            <span className="lvb-trust-pill"><span style={{ color: "#B8955A" }}>↻</span> 30-Day Money-Back</span>
+            <span className="lvb-trust-pill"><span style={{ color: "#B8955A" }}>⚕</span> Doctor-Formulated</span>
+          </div>
+
+          {variant === "couples" && <WhatsInsideCard />}
+        </Reveal>
+      </div>
+    </>
   );
 }
+
 
 function GalleryArrows({
   images,
@@ -681,188 +703,6 @@ function MiniFaq({ q, a }: { q: string; a: string }) {
   );
 }
 
-function CouplesBundle({ setTab }: { setTab: (v: Variant) => void }) {
-  const couplesMain =
-    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2011_46_31%20PM.png";
-  const couples2 =
-    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2001_47_05%20AM%20(1).png";
-  const couples3 =
-    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2028,%202026,%2002_19_52%20AM%20(1).png";
-  const couples4 =
-    "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/public/LOVABLE%20ASSETS/ChatGPT%20Image%20Apr%2029,%202026,%2004_28_13%20PM.png";
-  const thumbnails = [couplesMain, couples2, couples3, couples4];
-
-  const [active, setActive] = useState(couplesMain);
-  const defaultB = couplesBundles.find((b) => b.badge === "BEST SELLER") ?? couplesBundles[0];
-  const [selected, setSelected] = useState(defaultB.id);
-  const selectedBundle = couplesBundles.find((b) => b.id === selected) ?? defaultB;
-
-  useEffect(() => {
-    setShopState({ variant: "couples", price: selectedBundle.price, bundleLabel: selectedBundle.label });
-  }, [selectedBundle.price, selectedBundle.label]);
-
-
-  return (
-    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
-      {/* LEFT: image gallery */}
-      <Reveal>
-        <div
-          className="relative w-full overflow-hidden group"
-          style={{
-            aspectRatio: "1 / 1",
-            borderRadius: 14,
-            border: "0.5px solid rgba(184, 149, 90, 0.22)",
-            background: "transparent",
-          }}
-        >
-          <img
-            src={active}
-            alt="LOVABLE Couples Bundle"
-            loading="lazy"
-            className="absolute inset-0 h-full w-full block object-cover"
-            style={{ objectPosition: "center 35%" }}
-          />
-          <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
-        </div>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {thumbnails.slice(1, 4).map((thumb, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(thumb)}
-              className={`aspect-square rounded-xl overflow-hidden ring-1 transition-all ${
-                active === thumb ? "ring-[var(--color-brand-red)]" : "ring-white/10 hover:ring-white/30"
-              }`}
-            >
-              <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
-            </button>
-          ))}
-        </div>
-      </Reveal>
-
-      {/* RIGHT: details */}
-      <Reveal delay={0.1}>
-        
-        <p className="eyebrow mb-3">LOVABLE Couples Bundle</p>
-        <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
-          The Complete <span style={{ color: "#A81716", fontStyle: "italic" }}>Couples Bundle</span>
-        </h2>
-        <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
-          <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
-          <span>4.9 · 2,000+ reviews</span>
-        </div>
-        <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
-          For couples na pareho ng goal: <span style={{ color: "#F2EAE0", fontWeight: 600 }}>bumalik sa kung sino kayo dati</span>. Synced formulas, designed to be taken together.
-        </p>
-
-        {/* Bundles */}
-        <div className="mt-6 space-y-5">
-          {couplesBundles.map((b) => {
-            const isSelected = selected === b.id;
-            const borderColor = isSelected
-              ? "var(--color-brand-red)"
-              : "rgba(184, 149, 90, 0.45)";
-            return (
-              <div key={b.id} className="relative">
-                {b.savePercent && (
-                  <div
-                    className="absolute z-10"
-                    style={{
-                      top: -14,
-                      right: 16,
-                      background: "#0D0606",
-                      color: "#F2EAE0",
-                      borderRadius: 999,
-                      padding: "5px 12px",
-                      fontSize: 12,
-                      fontWeight: 600,
-                      fontFamily: "Montserrat, sans-serif",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 6,
-                      border: "0.5px solid rgba(184, 149, 90, 0.4)",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-                    }}
-                  >
-                    <span style={{ color: "#C9A06D" }}>★</span> Save {b.savePercent}%
-                  </div>
-                )}
-                <button
-                  onClick={() => setSelected(b.id)}
-                  className="w-full text-left transition-all"
-                  style={{
-                    borderRadius: 14,
-                    border: `2px solid ${borderColor}`,
-                    background: isSelected ? "rgba(220, 38, 39, 0.04)" : "transparent",
-                    padding: "18px 20px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 16,
-                  }}
-                >
-                  <span
-                    className="flex-shrink-0 inline-flex items-center justify-center rounded-full"
-                    style={{
-                      height: 22,
-                      width: 22,
-                      border: `2px solid ${isSelected ? "var(--color-brand-red)" : "rgba(184,149,90,0.5)"}`,
-                    }}
-                  >
-                    {isSelected && <span style={{ height: 10, width: 10, borderRadius: 999, background: "var(--color-brand-red)" }} />}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[var(--color-ivory)] font-semibold leading-tight text-[14px] sm:text-[16px]">
-                      {b.label}
-                    </div>
-                    <div className="mt-1.5 flex items-center gap-2 flex-wrap text-[12px] sm:text-[13px]">
-                      <span style={{ color: "rgba(242,234,224,0.5)", textDecoration: "line-through", fontStyle: "italic" }}>
-                        ₱{b.originalPrice.toLocaleString()}
-                      </span>
-                      <span style={{ color: "rgba(242,234,224,0.7)" }}>{b.supply}</span>
-                    </div>
-                  </div>
-                  <div className="flex-shrink-0 text-right">
-                    <div style={{ color: "var(--color-brand-red)", fontWeight: 700, lineHeight: 1 }} className="text-[18px] sm:text-[22px]">
-                      ₱{b.price.toLocaleString()}
-                    </div>
-                    <div style={{ color: "rgba(242,234,224,0.5)", textDecoration: "line-through", fontStyle: "italic", marginTop: 4 }} className="text-[11px] sm:text-[12px]">
-                      ₱{b.perDay}/day
-                    </div>
-                  </div>
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-         {/* What's included (couples always include the bonus) */}
-         <BundleIncludesSection
-           productImage={BOTTLE_HER_URL}
-           productName={`LOVABLE Couples Bundle — ${selectedBundle.label}`}
-           tier={(selectedBundle.id === "3" ? "3" : "2") as "2" | "3"}
-         />
-
-         {/* CTA */}
-         <Link
-           to="/checkout"
-           search={{ variant: "couples" as const, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
-         >
-           <span>Get the Couples Bundle, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-         </Link>
-
-        {/* Trust chips */}
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
-          <span>🚚 Free Nationwide Shipping</span>
-          <span>💳 COD Available</span>
-          <span>🛡️ 30-Day Guarantee</span>
-        </div>
-
-        {/* What's Inside the Bundle */}
-        <WhatsInsideCard />
-      </Reveal>
-    </div>
-  );
-}
 
 function WhatsInsideCard() {
   const items: {
