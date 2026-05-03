@@ -219,6 +219,7 @@ function CheckoutPage() {
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+    setSubmitError(null);
 
     const fullName = form.fullName.trim();
     if (!fullName.includes(" ")) {
@@ -226,8 +227,13 @@ function CheckoutPage() {
       return;
     }
 
+    const phoneDigits = form.phone.replace(/\D/g, "");
+    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      setSubmitError("Please enter a valid phone number (10-11 digits).");
+      return;
+    }
+
     const errs: typeof addressErrors = {};
-    if (!form.regionCode) errs.region = "Please select your region";
     if (!form.provinceCode) errs.province = "Please select your province";
     if (!form.cityCode) errs.city = "Please select your city or municipality";
     if (!form.barangayCode) errs.barangay = "Please select your barangay";
@@ -235,45 +241,49 @@ function CheckoutPage() {
     setAddressErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    setSubmitting(true);
-    const [firstName, ...rest] = fullName.split(/\s+/);
-    const lastName = rest.join(" ");
-    const landmark = form.landmark.trim();
-    const fullAddress = [
-      form.address.trim(),
-      `Brgy. ${form.barangay}`,
-      form.city,
-      form.province,
-      form.region,
-    ].filter(Boolean).join(", ") + (landmark ? `. Landmark: ${landmark}.` : "");
-    const order = {
-      country: "Philippines",
-      fullName,
-      firstName,
-      lastName,
-      phone: form.phone,
-      email: form.email,
-      address: form.address,
-      region: { code: form.regionCode, name: form.region },
-      province: { code: form.provinceCode, name: form.province },
-      city: { code: form.cityCode, name: form.city },
-      barangay: { code: form.barangayCode, name: form.barangay },
-      landmark,
-      fullAddress,
-      paymentMethod: "COD",
-      variant,
-      bundle,
-      total,
+    // Resolve Pancake SKU from variant + bundle
+    const skuMap: Record<Variant, Record<BundleId, PancakeSku>> = {
+      her: { "1": "1LFW", "2": "2LFW", "3": "3LFW" },
+      him: { "1": "1LFM", "2": "2LFM", "3": "3LFM" },
+      couples: { "1": "1LFC", "2": "2LFC", "3": "2LFC" },
     };
-    // Simulated submit (POS receives order on backend in production)
-    void order;
-    await new Promise((r) => setTimeout(r, 1200));
-    setSubmitting(false);
+    const sku = skuMap[variant][bundle];
+    const product = PRODUCT_MAP[sku];
 
-    // Generate a simple order reference like LV-2026-001234
+    const [firstName] = fullName.split(/\s+/);
+    const landmark = form.landmark.trim();
+
+    // Generate website order reference
     const year = new Date().getFullYear();
     const seq = Math.floor(100000 + Math.random() * 900000);
     const orderId = `LV-${year}-${seq}`;
+
+    setSubmitting(true);
+    try {
+      await submitOrder({
+        fullName,
+        phone: phoneDigits,
+        streetAddress: form.address.trim(),
+        landmark,
+        provinceId: form.provinceCode,
+        provinceName: form.province,
+        districtId: form.cityCode,
+        districtName: form.city,
+        communeId: form.barangayCode,
+        communeName: form.barangay,
+        paymentMethod: "cod",
+        price: product.price,
+        productId: product.productId,
+        sku,
+        bundleLabel: item.label,
+        websiteOrderId: orderId,
+      });
+    } catch (err) {
+      setSubmitting(false);
+      setSubmitError((err as Error).message || "Could not place order. Please try again.");
+      return;
+    }
+    setSubmitting(false);
 
     navigate({
       to: "/thank-you",
@@ -286,12 +296,13 @@ function CheckoutPage() {
         fullName,
         phone: form.phone,
         address: form.address,
-        region: form.region,
+        region: "",
         city: form.city,
         barangay: form.barangay,
       } as never,
     });
   };
+
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
