@@ -307,33 +307,10 @@ function BottleStack({ src, count }: { src: string; count: number }) {
   );
 }
 
-function ProductDetail({
-  variant,
-  setTab,
-  eyebrow,
-  title,
-  rating,
-  reviews,
-  description,
-  mainImage,
-  thumbnails,
-  bundles,
-  bottleImage,
-  checkoutUrl,
-}: {
-  variant: Variant;
-  setTab: (v: Variant) => void;
-  eyebrow: string;
-  title: React.ReactNode;
-  rating: string;
-  reviews: string;
-  description: React.ReactNode;
-  mainImage: string;
-  thumbnails: string[];
-  bundles: Bundle[];
-  bottleImage: string;
-  checkoutUrl: string;
-}) {
+function ProductDetail({ variant, setTab }: { variant: Variant; setTab: (v: Variant) => void }) {
+  const cfg = getVariantConfig(variant);
+  const { eyebrow, title, rating, reviews, description, mainImage, thumbnails, bundles, bottleImage } = cfg;
+
   const [active, setActive] = useState(mainImage);
   const defaultBundle = bundles.find((b) => b.badge === "BEST SELLER") ?? bundles[0];
   const [selected, setSelected] = useState<string>(defaultBundle.id);
@@ -342,159 +319,324 @@ function ProductDetail({
     setActive(mainImage);
     setSelected(defaultBundle.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mainImage]);
+  }, [variant]);
 
   const selectedBundle = bundles.find((b) => b.id === selected) ?? defaultBundle;
 
-  // Broadcast selected price/label to global store for the sticky bar
   useEffect(() => {
     setShopState({ variant, price: selectedBundle.price, bundleLabel: selectedBundle.label });
   }, [variant, selectedBundle.price, selectedBundle.label]);
 
+  const variantTabs: { id: Variant; label: string; Icon: typeof VenusIcon }[] = [
+    { id: "her", label: "FOR HER", Icon: VenusIcon },
+    { id: "him", label: "FOR HIM", Icon: MarsIcon },
+    { id: "couples", label: "COUPLES", Icon: HeartIcon },
+  ];
 
   return (
-    <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
-      {/* LEFT: image gallery */}
-      <Reveal>
-        <div
-          className="relative w-full overflow-hidden group lift-image lift-halo"
-          style={{
-            aspectRatio: "1 / 1",
-            border: "0.5px solid rgba(184, 149, 90, 0.22)",
-            background: "transparent",
-          }}
-        >
-          <img
-            src={active}
-            alt=""
-            loading="lazy"
-            className="absolute inset-0 h-full w-full block object-cover"
-            style={{ objectPosition: "center 30%" }}
-          />
-          <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
-        </div>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {thumbnails.slice(1, 4).map((thumb, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(thumb)}
-              className={`aspect-square rounded-xl overflow-hidden ring-1 transition-all ${
-                active === thumb ? "ring-[var(--color-brand-red)]" : "ring-white/10 hover:ring-white/30"
-              }`}
-            >
-              <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
-            </button>
-          ))}
-        </div>
-      </Reveal>
-
-      {/* RIGHT: details */}
-      <Reveal delay={0.1}>
-        
-        <p className="eyebrow mb-3">{eyebrow}</p>
-        <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
-          {title}
-        </h2>
-        <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
-          <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
-          <span>{rating} · {reviews} reviews</span>
-        </div>
-        <p className="mt-4 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
-          {description}
-        </p>
-
-        {/* Bundles */}
-        <div className="mt-6 space-y-3">
-          {bundles.map((b) => {
-            const isSelected = selected === b.id;
-            const borderClass =
-              b.badge === "BEST SELLER"
-                ? "border-[var(--color-brand-red)]"
-                : b.badge === "BEST VALUE"
-                ? "border-[var(--color-gold)]"
-                : isSelected
-                ? "border-[var(--color-ivory)]/60"
-                : "border-white/10";
-            return (
+    <>
+      <style>{`
+        .lvb-variant-container {
+          display: flex;
+          background: #1A0E0E;
+          border: 0.5px solid rgba(184, 149, 90, 0.3);
+          border-radius: 14px;
+          padding: 6px;
+          gap: 4px;
+          margin-bottom: 28px;
+          box-shadow: 0 1px 0 rgba(242,234,224,0.05) inset, 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .lvb-variant-pill {
+          flex: 1;
+          padding: 14px 6px;
+          border-radius: 10px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+          color: rgba(242, 234, 224, 0.7);
+          font-family: 'Montserrat', sans-serif;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 1px;
+        }
+        @media (min-width: 640px) { .lvb-variant-pill { padding: 16px 8px; font-size: 12px; } }
+        .lvb-variant-pill:hover:not(.active) { background: rgba(184,149,90,0.06); color: #F2EAE0; }
+        .lvb-variant-pill.active {
+          background: linear-gradient(135deg, #DC2627, #C61F20);
+          color: #F2EAE0;
+          box-shadow: 0 1px 0 rgba(242,234,224,0.2) inset, 0 6px 14px rgba(220,38,39,0.4);
+        }
+        .lvb-section-divider {
+          width: 100%;
+          height: 0.5px;
+          background: linear-gradient(to right, transparent, rgba(184,149,90,0.25) 30%, rgba(184,149,90,0.25) 70%, transparent);
+          margin: 28px 0;
+        }
+        .lvb-bundle-card {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px;
+          background: #160808;
+          border: 0.5px solid rgba(184,149,90,0.25);
+          border-radius: 12px;
+          cursor: pointer;
+          width: 100%;
+          text-align: left;
+          transition: all 300ms cubic-bezier(0.4,0,0.2,1);
+        }
+        @media (min-width: 640px) { .lvb-bundle-card { padding: 18px 20px; gap: 16px; } }
+        .lvb-bundle-card:hover:not(.selected) {
+          border-color: rgba(184,149,90,0.5);
+          background: #1A0E0E;
+        }
+        .lvb-bundle-card.selected {
+          border: 1px solid #DC2627;
+          background: rgba(220,38,39,0.06);
+          box-shadow: 0 1px 0 rgba(242,234,224,0.06) inset, 0 8px 24px rgba(220,38,39,0.2), 0 0 0 4px rgba(220,38,39,0.08);
+        }
+        .lvb-bundle-radio {
+          width: 22px; height: 22px; border-radius: 50%;
+          border: 1.5px solid rgba(184,149,90,0.5);
+          flex-shrink: 0; position: relative;
+          transition: all 250ms ease;
+        }
+        .lvb-bundle-card.selected .lvb-bundle-radio { border-color: #DC2627; background: #DC2627; }
+        .lvb-bundle-card.selected .lvb-bundle-radio::after {
+          content: ''; position: absolute; inset: 4px; background: #F2EAE0; border-radius: 50%;
+        }
+        .lvb-checkout-btn {
+          width: 100%;
+          padding: 16px 24px;
+          background: linear-gradient(135deg, #FF3F40, #DC2627);
+          border: none;
+          border-radius: 999px;
+          color: #F2EAE0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 20px;
+          box-shadow: 0 1px 0 rgba(242,234,224,0.2) inset, 0 8px 24px rgba(220,38,39,0.45), 0 16px 40px rgba(0,0,0,0.4), 0 0 32px rgba(220,38,39,0.1);
+          transition: all 300ms cubic-bezier(0.4,0,0.2,1);
+          position: relative;
+          overflow: hidden;
+          text-decoration: none;
+        }
+        @media (min-width: 640px) { .lvb-checkout-btn { padding: 18px 32px; font-size: 14px; letter-spacing: 3px; } }
+        .lvb-checkout-btn:hover { transform: translateY(-2px); }
+        .lvb-trust-pills {
+          display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px;
+        }
+        .lvb-trust-pill {
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 7px 12px;
+          background: rgba(184,149,90,0.06);
+          border: 0.5px solid rgba(184,149,90,0.3);
+          border-radius: 999px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10px;
+          letter-spacing: 0.5px;
+          color: rgba(242,234,224,0.85);
+          white-space: nowrap;
+        }
+        @media (min-width: 640px) { .lvb-trust-pill { font-size: 11px; padding: 8px 14px; } }
+      `}</style>
+      <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-2 items-start">
+        {/* LEFT */}
+        <Reveal>
+          <div
+            className="relative w-full overflow-hidden group lift-image lift-halo"
+            style={{ aspectRatio: "1 / 1", border: "0.5px solid rgba(184,149,90,0.22)", background: "transparent" }}
+          >
+            <img
+              src={active}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 h-full w-full block object-cover"
+              style={{ objectPosition: variant === "couples" ? "center 35%" : "center 30%" }}
+            />
+            <GalleryArrows images={thumbnails} active={active} setActive={setActive} />
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            {thumbnails.slice(1, 4).map((thumb, i) => (
               <button
-                key={b.id}
-                onClick={() => setSelected(b.id)}
-                className={`w-full text-left rounded-2xl border-2 ${borderClass} ${
-                  isSelected ? "bg-white/[0.04]" : "bg-transparent"
-                } p-4 transition-all hover:bg-white/[0.03] flex items-center gap-4`}
-                style={
-                  isSelected
-                    ? {
-                        boxShadow:
-                          "inset 0 0 0 1px rgba(220, 38, 39, 0.4), 0 12px 32px rgba(220, 38, 39, 0.15)",
-                      }
-                    : undefined
-                }
+                key={i}
+                onClick={() => setActive(thumb)}
+                className={`aspect-square rounded-xl overflow-hidden ring-1 transition-all ${
+                  active === thumb ? "ring-[var(--color-brand-red)]" : "ring-white/10 hover:ring-white/30"
+                }`}
               >
-                <span
-                  className={`flex-shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border ${
-                    isSelected ? "border-[var(--color-brand-red)]" : "border-white/40"
-                  }`}
+                <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* RIGHT */}
+        <Reveal delay={0.1}>
+          <p className="eyebrow mb-3">{eyebrow}</p>
+          <h2 className="text-display text-[var(--color-ivory)] text-[28px] md:text-[36px] leading-[1.15]">
+            {title}
+          </h2>
+          <div className="mt-3 flex items-center gap-3 text-sm text-[var(--color-ivory)]/85">
+            <span className="text-[var(--color-gold)] tracking-wider">★★★★★</span>
+            <span>{rating} · {reviews} reviews</span>
+          </div>
+          <p className="mt-4 mb-7 text-[var(--color-ivory-muted)] text-[15px] leading-[1.7]">
+            {description}
+          </p>
+
+          {/* SECTION 1 */}
+          <SectionHeader num={1} label="PICK YOUR VARIANT" />
+          <div className="lvb-variant-container">
+            {variantTabs.map((t) => {
+              const isActive = variant === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`lvb-variant-pill ${isActive ? "active" : ""}`}
+                  aria-pressed={isActive}
                 >
-                {isSelected && <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-red)]" />}
-                </span>
-                <BottleStack src={bottleImage} count={Number(b.id) || 1} />
-                 <div className="flex-1 min-w-0">
-                   <div className="flex items-center gap-2 flex-wrap">
-                     <span className="text-[var(--color-ivory)] font-semibold text-base">{b.label}</span>
-                     {b.badge && (
-                       <span
-                         className={`text-[10px] tracking-[0.18em] uppercase font-semibold px-2 py-0.5 rounded ${
-                           b.badge === "BEST SELLER"
-                             ? "bg-[var(--color-brand-red)] text-white"
-                             : "bg-[var(--color-gold)] text-[var(--color-noir)]"
-                         }`}
-                       >
-                         {b.badge}
-                       </span>
-                     )}
-                   </div>
-                   <div className="text-sm text-[var(--color-ivory-muted)] mt-0.5">
-                     ₱{b.price.toLocaleString()}
-                     {b.save ? ` · Save ₱${b.save}` : ""}
-                   </div>
-                   {b.id !== "1" && <BundleBonusIndicator tier={b.id as "2" | "3"} />}
-                 </div>
-                 <div className="text-[var(--color-ivory)] font-serif text-xl">₱{b.price.toLocaleString()}</div>
-               </button>
-             );
-           })}
-         </div>
+                  <t.Icon active={isActive} />
+                  <span>{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
 
-         {/* What's included (bonus + product) */}
-         {selectedBundle.id !== "1" && (
-           <BundleIncludesSection
-             productImage={bottleImage}
-             productName={`LOVABLE for ${variant === "her" ? "Her" : "Him"} — ${selectedBundle.label}`}
-             tier={selectedBundle.id as "2" | "3"}
-           />
-         )}
+          <div className="lvb-section-divider" />
 
-         {/* CTA */}
-         <Link
-           to="/checkout"
-           search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
-           className="btn-pulse-shine btn-pulse-medium mt-7 !w-full"
-         >
-           <span>Order Now, ₱{selectedBundle.price.toLocaleString()}</span> <span className="arrow">→</span>
-         </Link>
+          {/* SECTION 2 */}
+          <SectionHeader num={2} label="CHOOSE YOUR BUNDLE" />
+          <div className="flex flex-col gap-2.5 mb-7">
+            {bundles.map((b) => {
+              const isSelected = selected === b.id;
+              return (
+                <div key={b.id} className="relative">
+                  {b.savePercent && (
+                    <div
+                      style={{
+                        position: "absolute", top: -8, right: 16, zIndex: 2,
+                        padding: "4px 10px",
+                        background: "#0D0606",
+                        border: "0.5px solid #B8955A",
+                        borderRadius: 999,
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: 9,
+                        letterSpacing: 1.5,
+                        color: "#B8955A",
+                        fontWeight: 600,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <span style={{ color: "#B8955A" }}>★</span> SAVE {b.savePercent}%
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setSelected(b.id)}
+                    className={`lvb-bundle-card ${isSelected ? "selected" : ""}`}
+                  >
+                    <span className="lvb-bundle-radio" />
+                    <div className="flex-1 min-w-0">
+                      <div
+                        style={{
+                          fontFamily: '"Playfair Display", Georgia, serif',
+                          color: "#F2EAE0", fontWeight: 400,
+                          lineHeight: 1.2,
+                        }}
+                        className="text-[14px] sm:text-[16px]"
+                      >
+                        {b.label}
+                      </div>
+                      <div className="mt-1 flex items-center gap-2 flex-wrap text-[10px] sm:text-[11px]">
+                        {b.originalPrice > b.price && (
+                          <span style={{ color: "rgba(154,136,128,0.65)", textDecoration: "line-through" }}>
+                            ₱{b.originalPrice.toLocaleString()}
+                          </span>
+                        )}
+                        <span style={{ color: "rgba(154,136,128,0.85)" }}>{b.supply}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-0.5 flex-shrink-0">
+                      <div
+                        style={{
+                          fontFamily: '"Playfair Display", Georgia, serif',
+                          fontStyle: "italic",
+                          color: "#DC2627",
+                          fontWeight: 500,
+                          lineHeight: 1,
+                        }}
+                        className="text-[19px] sm:text-[22px]"
+                      >
+                        ₱{b.price.toLocaleString()}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "Montserrat, sans-serif",
+                          fontSize: 10,
+                          color: "rgba(184,149,90,0.85)",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        ₱{b.perDay}/day
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Trust chips */}
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] tracking-wider uppercase text-[var(--color-ivory)]/65">
-          <span>🚚 Free Nationwide Shipping</span>
-          <span>💳 COD Available</span>
-          <span>🛡️ 30-Day Guarantee</span>
-        </div>
+          {/* What's included (bonus + product) for tiers 2/3 */}
+          {selectedBundle.id !== "1" && (
+            <BundleIncludesSection
+              productImage={bottleImage}
+              productName={`${variant === "couples" ? "LOVABLE Couples Bundle" : `LOVABLE for ${variant === "her" ? "Her" : "Him"}`} — ${selectedBundle.label}`}
+              tier={selectedBundle.id as "2" | "3"}
+            />
+          )}
 
-      </Reveal>
-    </div>
+          {/* CHECK OUT */}
+          <Link
+            to="/checkout"
+            search={{ variant, bundle: (selectedBundle.id as "1" | "2" | "3") }}
+            className="lvb-checkout-btn btn-shine mt-6"
+          >
+            <span>CHECK OUT</span>
+            <span aria-hidden>🛒</span>
+          </Link>
+
+          {/* Trust pills */}
+          <div className="lvb-trust-pills">
+            <span className="lvb-trust-pill"><span style={{ color: "#B8955A" }}>💵</span> COD Available</span>
+            <span className="lvb-trust-pill"><span style={{ color: "#B8955A" }}>↻</span> 30-Day Money-Back</span>
+            <span className="lvb-trust-pill"><span style={{ color: "#B8955A" }}>⚕</span> Doctor-Formulated</span>
+          </div>
+
+          {variant === "couples" && <WhatsInsideCard />}
+        </Reveal>
+      </div>
+    </>
   );
 }
+
 
 function GalleryArrows({
   images,
