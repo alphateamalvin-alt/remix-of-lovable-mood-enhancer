@@ -106,10 +106,10 @@ const couplesBundles: CouplesBundle[] = [
   {
     id: "2",
     label: "2 Bottles Men + 2 Bottles Women",
-    price: 2796,
+    price: 1476,
     originalPrice: 7196,
     supply: "60-day supply",
-    perDay: 47,
+    perDay: 25,
     savePercent: 22,
     badge: "BEST SELLER",
   },
@@ -174,7 +174,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
     const defaults: Record<Variant, { price: number; label: string }> = {
       her: { price: 899, label: "2 Bottles" },
       him: { price: 899, label: "2 Bottles" },
-      couples: { price: 2796, label: "2 Bottles Men + 2 Bottles Women" },
+      couples: { price: 1476, label: "2 Bottles Men + 2 Bottles Women" },
     };
     const d = defaults[tab];
     setShopState({ variant: tab, price: d.price, bundleLabel: d.label });

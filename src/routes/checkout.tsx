@@ -36,8 +36,8 @@ const PRICING: Record<Variant, Record<BundleId, { price: number; baseEach: numbe
   },
   couples: {
     "1": { price: 899, baseEach: 1798, label: "1 Bottle Men + 1 Bottle Women", supply: "30-day supply" },
-    "2": { price: 2796, baseEach: 1798, label: "2 Bottles Men + 2 Bottles Women", supply: "60-day supply" },
-    "3": { price: 2796, baseEach: 1798, label: "2 Bottles Men + 2 Bottles Women", supply: "60-day supply" },
+    "2": { price: 1476, baseEach: 1798, label: "2 Bottles Men + 2 Bottles Women", supply: "60-day supply" },
+    "3": { price: 1476, baseEach: 1798, label: "2 Bottles Men + 2 Bottles Women", supply: "60-day supply" },
   },
 };
 
