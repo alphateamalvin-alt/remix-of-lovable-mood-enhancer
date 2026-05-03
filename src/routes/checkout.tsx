@@ -3,15 +3,15 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Lock, Truck, CheckCircle2, ArrowLeft, Star, Heart } from "lucide-react";
 import { AddressCombobox, type ComboOption } from "@/components/AddressCombobox";
 import {
-  loadRegions,
-  provincesByRegion,
-  citiesByProvince,
-  barangaysByCity,
-  type Region,
-  type Province,
-  type City,
-  type Barangay,
-} from "@/lib/psgc";
+  fetchVariations,
+  fetchProvinces,
+  fetchDistricts,
+  fetchCommunes,
+  submitOrder,
+  PRODUCT_MAP,
+  type PancakeGeo,
+  type PancakeSku,
+} from "@/services/pancakeService";
 
 const BOTTLE_HER_URL =
   "https://hmavnijneqxnythlehpw.supabase.co/storage/v1/object/sign/LOVABLE%20ASSETS/12.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNmM0OTM0Ny0zYWQ3LTRiMTAtYmI4NC04N2E3N2VmMWM3NTYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT1ZBQkxFIEFTU0VUUy8xMi5wbmciLCJpYXQiOjE3NzcwODkxODksImV4cCI6MTgwODYyNTE4OX0.lwk9AUb9CE31IDWqJDTuZOZtmes59bZ4FO-lUxOVd4s";
