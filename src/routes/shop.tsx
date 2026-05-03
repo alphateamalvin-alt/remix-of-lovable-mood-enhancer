@@ -107,6 +107,7 @@ function ShopPage() {
         <ProductTabs initial={variant} />
         <TrustAssurance />
         <HowToOrder />
+        <MobileTestimonials />
         <ComprehensiveFAQ />
         <FinalShopCTA />
       </main>
