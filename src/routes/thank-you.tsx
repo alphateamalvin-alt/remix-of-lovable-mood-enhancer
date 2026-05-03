@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart, Check, Download } from "lucide-react";
 import manualCover from "@/assets/reconnection-manual-cover.jpg";
+import { trackPurchase } from "@/lib/metaPixel";
 
 type ThankYouSearch = {
   orderId: string;
@@ -101,6 +102,22 @@ function ThankYouPage() {
     // Consider order "found" if we have at least an orderId or a total
     setHasParams(Boolean(search.orderId || search.total));
   }, [search.orderId, search.total]);
+
+  const purchaseFiredRef = useRef(false);
+  useEffect(() => {
+    if (purchaseFiredRef.current) return;
+    if (!search.orderId && !search.total) return;
+    purchaseFiredRef.current = true;
+    const v = search.variant === "him" || search.variant === "couples" ? search.variant : "her";
+    const b = search.bundle === "2" || search.bundle === "3" ? search.bundle : "1";
+    const total = Number(search.total) || PRICING[v as Variant][b as BundleId].price;
+    trackPurchase({
+      value: total,
+      currency: "PHP",
+      contentIds: [`lovable-${v}-${b}`],
+      phone: search.phone || undefined,
+    });
+  }, [search.orderId, search.total, search.variant, search.bundle, search.phone]);
 
   if (!hasParams) {
     return (
