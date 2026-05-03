@@ -99,6 +99,20 @@ export const Route = createFileRoute("/api/pancake")({
           switch (parsed.action) {
             case "getVariations": {
               const data = await pancakeGet(`/shops/${shopId}/variations`, apiKey);
+              // TEMP DEBUG: log all SKUs returned by Pancake
+              const list = Array.isArray(data)
+                ? data
+                : Array.isArray((data as { data?: unknown[] })?.data)
+                  ? (data as { data: unknown[] }).data
+                  : Array.isArray((data as { variations?: unknown[] })?.variations)
+                    ? (data as { variations: unknown[] }).variations
+                    : [];
+              const skus = (list as Array<Record<string, unknown>>).map((v) => ({
+                sku: v.sku ?? v.display_id ?? null,
+                id: v.id ?? v.variation_id ?? v.uuid ?? null,
+                name: v.name ?? v.display_name ?? null,
+              }));
+              console.log("[pancake-proxy] getVariations count=", skus.length, "skus=", JSON.stringify(skus));
               return json({ data });
             }
             case "getProvinces": {
