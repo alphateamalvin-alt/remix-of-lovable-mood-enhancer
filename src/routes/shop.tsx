@@ -98,10 +98,10 @@ const couplesBundles: CouplesBundle[] = [
   {
     id: "1",
     label: "1 Bottle Men + 1 Bottle Women",
-    price: 1598,
+    price: 899,
     originalPrice: 3596,
     supply: "30-day supply",
-    perDay: 53,
+    perDay: 30,
   },
   {
     id: "2",
