@@ -298,7 +298,7 @@ function ProductTabs({ initial }: { initial: Variant }) {
         }
         @media (max-width: 639px) {
           .variant-tabs-inner {
-            justify-content: flex-start;
+            justify-content: center;
             padding: 0 4px;
           }
           .tab-pill {
