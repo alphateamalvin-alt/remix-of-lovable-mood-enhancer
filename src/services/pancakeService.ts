@@ -141,7 +141,16 @@ export async function submitOrder(input: SubmitOrderInput) {
   const variations = await fetchVariations();
   const variationId = variations.get(input.sku.toUpperCase());
   if (!variationId) {
-    throw new Error(`Variation not found for SKU ${input.sku}. Check Pancake POS catalog.`);
+    const available = Array.from(variations.keys());
+    console.error(
+      `[pancakeService] Variation not found for SKU "${input.sku}". Available SKUs (${available.length}):`,
+      available,
+    );
+    throw new Error(
+      `Variation not found for SKU "${input.sku}". Available SKUs in Pancake: ${
+        available.length ? available.join(", ") : "(none returned)"
+      }`,
+    );
   }
 
   const note_internal = [
