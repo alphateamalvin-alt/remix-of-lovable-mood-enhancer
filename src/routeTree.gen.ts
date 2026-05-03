@@ -13,6 +13,7 @@ import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPancakeRouteImport } from './routes/api/pancake'
 import { Route as ApiPublicMetaCapiRouteImport } from './routes/api/public/meta-capi'
 
 const ThankYouRoute = ThankYouRouteImport.update({
@@ -35,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPancakeRoute = ApiPancakeRouteImport.update({
+  id: '/api/pancake',
+  path: '/api/pancake',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicMetaCapiRoute = ApiPublicMetaCapiRouteImport.update({
   id: '/api/public/meta-capi',
   path: '/api/public/meta-capi',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/shop': typeof ShopRoute
   '/thank-you': typeof ThankYouRoute
+  '/api/pancake': typeof ApiPancakeRoute
   '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/shop': typeof ShopRoute
   '/thank-you': typeof ThankYouRoute
+  '/api/pancake': typeof ApiPancakeRoute
   '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/shop': typeof ShopRoute
   '/thank-you': typeof ThankYouRoute
+  '/api/pancake': typeof ApiPancakeRoute
   '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
 }
 export interface FileRouteTypes {
@@ -70,15 +79,23 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/shop'
     | '/thank-you'
+    | '/api/pancake'
     | '/api/public/meta-capi'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkout' | '/shop' | '/thank-you' | '/api/public/meta-capi'
+  to:
+    | '/'
+    | '/checkout'
+    | '/shop'
+    | '/thank-you'
+    | '/api/pancake'
+    | '/api/public/meta-capi'
   id:
     | '__root__'
     | '/'
     | '/checkout'
     | '/shop'
     | '/thank-you'
+    | '/api/pancake'
     | '/api/public/meta-capi'
   fileRoutesById: FileRoutesById
 }
@@ -87,6 +104,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ShopRoute: typeof ShopRoute
   ThankYouRoute: typeof ThankYouRoute
+  ApiPancakeRoute: typeof ApiPancakeRoute
   ApiPublicMetaCapiRoute: typeof ApiPublicMetaCapiRoute
 }
 
@@ -120,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/pancake': {
+      id: '/api/pancake'
+      path: '/api/pancake'
+      fullPath: '/api/pancake'
+      preLoaderRoute: typeof ApiPancakeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/meta-capi': {
       id: '/api/public/meta-capi'
       path: '/api/public/meta-capi'
@@ -135,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ShopRoute: ShopRoute,
   ThankYouRoute: ThankYouRoute,
+  ApiPancakeRoute: ApiPancakeRoute,
   ApiPublicMetaCapiRoute: ApiPublicMetaCapiRoute,
 }
 export const routeTree = rootRouteImport
